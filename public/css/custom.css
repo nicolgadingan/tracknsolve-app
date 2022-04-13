@@ -1,0 +1,174 @@
+:root {
+    --cheese:       #EAD2AC;
+    --marine:       #4281A4;
+    --forest:       #9CAFB7;
+    --rose:         #FE938C;
+    --rose-dark:    #d87770;
+    --marine-dark:  #326986;
+}
+
+html,
+body {
+    color: var(--marine-dark);
+}
+
+/* AUTH LAYOUT */
+#box-login {
+    max-width: 355px;
+    background-color: var(--cheese);
+    padding: 3rem 1.5rem;
+}
+
+#brand-auth,
+#sidebar-logo {
+    max-width: 200px;
+}
+
+/* SIDEBAR */
+#sidebar {
+    width: 255px;
+    max-width: 255px;
+    background-color: var(--cheese);
+    height: 100vh;
+}
+
+.side-nav .side-nav-item {
+    text-align: left;
+    padding-left: 1rem;
+    color: var(--marine)
+}
+
+.side-nav-item:hover {
+    font-weight: bold;
+    background-color: white;
+}
+
+.side-nav-item.active {
+    background-color: white;
+    font-weight: bold;
+    pointer-events: none;
+    cursor: default;
+}
+
+
+/* FONTS */
+.fg-marine {
+    color: var(--marine);
+}
+
+.fg-cheese {
+    color: var(--cheese);
+}
+
+.fg-forest {
+    color: var(--forest);
+}
+
+.fg-rose {
+    color: var(--rose);
+}
+
+
+/* COLORS */
+.bg-marine {
+    background-color: var(--marine);
+}
+
+.bg-marine-dark {
+    background-color: var(--marine-dark);
+}
+
+.bg-cheese {
+    background-color: var(--cheese);
+}
+
+.bg-forest {
+    background-color: var(--forest);
+}
+
+.bg-rose {
+    background-color: var(--rose);
+}
+
+
+/* CUSTOM BUTTONS AND LINKS */
+.btn-marine {
+    background-color: var(--marine);
+    color: white;
+}
+
+.btn-rose {
+    background-color: var(--rose);
+    color: var(--marine);
+}
+
+.btn-marine:hover,
+.btn-marine:active {
+    background-color: var(--marine-dark);
+    color: white;
+}
+
+.btn-rose:hover,
+.btn-rose:active {
+    background-color: var(--rose-dark);
+    color: var(--marine);
+}
+
+a.link-marine {
+    color: var(--marine);
+}
+
+a.link-marine:hover,
+a.link-marine:active {
+    color: var(--marine-dark);
+}
+
+
+/* CUSTOM FONTS */
+.fs-xs {
+    font-size: x-small;
+}
+
+.fs-sm {
+    font-size: small;
+}
+
+.fs-lg {
+    font-size: large;
+}
+
+.fs-xl {
+    font-size: x-large;
+}
+
+
+/* ALIGNMENT */
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+
+/* OVERRIDE */
+a {
+    text-decoration: none;
+}
+
+.borderless {
+    border: none;
+}
+
+.border-bubble {
+    border-radius: 2rem;
+}
+
+.block {
+    display: block;
+}
+
+#profile-link:after {
+    content: none;
+}
