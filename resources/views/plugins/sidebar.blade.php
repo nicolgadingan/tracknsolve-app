@@ -3,8 +3,7 @@
         <img src="{{ asset('imgs/yortik.svg') }}" alt="Yorik logo" id="sidebar-logo">
     </div>
     @php
-        // Request::is('dashboard');
-        $whereami   =   request()->path();
+        $whereami   =   explode("/", request()->path())[0];
         $whatami    =   auth()->user()->role;
     @endphp
     <div class="p-4">

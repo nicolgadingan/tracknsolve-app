@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Group;
+use Illuminate\Support\Str;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Utils;
 
 class GroupsController extends Controller
 {
+    protected $utils;
+
     /**
      * Create a new controller instance.
      *
@@ -14,6 +21,7 @@ class GroupsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->utils    =   new Utils;
     }
 
     /**
@@ -22,8 +30,24 @@ class GroupsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('groups.index');
+    {        
+        // Validate restriction
+        if ($this->utils->isUser()) {
+            abort('401');
+        }
+
+        // Get users that can manage a group
+        $user   =   new User();
+        $users  =   $user->canManage();
+
+        // Get groups
+        $group  =   new Group();
+        $groups =   $group->getGroups();
+
+        return view('groups.index')->with([
+            'managers'  =>  $users,
+            'groups'    =>  $groups,
+        ]);
     }
 
     /**
@@ -33,7 +57,7 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        //
+        abort('404');
     }
 
     /**
@@ -44,7 +68,32 @@ class GroupsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Creation of GROUPS can only be done by Admin
+        if (!$this->utils->isAdmin()) {
+            abort('401');
+        }
+
+        // Validate input
+        $this->validate($request, [
+            'name'      =>  'required|max:20|unique:groups',
+            'manager'   =>  'required|numeric'
+        ]);
+
+        $groupName      =   $request->name;
+
+        // Insert group
+        $group  =   new Group;
+        $group->name        =   $request->name;
+        $group->status      =   'A';
+        $group->owner       =   $request->manager;
+        $group->slug        =   Str::slug($request->name);
+        $group->created_by  =   auth()->user()->id;
+        $group->updated_by  =   auth()->user()->id;
+        $group->save();
+
+        return redirect('/groups')->with([
+            'success'       =>  "You have successfully created <b>" . $groupName . "</b> group."
+        ]);
     }
 
     /**

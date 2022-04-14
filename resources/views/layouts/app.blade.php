@@ -25,8 +25,18 @@
         <div class="flex-grow-1 p-3">
             <header class="container-fluid">
                 <div class="row">
-                    <div class="col-sm d-flex align-items-end">
-                        {{ Str::ucfirst(request()->path()) }}
+                    <div class="col-sm d-flex align-items-end fg-forest">
+                        @php
+                            $path   =   explode("/", request()->path());
+                            $total  =   count($path);
+                            $count  =   1;
+                            foreach ($path as $p) {
+                                echo ucfirst($p);
+                                $retVal =   ($total > $count) ? "<i class='bi bi-chevron-right'></i>" : "" ;
+                                echo $retVal;
+                                $count++;
+                            }
+                        @endphp
                     </div>
                     <div class="col-sm d-flex justify-content-end align-items-center">
                         <div class="search-bar">
@@ -46,7 +56,7 @@
                                 </b>
                             </button>
     
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-link">
+                            <ul class="dropdown-menu dropdown-menu-end pb-0" aria-labelledby="profile-link">
                                 <li class="right">
                                     <span class="dropdown-item-text">
                                         <b>{{ Str::ucfirst($user->first_name . ' ' . $user->last_name) }}</b>
@@ -61,6 +71,13 @@
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                </li>
+                                <li class="right">
+                                    <span class="dropdown-item-text">
+                                        <small class="text-muted">
+                                            v{{ config('app.ver') }}
+                                        </small>
+                                    </span>
                                 </li>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

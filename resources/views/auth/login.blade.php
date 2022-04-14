@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="card card-body borderless shadow-sm border-bubble" id="box-login">
+        <div class="card card-body borderless shadow-sm border-bubble pb-2" id="box-login">
             <div class="center mb-3 p-2">
                 <img src="{{ asset('imgs/yortik.svg') }}" alt="Yortik logo" id="brand-auth">
             </div>
@@ -33,6 +33,11 @@
                     <button type="submit" class="btn btn-lg btn-marine shadow">Login</button>
                 </div>
             </form>
+            <div class="pt-5 center">
+                <small class="text-muted">
+                    v{{ config('app.ver') }}
+                </small>
+            </div>
         </div>
     </div>
     {{-- <div class="container">
