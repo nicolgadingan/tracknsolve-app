@@ -1,10 +1,11 @@
 <div class="">
     <div class="pt-4 center">
-        <img src="{{ asset('imgs/brand.svg') }}" alt="Yorik logo" id="sidebar-logo">
+        <img src="{{ asset('imgs/yortik.svg') }}" alt="Yorik logo" id="sidebar-logo">
     </div>
     @php
         // Request::is('dashboard');
         $whereami   =   request()->path();
+        $whatami    =   auth()->user()->role;
     @endphp
     <div class="p-4">
         <h6 class="fg-forest">
@@ -31,6 +32,8 @@
             </a>
         </div>
     </div>
+    @if ($whatami == 'admin' ||
+            $whatami == 'manager')
     <div class="p-4">
         <h6 class="fg-forest">
             ADMIN
@@ -48,12 +51,15 @@
                     <i class="bi bi-briefcase-fill"></i>
                 </div>
             </a>
+            @if ($whatami == 'admin')
             <a href="/settings" class="btn block side-nav-item {{ $whereami == 'settings' ? 'active' : '' }}">
                 <div class="d-flex justify-content-between">
                     <span>Settings</span>
                     <i class="bi bi-toggles2"></i>
                 </div>
             </a>
+            @endif
         </div>
     </div>
+    @endif
 </div>

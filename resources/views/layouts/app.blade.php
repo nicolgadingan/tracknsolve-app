@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Yortik') }} - @yield('page')</title>
 
-    <link rel="shortcut icon" href="{{ asset('imgs/brand-icon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('imgs/yortik-icon.svg') }}" type="image/x-icon">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -19,30 +19,45 @@
 </head>
 <body>
     <div class="d-flex">
-        <div id="sidebar" class="">
+        <div id="sidebar" class="shadow">
             @include('plugins.sidebar')
         </div>
         <div class="flex-grow-1 p-3">
             <header class="container-fluid">
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col-sm d-flex align-items-end">
                         {{ Str::ucfirst(request()->path()) }}
                     </div>
-                    <div class="col-sm">
-
+                    <div class="col-sm d-flex justify-content-end align-items-center">
+                        <div class="search-bar">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <i class="bi bi-search search-icon"></i>
+                        </div>
                     </div>
                     <div class="col-auto">
+                        @php
+                            $user   =   auth()->user();
+                        @endphp
                         <div class="dropdown">
                             <button class="btn btn-lg p-2 shadow dropdown-toggle btn-rose" href="#" id="profile-link" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <b>
-                                    {{ Str::ucfirst(auth()->user()->first_name[0] . auth()->user()->last_name[0]) }}
+                                <b class="pr-2">
+                                    {{ Str::ucfirst($user->first_name[0] . $user->last_name[0]) }}
                                 </b>
                             </button>
     
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-link">
                                 <li class="right">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <span class="dropdown-item-text">
+                                        <b>{{ Str::ucfirst($user->first_name . ' ' . $user->last_name) }}</b>
+                                        <span class="text-muted">
+                                            {{ Str::ucfirst($user->role) }}
+                                        </span>
+                                    </span>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li class="right">
+                                    <a class="dropdown-item link-danger" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -56,8 +71,8 @@
                     </div>
                 </div>
             </header>
-            <main class="p-2">
-                asd
+            <main class="pt-4">
+                @yield('content')
             </main>
         </div>
     </div>
