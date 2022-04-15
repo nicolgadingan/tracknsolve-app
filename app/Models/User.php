@@ -20,7 +20,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'user_id',
+        'first_name',
+        'last_name',
+        'username',
         'email',
         'password',
     ];
@@ -113,6 +116,15 @@ class User extends Authenticatable
                         ->paginate(10);
 
         return $users;
+    }
+
+    /**
+     * Add relationship to EmailVerify
+     * 
+     */
+    public function emailVerify()
+    {
+        return $this->hasOne(EmailVerify::class);
     }
 
 }

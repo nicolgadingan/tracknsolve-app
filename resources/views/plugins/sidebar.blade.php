@@ -1,6 +1,8 @@
 <div class="">
     <div class="pt-4 center">
-        <img src="{{ asset('imgs/yortik.svg') }}" alt="Yorik logo" id="sidebar-logo">
+        <a href="/">
+            <img src="{{ asset('imgs/yortik.svg') }}" alt="Yorik logo" id="sidebar-logo">
+        </a>
     </div>
     @php
         $whereami   =   explode("/", request()->path())[0];
