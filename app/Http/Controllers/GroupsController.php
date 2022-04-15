@@ -33,7 +33,7 @@ class GroupsController extends Controller
     {        
         // Validate restriction
         if ($this->utils->isUser()) {
-            abort('401');
+            // abort('401');
         }
 
         // Get users that can manage a group

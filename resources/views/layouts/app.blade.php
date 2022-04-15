@@ -38,12 +38,12 @@
                             }
                         @endphp
                     </div>
-                    <div class="col-sm d-flex justify-content-end align-items-center">
+                    {{-- <div class="col-sm d-flex justify-content-end align-items-center">
                         <div class="search-bar">
                             <input type="text" class="form-control" placeholder="Search...">
                             <i class="bi bi-search search-icon"></i>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-auto">
                         @php
                             $user   =   auth()->user();

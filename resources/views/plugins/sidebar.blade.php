@@ -33,8 +33,7 @@
             </a>
         </div>
     </div>
-    @if ($whatami == 'admin' ||
-            $whatami == 'manager')
+    @if (true)
     <div class="p-4">
         <h6 class="fg-forest">
             ADMIN

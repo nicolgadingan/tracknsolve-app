@@ -78,6 +78,7 @@ class AccessesController extends Controller
             $user->email_verified_at    =   \Carbon\Carbon::now();
             $user->updated_by           =   $request->user_id;
             $user->updated_at           =   \Carbon\Carbon::now();
+            $user->status               =   'A';
             $user->save();
 
             // Drop token

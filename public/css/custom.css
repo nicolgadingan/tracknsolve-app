@@ -62,6 +62,16 @@ body {
     cursor: default;
 }
 
+.click-disable {
+    pointer-events: none;
+    cursor: default;
+}
+
+.click-enable {
+    pointer-events: auto;
+    cursor: auto;
+}
+
 
 /* DOT */
 .dot {
@@ -299,6 +309,10 @@ a {
 }
 
 #profile-link:after {
+    content: none;
+}
+
+.dropstart.no-content a:before {
     content: none;
 }
 

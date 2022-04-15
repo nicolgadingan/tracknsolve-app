@@ -6,13 +6,18 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col right">
-            <a href="/users/create" class="btn btn-marine shadow">
-                New User
-            </a>
+    @php
+        $uinf    =   auth()->user();
+    @endphp
+    @if ($uinf->role == 'admin')
+        <div class="row mb-4">
+            <div class="col right">
+                <a href="/users/create" class="btn btn-marine shadow">
+                    New User
+                </a>
+            </div>
         </div>
-    </div>
+    @endif
     @include('plugins.messages')
     <div class="row">
         <div class="col">
@@ -70,9 +75,20 @@
                                         {{ \Carbon\Carbon::create($user->created_at)->diffForHumans() }}
                                     </td>
                                     <td class="right">
-                                        <a href="#options-for-{{ $user->slug }}" class="link-primary">
-                                            <i class="bi bi-three-dots-vertical"></i>
-                                        </a>
+                                        <div class="btn-group dropstart no-content">
+                                            <a href="#options-for-{{ $user->slug }}" data-bs-toggle="dropdown" aria-expanded="false"
+                                                class="dropdown-toggle @if ($uinf->role == 'user') ? link-secondary click-disable : link-primary @endif">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-item-text">
+                                                    <span class="text-muted">Options</span>
+                                                </li>
+                                                <li class="dropdown-item">
+                                                    <a href="#" class="link-danger">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

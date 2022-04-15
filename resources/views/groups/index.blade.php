@@ -7,10 +7,10 @@
 @section('content')
 <div class="container-fluid">
     @php
-        $user   =   auth()->user();
+        $uinf   =   auth()->user();
     @endphp
     @include('plugins.messages')
-    @if ($user->role == 'admin')
+    @if ($uinf->role == 'admin')
     <div class="row mb-4">
         <div class="col">
             <div class="card card-body border-round border-forest-light pt-4">
@@ -34,12 +34,12 @@
                                 <select name="manager" id="gr-manager" class="form-select">
                                     @if (count($managers) > 0)
                                         @foreach ($managers as $mgr)
-                                            <option value="{{ $mgr->id }}" {{ ($mgr->id == $user->id) ? 'selected' : '' }}>
+                                            <option value="{{ $mgr->id }}" {{ ($mgr->id == $uinf->id) ? 'selected' : '' }}>
                                                 {{ ucwords($mgr->first_name) . ' ' . ucwords($mgr->last_name) }}
                                             </option>
                                         @endforeach
                                     @else
-                                        <option value="{{ $user->id }}">{{ ucwords($user->first_name . ' ' . $user->last_name) }}</option>
+                                        <option value="{{ $user->id }}">{{ ucwords($uinf->first_name . ' ' . $uinf->last_name) }}</option>
                                     @endif
                                 </select>
                                 <label for="gr-manager">Manager</label>
@@ -100,9 +100,20 @@
                                         {{ \Carbon\Carbon::create($group->created_at)->diffForHumans() }}
                                     </td>
                                     <td class="right">
-                                        <a href="#options-for-{{ $group->slug }}" class="link-primary">
-                                            <i class="bi bi-three-dots-vertical"></i>
-                                        </a>
+                                        <div class="btn-group dropstart no-content">
+                                            <a data-bs-toggle="dropdown" aria-expanded="false"
+                                                class="dropdown-toggle @if ($uinf->role == 'user') ? link-secondary click-disable : click-enable link-primary @endif">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-item-text">
+                                                    <small class="text-muted">Options</small>
+                                                </li>
+                                                <li class="dropdown-item">
+                                                    <a href="#" class="link-danger">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

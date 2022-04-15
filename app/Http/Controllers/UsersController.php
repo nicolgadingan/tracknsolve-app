@@ -34,14 +34,17 @@ class UsersController extends Controller
      */
     public function index()
     { 
-        $role   =   auth()->user()->role;
+        // $role   =   auth()->user()->role;
         $user   =   new User();
 
-        if ($role == 'admin') {
-            $users  =   $user->getAllUsers();
-        } elseif ($role == 'manager') {
-            $users  =   $user->getManangedUsers();
-        }
+        // if ($role == 'admin') {
+        //     $users  =   $user->getAllUsers();
+        // } elseif ($role == 'manager') {
+        //     $users  =   $user->getManangedUsers();
+        // }
+
+        // Grant all view for now
+        $users  =   $user->getAllUsers();
         
         return view('users.index')->with([
             'users'     =>  $users
@@ -107,21 +110,6 @@ class UsersController extends Controller
         $user->created_by           =   $xuser->id;
         $user->updated_by           =   $xuser->id;
         $user->save();
-
-        // $user   =   User::create([
-        //     'role'              =>  $request->role,
-        //     'status'            =>  'I',
-        //     'first_name'        =>  ucwords($request->first_name),
-        //     'last_name'         =>  ucwords($request->last_name),
-        //     'username'          =>  $username,
-        //     'group_id'          =>  $request->group,
-        //     'slug'              =>  $username,
-        //     'email'             =>  Str::lower($request->email),
-        //     'contact_no'        =>  $request->contact_no,
-        //     'password'          =>  Hash::make('password'),
-        //     'created_by'        =>  $xuser->id,
-        //     'updated_by'        =>  $xuser->id
-        // ]);
 
         // Create token entry for verification
         $token  =   EmailVerify::create([
