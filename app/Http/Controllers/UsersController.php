@@ -181,13 +181,4 @@ class UsersController extends Controller
     {
         //
     }
-
-    /**
-     * Registered user verification
-     * 
-     */
-    public function verify($token)
-    {
-        return view('users.verify');
-    }
 }

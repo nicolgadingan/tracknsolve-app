@@ -39,6 +39,11 @@ body {
     height: 100vh;
 }
 
+/* APP LAYOUT */
+#profile-link {
+    min-width: 47px;
+}
+
 .side-nav .side-nav-item {
     text-align: left;
     padding-left: 1rem;
@@ -260,6 +265,11 @@ a.link-marine:active {
 
 .bottom {
     vertical-align: bottom;
+}
+
+.justify {
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 

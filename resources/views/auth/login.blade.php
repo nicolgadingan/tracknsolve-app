@@ -14,7 +14,7 @@
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="form-floating mb-3">
-                    <input type="text" id="li-username" class="form-control center borderless" name="username" placeholder="Username">
+                    <input type="text" id="li-username" class="form-control center borderless @error('username') is-invalid @enderror" name="username" placeholder="Username">
                     @error('username')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

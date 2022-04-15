@@ -59,7 +59,7 @@
                             <ul class="dropdown-menu dropdown-menu-end pb-0" aria-labelledby="profile-link">
                                 <li class="right">
                                     <span class="dropdown-item-text">
-                                        <b>{{ Str::ucfirst($user->first_name . ' ' . $user->last_name) }}</b>
+                                        <b>{{ Str::ucfirst($user->first_name . ' ' . $user->last_name) }}</b><br>
                                         <span class="text-muted">
                                             {{ Str::ucfirst($user->role) }}
                                         </span>
