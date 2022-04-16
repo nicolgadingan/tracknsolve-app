@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+<script>
+    $(document).ready(function() {
+        $("body").on("click", ".us-delete", function() {
+            $("#us-delete-form").attr("action", "/users/" + $(this).attr("data-id"));
+            $("#us-delete-form").submit();
+        });
+    });
+</script>
 <div class="container-fluid">
     @php
         $uinf    =   auth()->user();
@@ -76,17 +84,21 @@
                                     </td>
                                     <td class="right">
                                         <div class="btn-group dropstart no-content">
-                                            <a href="#options-for-{{ $user->slug }}" data-bs-toggle="dropdown" aria-expanded="false"
+                                            <a href="#options-for-{{ $user->id }}" data-bs-toggle="dropdown" aria-expanded="false"
                                                 class="dropdown-toggle @if ($uinf->role == 'user') ? link-secondary click-disable : link-primary @endif">
                                                 <i class="bi bi-three-dots-vertical"></i>
                                             </a>
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu right">
                                                 <li class="dropdown-item-text">
                                                     <span class="text-muted">Options</span>
                                                 </li>
-                                                <li class="dropdown-item">
-                                                    <a href="#" class="link-danger">Delete</a>
+                                                @if ($uinf->role == 'admin')
+                                                <li class="dropdown-item us-delete" data-id="{{ $user->id }}">
+                                                    <a href="#delete-{{ $user->id }}" class="link-danger">
+                                                        Delete
+                                                    </a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>
@@ -106,6 +118,10 @@
                         {{ $users->links() }}
                     @endif
                 </div>
+                <form id="us-delete-form" action="" method="POST">
+                    @method("DELETE")
+                    @csrf
+                </form>
             </div>
         </div>
     </div>

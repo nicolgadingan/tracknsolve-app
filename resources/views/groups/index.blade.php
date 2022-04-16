@@ -105,13 +105,15 @@
                                                 class="dropdown-toggle @if ($uinf->role == 'user') ? link-secondary click-disable : click-enable link-primary @endif">
                                                 <i class="bi bi-three-dots-vertical"></i>
                                             </a>
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu right">
                                                 <li class="dropdown-item-text">
                                                     <small class="text-muted">Options</small>
                                                 </li>
+                                                @if ($uinf->role == 'admin')
                                                 <li class="dropdown-item">
                                                     <a href="#" class="link-danger">Delete</a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>

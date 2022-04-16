@@ -167,6 +167,46 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        // Fetch user data
+        $user   =   User::find($id);
+
+        // Validate fetched data
+        if ($user == null) {
+            // If user not exists in users table
+            // Check from deleted table
+            $model      =   new User();
+            $deleted    =   $model->isDeleted($id);
+
+            if ($deleted != null) {
+                // If found in deleted table
+                return redirect('/users')->withErrors([
+                    'warning'   =>  "User <b>" . $deleted->first_name . ' ' . $deleted->last_name . "</b>'s account has already been deleted."
+                ]);
+            } else {
+                // If not found in deleted table
+                return redirect('/users')->withErrors([
+                    'error'   =>  "User <b>" . $deleted->first_name . ' ' . $deleted->last_name . "</b>'s account seems to be missing or invalid."
+                ]);
+            }
+        } else {
+            // Delete user data
+            $delete     =   new User();
+            $destroy    =   $delete->deleteUser($user);
+
+            return redirect('/users')->with([
+                'success'   =>  "User <b>" . $user->first_name . ' ' . $user->last_name . "</b>'s account was successfully deleted."
+            ]);
+        }
+    }
+
+    /**
+     * Inactivate user account
+     * 
+     * @param   int $id
+     * @return  Illuminate\Http\Response
+     */
+    public function inactivate($id)
+    {
         //
     }
 }

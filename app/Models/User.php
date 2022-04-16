@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -125,6 +127,54 @@ class User extends Authenticatable
     public function emailVerify()
     {
         return $this->hasOne(EmailVerify::class);
+    }
+
+    /**
+     * Delete user account
+     * 
+     * @param   object $user
+     * @return  Response
+     */
+    public function deleteUser($user)
+    {
+        $delete =   false;
+
+        // Backup user data
+        DB::table('deleted_users')
+        ->insert([
+            'user_id'       =>  $user->id,
+            'role'          =>  $user->role,
+            'first_name'    =>  $user->first_name,
+            'last_name'     =>  $user->last_name,
+            'username'      =>  $user->username,
+            'group_id'      =>  $user->group_id,
+            'email'         =>  $user->email,
+            'contact_no'    =>  $user->contact_no,
+            'deleted_by'    =>  auth()->user()->id,
+            'deleted_at'    =>  \Carbon\Carbon::now()
+        ]);
+
+        // Delete user data
+        $delete    =   $user->delete();
+        
+        return $delete;
+    }
+
+    /**
+     * Check if account is deleted
+     * 
+     * @param   int $id
+     * @return  object
+     */
+    public function isDeleted($id)
+    {
+        $check  =   DB::table('deleted_users')
+                        ->where('user_id',  $id)
+                        ->select('user_id')
+                        ->first();
+        
+        return $check;
+        
     }
 
 }

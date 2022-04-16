@@ -25,3 +25,17 @@
         {!! session('success') !!}
     </div>
 @endif
+
+@if (session('warning'))
+    <div class="alert alert-warning">
+        <strong>Holy Guacamole!</strong>
+        {!! session('warning') !!}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        <strong>Oh Snap!</strong>
+        {!! session('error') !!}
+    </div>
+@endif
