@@ -130,6 +130,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Add relationship to Group
+     * 
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
      * Delete user account
      * 
      * @param   object $user

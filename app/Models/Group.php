@@ -33,4 +33,13 @@ class Group extends Model
         return $groups;
     }
 
+    /**
+     * Add relationship to user
+     * 
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class, 'group_id');
+    }
+
 }

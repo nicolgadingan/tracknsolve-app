@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Group;
 
 class TicketsController extends Controller
 {
@@ -34,7 +36,13 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        return view('tickets.create');
+        $reporter   =   User::find(auth()->user()->id);
+        $groups     =   Group::all();
+
+        return view('tickets.create')->with([
+            'reporter'  =>  $reporter,
+            'groups'    =>  $groups
+        ]);
     }
 
     /**
@@ -45,7 +53,14 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'attachment'        =>  'file|max:2048',
+            'priority'          =>  'required',
+            'status'            =>  'required',
+            'assignment_group'  =>  'required',
+            'title'             =>  'required|min:5',
+            'description'       =>  'required|min:20'
+        ]);
     }
 
     /**

@@ -263,6 +263,20 @@ a.link-marine:active {
     padding-right: 2rem;
 }
 
+.search input.search-input,
+.search .search-list {
+    border-radius: 0.5rem !important;
+    /* max-width: 400px; */
+    /* border-color: var(--bs-light); */
+}
+
+.search .search-list {
+    padding-top: 0.2rem;
+    position: absolute;
+    z-index: 10;
+    /* width: 400px; */
+}
+
 
 /* ALIGNMENT */
 .center {
@@ -316,3 +330,6 @@ a {
     content: none;
 }
 
+.pagination-right ul.pagination {
+    justify-content: end;
+}

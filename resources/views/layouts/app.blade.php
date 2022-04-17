@@ -18,6 +18,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" crossorigin="anonymous"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="></script>
+
+    @livewireStyles
 </head>
 <body>
     <div class="d-flex">
@@ -27,18 +29,21 @@
         <div class="flex-grow-1 p-3">
             <header class="container-fluid">
                 <div class="row">
-                    <div class="col-sm d-flex align-items-end fg-forest">
-                        @php
-                            $path   =   explode("/", request()->path());
-                            $total  =   count($path);
-                            $count  =   1;
-                            foreach ($path as $p) {
-                                echo ucfirst($p);
-                                $retVal =   ($total > $count) ? "<i class='bi bi-chevron-right'></i>" : "" ;
-                                echo $retVal;
-                                $count++;
-                            }
-                        @endphp
+                    <div class="col-sm d-flex align-items-end fs-lg fg-marine-light">
+                        <strong>
+                            @php
+                                $path   =   explode("/", request()->path());
+                                // $total  =   count($path);
+                                // $count  =   1;
+                                // foreach ($path as $p) {
+                                //     echo ucfirst($p);
+                                //     $retVal =   ($total > $count) ? "<i class='bi bi-chevron-right'></i>" : "" ;
+                                //     echo $retVal;
+                                //     $count++;
+                                // }
+                                echo ucfirst($path[0]);
+                            @endphp
+                        </strong>
                     </div>
                     {{-- <div class="col-sm d-flex justify-content-end align-items-center">
                         <div class="search-bar">
@@ -95,6 +100,8 @@
             </main>
         </div>
     </div>
+
+    @livewireScripts
 </body>
 </html>
 

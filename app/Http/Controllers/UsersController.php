@@ -34,21 +34,7 @@ class UsersController extends Controller
      */
     public function index()
     { 
-        // $role   =   auth()->user()->role;
-        $user   =   new User();
-
-        // if ($role == 'admin') {
-        //     $users  =   $user->getAllUsers();
-        // } elseif ($role == 'manager') {
-        //     $users  =   $user->getManangedUsers();
-        // }
-
-        // Grant all view for now
-        $users  =   $user->getAllUsers();
-        
-        return view('users.index')->with([
-            'users'     =>  $users
-        ]);
+        return view('users.index');
     }
 
     /**
