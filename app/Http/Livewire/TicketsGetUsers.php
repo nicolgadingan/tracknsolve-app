@@ -5,10 +5,17 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Group;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class TicketsGetUsers extends Component
 {
-    public $query;
+    public $group       =   '';
+    public $assignee    =   '';
+
+    protected $rules = [
+        'group'     =>  'required|exists:groups,name',
+        'assignee'  =>  'nullable|exists:users,username'
+    ];
 
     /**
      * Mount variable
@@ -16,7 +23,13 @@ class TicketsGetUsers extends Component
      */
     public function mount()
     {
-        $this->query    =   '';
+        $this->group    =   '';
+        $this->assignee =   '';
+    }
+
+    public function updated($names)
+    {
+        $this->validateOnly($names);
     }
 
     public function render()
@@ -25,7 +38,12 @@ class TicketsGetUsers extends Component
             'groups'    =>  Group::where('status', 'A')
                                 ->orderBy('name')
                                 ->get(),
-            'users'     =>  User::where('group_id', '=', $this->query)
+            'users'     =>  DB::table('groups')
+                                ->leftJoin('users', 'users.group_id', '=', 'groups.id')
+                                ->where('groups.name', $this->group)
+                                ->select('users.id'
+                                        ,DB::raw("concat(first_name, ' ', last_name) as fullname")
+                                        ,'users.username')
                                 ->get()
         ]);
     }

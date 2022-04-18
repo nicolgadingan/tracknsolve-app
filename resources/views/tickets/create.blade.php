@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" id="tk-create-box">
     @include('plugins.previous')
     <div class="card card-body border-round border-forest-light pt-4">
-        
+        @include('plugins.messages')
         <h6 class="fg-forest">REPORTER</h6>
         <div class="row g-3">
             <div class="col-md-6">
@@ -100,7 +100,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="tk-attachment">Attachment</label>
-                        <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="tk-attachment" name="attachment" placeholder="Attachment">
+                        <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="tk-attachment" name="attachment" placeholder="Attachment" value="{{ old('attachment') }}">
                         @error('attachment')
                             <span class="invalid-feedback">
                                 {{ $message }}
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="mb-2 right">
-                <button type="submit" class="btn btn-marine btn-lg">Submit</button>
+                <button type="submit" class="btn btn-marine btn-lg" id="tk-create-submit">Submit</button>
             </div>
         </form>
     </div>
@@ -126,13 +126,11 @@
                 }
             });
 
-            $("body").on("change", "#tk-assignmentx", function() {
+            $("body").on("input", "#tk-assignment", function() {
                 var thisObj = $(this);
-                var inpAsgn = $("#tk-assignee")
-                if (thisObj.children("option:selected").val() == "") {
-                    inpAsgn.empty();
-                } else {
-                    thisObj.removeClass("is-invalid");
+                var inpAsgn = $("#tk-assignee");
+                if (thisObj.val() == "") {
+                    inpAsgn.val("");
                 }
             });
         });

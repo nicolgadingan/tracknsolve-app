@@ -54,12 +54,26 @@ class TicketsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'attachment'        =>  'file|max:2048',
+            'attachment'        =>  'nullable|mimes:pdf,docx,xlsx,jpg,png|max:2048',
             'priority'          =>  'required',
             'status'            =>  'required',
-            'assignment_group'  =>  'required',
+            'group'             =>  'required|exists:groups,name',
             'title'             =>  'required|min:5',
-            'description'       =>  'required|min:20'
+            'description'       =>  'required|min:20',
+            'assignee'          =>  'nullable|exists:users,username'
+        ]);
+
+        $group_id   =   Group::where('name', $request->group)->first()->id;
+        $user       =   User::where('username', $request->assignee)->first();
+
+        if ($user->group_id != $group_id) {
+            return back()->withErrors([
+                'assignee'   =>  'User does not belong to the selected group.'
+            ]);
+        }
+
+        return back()->with([
+            'success'   =>  'Amazing'
         ]);
     }
 
