@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -14,27 +15,26 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('status');
-            $table->string('title', 100);
-            $table->text('description', 4000);
-            $table->integer('group_id');
-            $table->integer('assignee')->nullable();
-            $table->integer('reporter');
+            $table->string('config_name', 20)->unique();
+            $table->string('value', 50);
+            $table->text('description');
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
 
-        DB::statement('alter table tickets auto_increment = 84253800001');
+        DB::statement('alter table configs auto_increment = 222001');
     }
-    
-     /**
+
+    /**
      * Reverse the migrations.
      *
      * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('configs');
     }
 };

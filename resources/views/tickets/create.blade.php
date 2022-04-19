@@ -5,10 +5,19 @@
 @endsection
 
 @section('content')
-<div class="container-fluid" id="tk-create-box">
+<div class="container" id="tk-create-box">
     @include('plugins.previous')
     <div class="card card-body border-round border-forest-light pt-4">
         @include('plugins.messages')
+        <h6 class="fg-forest">STATUS</h6>
+        <div class="row g-3 mb-2">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $tkey }}" readonly>
+                    <label for="tk-tkey">Key</label>
+                </div>
+            </div>
+        </div>
         <h6 class="fg-forest">REPORTER</h6>
         <div class="row g-3">
             <div class="col-md-6">
@@ -76,7 +85,7 @@
             <div class="row mb-2">
                 <div class="col">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Title" value="{{ old('title') }}">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Title" value="{{ old('title') }}" maxlength="100">
                         @error('title')
                             <span class="invalid-feedback">
                                 {{ $message }}
@@ -86,7 +95,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <textarea name="description" id="tk-description" cols="30" rows="20" class="form-control @error('description') is-invalid @enderror"
-                            placeholder="Type the ticket description here.." style="min-height: 147px;">{!! old('description') !!}</textarea>
+                            placeholder="Type the ticket description here.." style="min-height: 147px;" maxlength="4000">{!! old('description') !!}</textarea>
                         @error('description')
                             <span class="invalid-feedback">
                                 {{ $message }}

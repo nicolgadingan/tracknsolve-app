@@ -41,7 +41,8 @@ class TicketsController extends Controller
 
         return view('tickets.create')->with([
             'reporter'  =>  $reporter,
-            'groups'    =>  $groups
+            'groups'    =>  $groups,
+            'tkey'      =>  'DECC90120911'
         ]);
     }
 

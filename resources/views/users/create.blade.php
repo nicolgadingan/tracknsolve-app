@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     @include('plugins.previous')
     <div class="card card-body border-round border-forest-light pt-4">
         <h6 class="fg-forest">USER INFORMATION</h6>

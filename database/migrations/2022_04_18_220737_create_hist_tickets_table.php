@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('hist_tickets', function (Blueprint $table) {
             $table->id();
+            $table->string('ticket_id');
+            $table->string('status');
+            $table->string('title', 100);
+            $table->text('description', 4000);
+            $table->integer('group_id');
+            $table->integer('assignee')->nullable();
+            $table->integer('reporter');
+            $table->integer('updated_by');
             $table->timestamps();
         });
     }

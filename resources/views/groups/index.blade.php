@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     @php
         $uinf   =   auth()->user();
     @endphp
