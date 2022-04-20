@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Ticket;
 
 class TicketsController extends Controller
 {
@@ -39,10 +41,13 @@ class TicketsController extends Controller
         $reporter   =   User::find(auth()->user()->id);
         $groups     =   Group::all();
 
+        $config     =   new Config();
+        $tkSeq      =   $config->getKey();
+
         return view('tickets.create')->with([
             'reporter'  =>  $reporter,
             'groups'    =>  $groups,
-            'tkey'      =>  'DECC90120911'
+            'tkey'      =>  $tkSeq
         ]);
     }
 
@@ -66,6 +71,8 @@ class TicketsController extends Controller
 
         $group_id   =   Group::where('name', $request->group)->first()->id;
         $user       =   User::where('username', $request->assignee)->first();
+
+        dd($request);
 
         if ($user->group_id != $group_id) {
             return back()->withErrors([

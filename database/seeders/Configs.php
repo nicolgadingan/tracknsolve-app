@@ -24,5 +24,13 @@ class Configs extends Seeder
             'created_at'        =>  \Carbon\Carbon::now()
         ]);
 
+        DB::table('configs')->insert([
+            'config_name'       =>  'LAST_TK_SEQ',
+            'value'             =>  842538001,
+            'description'       =>  "This is the last ticket sequence generated.",
+            'created_by'        =>  '999',
+            'created_at'        =>  \Carbon\Carbon::now()
+        ]);
+
     }
 }

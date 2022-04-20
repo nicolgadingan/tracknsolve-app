@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id', 20);
             $table->string('status');
             $table->string('title', 100);
             $table->text('description', 4000);
@@ -24,8 +24,6 @@ return new class extends Migration
             $table->integer('reporter');
             $table->timestamps();
         });
-
-        DB::statement('alter table tickets auto_increment = 84253800001');
     }
     
      /**
