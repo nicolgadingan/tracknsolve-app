@@ -26,7 +26,7 @@
         <div id="sidebar" class="shadow">
             @include('plugins.sidebar')
         </div>
-        <div class="flex-grow-1 p-3">
+        <div class="flex-grow-1 p-3 pb-5" id="context-body">
             <header class="container-fluid">
                 <div class="row">
                     <div class="col-sm d-flex align-items-end fs-lg fg-marine-light">

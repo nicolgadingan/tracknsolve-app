@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <form action="/tickets" method="POST">
+        <form action="/tickets" method="POST" id="tk-create-form">
             @csrf
             <h6 class="fg-forest">TICKET</h6>
             <div class="row g-3">
@@ -105,24 +105,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="tk-attachment">Attachment</label>
-                        <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="tk-attachment" name="attachment" placeholder="Attachment" value="{{ old('attachment') }}">
-                        @error('attachment')
-                            <span class="invalid-feedback">
-                                {{ $message }}
-                            </span>
-                        @enderror
-                        <small class="text-muted">File should only have max size of 2Mb.</small>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2 right">
-                <button type="submit" class="btn btn-marine btn-lg" id="tk-create-submit">Submit</button>
-            </div>
         </form>
+        @livewire('upload-attachment', ['tkey' => $tkey])
+        <div class="mb-2 right">
+            <button type="button" class="btn btn-marine btn-lg" id="tk-create-submit">Submit</button>
+        </div>
     </div>
     <script>
         $(document).ready(function() {
@@ -141,6 +128,10 @@
                 if (thisObj.val() == "") {
                     inpAsgn.val("");
                 }
+            });
+
+            $("body").on("click", "#tk-create-submit", function() {
+                $("#tk-create-form").submit();
             });
         });
     </script>

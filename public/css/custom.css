@@ -44,6 +44,11 @@ body {
     min-width: 47px;
 }
 
+#context-body {
+    max-height: 100vh;
+    overflow: auto;
+}
+
 .side-nav .side-nav-item {
     text-align: left;
     padding-left: 1rem;
@@ -333,3 +338,4 @@ a {
 .pagination-right ul.pagination {
     justify-content: end;
 }
+
