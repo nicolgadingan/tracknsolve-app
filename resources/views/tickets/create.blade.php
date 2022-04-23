@@ -133,6 +133,22 @@
             $("body").on("click", "#tk-create-submit", function() {
                 $("#tk-create-form").submit();
             });
+
+            // Delete attachment
+            $("body").on("click", ".tk-del-att", function() {
+                var attid   =   $(this).data('value'),
+                    tarBtn  =   $("#tk-delatt-btn"),
+                    tarInp  =   $("#tk-delatt-id");
+
+                // $("#tk-delatt-id").val(attid, function() {
+                //     tarBtn.trigger("click");
+                // });
+
+                tarInp.val(attid, function() {
+                    tarBtn.trigger("click");
+                    console.log("Trigger completed.");
+                });
+            });
         });
     </script>
 </div>

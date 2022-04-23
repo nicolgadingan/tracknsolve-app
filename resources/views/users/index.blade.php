@@ -30,7 +30,6 @@
     <div class="row">
         <div class="col">
             @livewire('users-search-user')
-            
         </div>
     </div>
 </div>

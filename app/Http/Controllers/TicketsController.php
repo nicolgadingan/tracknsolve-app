@@ -38,17 +38,10 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        $reporter   =   User::find(auth()->user()->id);
-        $groups     =   Group::all();
-
         $config     =   new Config();
         $tkSeq      =   $config->getKey();
 
-        return view('tickets.create')->with([
-            'reporter'  =>  $reporter,
-            'groups'    =>  $groups,
-            'tkey'      =>  $tkSeq
-        ]);
+        return redirect('/tickets/' . $tkSeq);
     }
 
     /**
@@ -93,7 +86,17 @@ class TicketsController extends Controller
      */
     public function show($id)
     {
-        //
+        $ticket     =   Ticket::find($id);
+
+        $reporter   =   User::find(auth()->user()->id);
+        $groups     =   Group::all();
+
+        return view('tickets.create')->with([
+            'reporter'  =>  $reporter,
+            'groups'    =>  $groups,
+            'tkey'      =>  $id,
+            'ticket'    =>  $ticket
+        ]);
     }
 
     /**

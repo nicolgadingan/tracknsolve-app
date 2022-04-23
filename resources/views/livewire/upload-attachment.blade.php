@@ -22,6 +22,26 @@
                     <div class="p-2" wire:loading wire:target="attachment">Checking...</div>
                 </form>
             </div>
+            <div class="mb-3">
+                @if (count($files) > 0)
+                    <input type="hidden" wire:model="xfile" id="tk-delatt-id">
+                    <button class="d-none" wire:click="delatt" id="tk-delatt-btn"></button>
+                    <ul class="list-group">
+                        @foreach ($files as $file)
+                            <li class="list-group-item d-flex justify-content-between">
+                                <a href="{{ asset('storage/' . $file->att_path) }}" class="link-primary" download="{{ $file->att_path }}">
+                                    {{ Arr::last(explode('/', $file->att_path)) }}
+                                </a>
+                                {{-- <a href="#del-att" class="link-danger tk-del-att" data-value="{{ $file->id }}">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a> --}}
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    No attachments
+                @endif
+            </div>
         </div>
     </div>
 </div>
