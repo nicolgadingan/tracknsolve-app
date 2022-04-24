@@ -139,6 +139,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Add relationship to Comments
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Add relationship to Tickets
+     */
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
      * Delete user account
      * 
      * @param   object $user

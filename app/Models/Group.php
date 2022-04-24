@@ -42,4 +42,13 @@ class Group extends Model
         return $this->hasMany(User::class, 'group_id');
     }
 
+    /**
+     * Add relationship with tickets
+     * 
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
 }

@@ -22,21 +22,58 @@
                 <h6>
                     <b>All Tickets</b>
                 </h6>
-                <table class="table table-borderless table-hover">
+                <table class="table table-hover">
                     <thead>
                         <th>Key</th>
                         <th>Status</th>
-                        <th>Description</th>
+                        <th>Title</th>
+                        <th>Group</th>
                         <th>Reporter</th>
                         <th>Assignee</th>
                         <th class="right">Created</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="6">
-                                No tickets.
-                            </td>
-                        </tr>
+                        @if (count($tickets) > 0)
+                            @foreach ($tickets as $ticket)
+                                <tr>
+                                    <td>
+                                       {{ $ticket->tkey }} 
+                                    </td>
+                                    <td>
+                                        {{ Str::ucfirst($ticket->status) }}
+                                    </td>
+                                    <td>
+                                        {{ $ticket->title }}
+                                    </td>
+                                    <td>
+                                        {{ $ticket->assignment->name }}
+                                    </td>
+                                    <td>
+                                        {{ $ticket->user->first_name . ' ' . $ticket->user->last_name }}
+                                    </td>
+                                    <td>
+                                        @php
+                                            if ($ticket->assignee != null ||
+                                                    $ticket->assignee != '') {
+                                                $assignee   =   $ticket->assignedTo->first_name . ' ' . $ticket->assignedTo->last_name;
+                                            } else {
+                                                $assignee   =   '';
+                                            }
+                                        @endphp
+                                        {{ $assignee }}
+                                    </td>
+                                    <td class="right">
+                                        {{ \Carbon\Carbon::create($ticket->created_at)->diffForHumans() }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6">
+                                    No tickets.
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class TicketsGetUsers extends Component
 {
+    public $assignment  =   '';
     public $group       =   '';
     public $assignee    =   '';
+    public $state       =   '';
 
     protected $rules = [
         'group'     =>  'required|exists:groups,name',

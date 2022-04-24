@@ -28,7 +28,23 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        return view('tickets.index');
+        $user   =   auth()->user();
+        $ticket =   new Ticket();
+
+        if ($user->role == 'user' ||
+            $user->role == 'manager') {
+            
+            $tickets    =   $ticket->groupsOpenTickets($user->group_id);
+
+        } else {
+
+            $tickets    =   $ticket->allOpenTickets();
+
+        }
+
+        return view('tickets.index')->with([
+            'tickets'   =>  $tickets
+        ]);
     }
 
     /**
@@ -53,7 +69,6 @@ class TicketsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'attachment'        =>  'nullable|mimes:pdf,docx,xlsx,jpg,png|max:2048',
             'priority'          =>  'required',
             'status'            =>  'required',
             'group'             =>  'required|exists:groups,name',
@@ -62,19 +77,50 @@ class TicketsController extends Controller
             'assignee'          =>  'nullable|exists:users,username'
         ]);
 
+        // Get specific data from value
         $group_id   =   Group::where('name', $request->group)->first()->id;
-        $user       =   User::where('username', $request->assignee)->first();
 
-        dd($request);
+        if ($request->assignee != null) {
+            $user       =   User::where('username', $request->assignee)->first();
 
-        if ($user->group_id != $group_id) {
+            // Check if user belongs to the group
+            if ($user->group_id != $group_id) {
+                return back()->withErrors([
+                    'assignee'  =>  'User does not belong to the selected group.',
+                    'group'     =>  $request->group
+                ]);
+            }
+        }
+        
+        $tdata  =   [
+            'id'            =>  $request->tkey,
+            'status'        =>  $request->status,
+            'priority'      =>  $request->priority,
+            'title'         =>  $request->title,
+            'description'   =>  $request->description,
+            'group_id'      =>  $group_id,
+            'assignee'      =>  $request->assignee,
+            'reporter'      =>  $request->reporter,
+            'created_at'    =>  \Carbon\Carbon::now()
+        ];
+
+        $ticket =   new Ticket();
+        $status =   $ticket->createTicket($tdata);
+
+        if ($status->isCreated != true) {
             return back()->withErrors([
-                'assignee'   =>  'User does not belong to the selected group.'
+                'message'   =>  'We have encountered an error while saving your data.'
             ]);
         }
 
+        if ($status->isLogged != true) {
+            return back()->withErrors([
+                'message'   =>  'Ticket data has been saved but failed in logging history.'
+            ]);
+        }
+        
         return back()->with([
-            'success'   =>  'Amazing'
+            'success'   =>  'You have successfully submitted your ticket.'
         ]);
     }
 
@@ -89,7 +135,9 @@ class TicketsController extends Controller
         $ticket     =   Ticket::find($id);
 
         $reporter   =   User::find(auth()->user()->id);
-        $groups     =   Group::all();
+        $groups     =   Group::where('status', 'A')
+                            ->orderBy('name')
+                            ->get();
 
         return view('tickets.create')->with([
             'reporter'  =>  $reporter,
