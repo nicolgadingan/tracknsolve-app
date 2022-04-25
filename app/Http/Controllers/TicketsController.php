@@ -54,6 +54,7 @@ class TicketsController extends Controller
      */
     public function create()
     {
+        // Generate key
         $config     =   new Config();
         $tkSeq      =   $config->getKey();
 
