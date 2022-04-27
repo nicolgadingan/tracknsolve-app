@@ -16,6 +16,24 @@ class Configs extends Seeder
      */
     public function run()
     {
+        /** ---------------------------------------
+         *   CLEANUP
+         *  --------------------------------------- */
+
+        DB::table('configs')
+            ->where('config_name', 'ORG_KEY')
+            ->delete();
+
+        DB::table('configs')
+            ->where('config_name', 'LAST_TK_SEQ')
+            ->delete();
+
+
+        /** ---------------------------------------
+         *   LOADING OF CONFIGURATION
+         *  --------------------------------------- */
+
+        // Organization Key
         DB::table('configs')->insert([
             'config_name'       =>  'ORG_KEY',
             'value'             =>  'YRTK',
@@ -24,6 +42,7 @@ class Configs extends Seeder
             'created_at'        =>  \Carbon\Carbon::now()
         ]);
 
+        // Ticket Sequence
         DB::table('configs')->insert([
             'config_name'       =>  'LAST_TK_SEQ',
             'value'             =>  842538001,

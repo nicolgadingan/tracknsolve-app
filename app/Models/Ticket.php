@@ -57,25 +57,45 @@ class Ticket extends Model
      */
     public function createTicket($tdata)
     {
-        $isCreated  =   Ticket::insert($tdata);
-        
-        $isLogged   =   DB::table('ticket_hists')
-                            ->insert([
-                                'ticket_id'     =>  $tdata['id'],
+        $tdate      =   \Carbon\Carbon::now();
+
+        $isCreated  =   Ticket::insert([
+                                'id'            =>  $tdata['tkey'],
                                 'status'        =>  $tdata['status'],
                                 'priority'      =>  $tdata['priority'],
                                 'title'         =>  $tdata['title'],
                                 'description'   =>  $tdata['description'],
                                 'group_id'      =>  $tdata['group_id'],
                                 'assignee'      =>  $tdata['assignee'],
+                                'reporter'      =>  $tdata['caller'],
+                                'created_at'    =>  $tdate
+                            ]);
+        
+        $isLogged   =   DB::table('ticket_hists')
+                            ->insert([
+                                'ticket_id'     =>  $tdata['tkey'],
+                                'status'        =>  $tdata['status'],
+                                'priority'      =>  $tdata['priority'],
+                                'title'         =>  $tdata['title'],
+                                'description'   =>  $tdata['description'],
+                                'group_id'      =>  $tdata['group'],
+                                'assignee'      =>  $tdata['assignee'],
                                 'reporter'      =>  $tdata['reporter'],
-                                'created_by'    =>  auth()->user()->id,
-                                'created_at'    =>  $tdata['created_at']
+                                'created_by'    =>  $tdata['caller'],
+                                'created_at'    =>  $tdate
+                            ]);
+
+        $isFlipped  =   DB::table('reserves')
+                            ->where('category', 'TICKET_KEY')
+                            ->where('key_id', $tdata['tkey'])
+                            ->udpate([
+                                'status'    =>  'P'
                             ]);
 
         return  ([
             'isCreated' =>  $isCreated,
-            'isLogged'  =>  $isLogged
+            'isLogged'  =>  $isLogged,
+            'isFlipped' =>  $isFlipped
         ]);
     }
 
@@ -144,6 +164,28 @@ class Ticket extends Model
                             )
                             ->orderBy('created_at')
                             ->paginate(10);
+
+        return $tickets;
+    }
+
+    /**
+     * Get all tickets created
+     * 
+     * @return  Object $tickets
+     */
+    public function allTickets()
+    {
+        $tickets    =   Ticket::select(DB::raw('tickets.id as tkey'),
+                                    'title',
+                                    'priority',
+                                    'status',
+                                    'reporter',
+                                    'assignee',
+                                    'created_at',
+                                    'group_id'
+                                )
+                                ->orderBy('created_at')
+                                ->paginate(10);
 
         return $tickets;
     }

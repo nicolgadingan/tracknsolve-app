@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\DB;
 
 class TicketsController extends Controller
 {
@@ -28,19 +29,20 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        $user   =   auth()->user();
-        $ticket =   new Ticket();
+        // $user   =   auth()->user();
+        $ticket     =   new Ticket();
+        $tickets    =   $ticket->allTickets();
 
-        if ($user->role == 'user' ||
-            $user->role == 'manager') {
+        // if ($user->role == 'user' ||
+        //     $user->role == 'manager') {
             
-            $tickets    =   $ticket->groupsOpenTickets($user->group_id);
+        //     $tickets    =   $ticket->groupsOpenTickets($user->group_id);
 
-        } else {
+        // } else {
 
-            $tickets    =   $ticket->allOpenTickets();
+        //     $tickets    =   $ticket->allOpenTickets();
 
-        }
+        // }
 
         return view('tickets.index')->with([
             'tickets'   =>  $tickets
@@ -133,19 +135,33 @@ class TicketsController extends Controller
      */
     public function show($id)
     {
-        $ticket     =   Ticket::find($id);
+        // Check reserved key
+        $reserved   =   DB::table('reserves')
+                            ->where('category', 'TICKET_KEY')
+                            ->where('key_id', $id)
+                            ->first();
 
-        $reporter   =   User::find(auth()->user()->id);
-        $groups     =   Group::where('status', 'A')
-                            ->orderBy('name')
-                            ->get();
+        // Validate if ticket is reserved
+        if ($reserved == null) {
+            abort('404');
+        }
 
-        return view('tickets.create')->with([
-            'reporter'  =>  $reporter,
-            'groups'    =>  $groups,
+        // Fetch prerequisite data
+
+        // Validate if ticket is for New or not
+        if ($reserved->status == 'N') {
+
+            $action =   'create';
+
+        } else {
+
+            $action =   'edit';
+        }
+
+        return view( 'tickets.' . $action )->with([
             'tkey'      =>  $id,
-            'ticket'    =>  $ticket
         ]);
+
     }
 
     /**

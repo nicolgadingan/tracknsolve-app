@@ -26,6 +26,7 @@
                     <thead>
                         <th>Key</th>
                         <th>Status</th>
+                        <th>Priority</th>
                         <th>Title</th>
                         <th>Group</th>
                         <th>Reporter</th>
@@ -37,10 +38,13 @@
                             @foreach ($tickets as $ticket)
                                 <tr>
                                     <td>
-                                       {{ $ticket->tkey }} 
+                                        <a href="/tickets/{{ $ticket->tkey }}" class="link-primary">{{ $ticket->tkey }}</a>
                                     </td>
                                     <td>
                                         {{ Str::ucfirst($ticket->status) }}
+                                    </td>
+                                    <td>
+                                        {{ Str::ucfirst($ticket->priority) }}
                                     </td>
                                     <td>
                                         {{ $ticket->title }}

@@ -9,7 +9,7 @@
     @include('plugins.previous')
     <div class="card card-body border-round border-forest-light pt-4">
         <div class="mb-2">
-            @livewire('tickets-processor', ['tkey' => $tkey])
+            @livewire('tickets-create', ['tkey' => $tkey])
         </div>
         <div class="mb-2">
             @livewire('upload-attachment', ['tkey' => $tkey])
