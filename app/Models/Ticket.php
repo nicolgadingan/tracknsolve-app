@@ -65,38 +65,57 @@ class Ticket extends Model
                                 'priority'      =>  $tdata['priority'],
                                 'title'         =>  $tdata['title'],
                                 'description'   =>  $tdata['description'],
-                                'group_id'      =>  $tdata['group_id'],
-                                'assignee'      =>  $tdata['assignee'],
+                                'group_id'      =>  $tdata['group'],
+                                'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
                                 'reporter'      =>  $tdata['caller'],
                                 'created_at'    =>  $tdate
                             ]);
         
-        $isLogged   =   DB::table('ticket_hists')
-                            ->insert([
-                                'ticket_id'     =>  $tdata['tkey'],
-                                'status'        =>  $tdata['status'],
-                                'priority'      =>  $tdata['priority'],
-                                'title'         =>  $tdata['title'],
-                                'description'   =>  $tdata['description'],
-                                'group_id'      =>  $tdata['group'],
-                                'assignee'      =>  $tdata['assignee'],
-                                'reporter'      =>  $tdata['reporter'],
-                                'created_by'    =>  $tdata['caller'],
-                                'created_at'    =>  $tdate
-                            ]);
+        $this->addHistory($tdata);
 
-        $isFlipped  =   DB::table('reserves')
-                            ->where('category', 'TICKET_KEY')
-                            ->where('key_id', $tdata['tkey'])
-                            ->udpate([
-                                'status'    =>  'P'
-                            ]);
+        $this->updReserves($tdata['tkey'], 'P');
 
-        return  ([
-            'isCreated' =>  $isCreated,
-            'isLogged'  =>  $isLogged,
-            'isFlipped' =>  $isFlipped
-        ]);
+        return  $isCreated;
+    }
+
+    /**
+     * Update reserved key
+     * 
+     * @param   String  $tkey
+     * @param   String  $status
+     */
+    protected function updReserves($tkey, $status)
+    {
+        DB::table('reserves')
+            ->where('category', 'TICKET_KEY')
+            ->where('key_id', $tkey)
+            ->update([
+                'status'    =>  $status
+            ]);
+    }
+
+    /**
+     * Log ticket history
+     * 
+     * @param   Array $tdata
+     */
+    protected function addHistory($tdata)
+    {
+        $tdate      =   \Carbon\Carbon::now();
+
+        DB::table('ticket_hists')
+            ->insert([
+                'ticket_id'     =>  $tdata['tkey'],
+                'status'        =>  $tdata['status'],
+                'priority'      =>  $tdata['priority'],
+                'title'         =>  $tdata['title'],
+                'description'   =>  $tdata['description'],
+                'group_id'      =>  $tdata['group'],
+                'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
+                'reporter'      =>  $tdata['caller'],
+                'created_by'    =>  $tdata['caller'],
+                'created_at'    =>  $tdate
+            ]);
     }
 
     /**

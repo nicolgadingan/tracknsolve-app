@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->text('description', 4000);
             $table->integer('group_id');
-            $table->integer('assignee')->nullable();
+            $table->integer('assignee')->nullable()->default(null);
             $table->integer('reporter');
             $table->timestamps();
         });

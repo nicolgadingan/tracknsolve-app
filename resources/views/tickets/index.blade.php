@@ -22,6 +22,7 @@
                 <h6>
                     <b>All Tickets</b>
                 </h6>
+                @include('plugins.messages')
                 <table class="table table-hover">
                     <thead>
                         <th>Key</th>
@@ -38,7 +39,7 @@
                             @foreach ($tickets as $ticket)
                                 <tr>
                                     <td>
-                                        <a href="/tickets/{{ $ticket->tkey }}" class="link-primary">{{ $ticket->tkey }}</a>
+                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-primary">{{ $ticket->tkey }}</a>
                                     </td>
                                     <td>
                                         {{ Str::ucfirst($ticket->status) }}

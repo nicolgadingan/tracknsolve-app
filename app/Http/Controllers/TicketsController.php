@@ -172,7 +172,21 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Check reserved key
+        $reserved   =   DB::table('reserves')
+                            ->where('category', 'TICKET_KEY')
+                            ->where('key_id', $id)
+                            ->first();
+
+        // Validate if ticket is reserved
+        if ($reserved == null ||
+                $reserved->status == 'N') {
+            abort('404');
+        }
+
+        return view( 'tickets.edit' )->with([
+            'tkey'      =>  $id,
+        ]);
     }
 
     /**

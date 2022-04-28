@@ -21,6 +21,7 @@ class TicketsCreate extends Component
     public $assignee;          // ticket is assigned to
     public $title;
     public $description;
+    public $response;
 
     protected $rules    =   [
         'tkey'          =>  'required|exists:reserves,key_id',
@@ -44,6 +45,7 @@ class TicketsCreate extends Component
         $this->users        =   [];
         $this->priority     =   '';
         $this->caller       =   $this->reporter->id;
+        $this->assignee     =   '';
     }
 
     /**
@@ -53,6 +55,15 @@ class TicketsCreate extends Component
     public function updated($field)
     {
         $this->validateOnly($field);
+    }
+
+    /**
+     * When $assignee is updated
+     * 
+     */
+    public function updatedAssignee()
+    {
+
     }
 
     /**
@@ -81,11 +92,21 @@ class TicketsCreate extends Component
      */
     public function submitTicket()
     {
-        $tdata  =   $this->validate();
-        $ticket =   new Ticket();
-        $xdata  =   $ticket->createTicket($tdata);
+        $tdata      =   $this->validate();
 
-        dd($xdata);
+        $ticket     =   new Ticket();
+        $creResult  =   $ticket->createTicket($tdata);
+
+        if ($creResult != true) {
+            return redirect('/tickets')->withErrors([
+                'Saving ticket data encountered an unexpected error. Please report this to your administrator for checking.'
+            ]);
+
+        } else {
+            return redirect('/tickets')->with([
+                'success'   =>  'You have successfully created and assigned your ticket.'
+            ]);
+        }
     }
 
     public function render()
