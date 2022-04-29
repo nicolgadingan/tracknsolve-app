@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Utils extends Controller
 {
@@ -53,5 +55,27 @@ class Utils extends Controller
     public function sanitize($str)
     {
         return preg_replace('/[^a-zA-Z0-9_ -]/s', '', $str);
+    }
+
+    /**
+     * Event logger
+     * 
+     * @param   String $data
+     * @param   Integer $opt
+     */
+    public function loggr($data, $opt)
+    {
+        $user_id    =   auth()->user()->id;
+        $dts        =   \Carbon\Carbon::now();
+        $disk       =   'local';
+        $file       =   'err/' . $user_id . '_' . $dts->format('Ymd') . '.log';
+
+        if ($opt == 1) {
+            Storage::disk($disk)->append($file, $dts . ' - ' . Str::padRight('', 60, '#'));
+            Storage::disk($disk)->append($file, $dts . ' - ' . $data);
+            Storage::disk($disk)->append($file, $dts . ' - ' . Str::padRight('', 60, '#'));
+        } else {
+            Storage::disk($disk)->append($file, $dts . ' - ' . $data);
+        }
     }
 }

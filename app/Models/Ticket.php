@@ -50,6 +50,15 @@ class Ticket extends Model
     }
 
     /**
+     * Get ticket
+     * 
+     */
+    public function fetchTicket($ticket_id)
+    {
+        return Ticket::where('tickets.id');
+    }
+
+    /**
      * Create ticket record
      * 
      * @param   Array $tdata
@@ -77,6 +86,38 @@ class Ticket extends Model
 
         return  $isCreated;
     }
+
+    /**
+     * Update ticket record
+     * 
+     * @param   Array   $tdata
+     * @return  Object
+     */
+    public function updateTicket($tdata)
+    {
+        $tdate      =   \Carbon\Carbon::now();
+
+        $isUpdated  =   Ticket::where('id', $tdata['tkey'])
+                            ->where('status', '!=', 'closed')
+                            ->update([
+                                'priority'      =>  $tdata['priority'],
+                                'status'        =>  $tdata['status'],
+                                'title'         =>  $tdata['title'],
+                                'description'   =>  $tdata['description'],
+                                'group_id'      =>  $tdata['group'],
+                                'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
+                                'updated_at'    =>  $tdate
+                            ]);
+        
+        $this->addHistory($tdata);
+
+        return $isUpdated;
+
+    }
+
+    /**
+     * Close ticket
+     */
 
     /**
      * Update reserved key
@@ -113,7 +154,7 @@ class Ticket extends Model
                 'group_id'      =>  $tdata['group'],
                 'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
                 'reporter'      =>  $tdata['caller'],
-                'created_by'    =>  $tdata['caller'],
+                'created_by'    =>  auth()->user()->id,
                 'created_at'    =>  $tdate
             ]);
     }

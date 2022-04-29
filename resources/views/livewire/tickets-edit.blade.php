@@ -12,7 +12,7 @@
     <div class="row mb-3 g-3">
         <div class="col-md">
             <div class="form-floating mb-3">
-                <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $tkey }}" readonly>
+                <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $tkey }}" readonly wire:model="tkey">
                 <label for="tk-tkey">Key</label>
             </div>
         </div>
@@ -150,5 +150,9 @@
                 <label for="tk-description">Description</label>
             </div>
         </div>
+    </div>
+    <div class="mb-3">
+        {{ $ticket }} <br>
+        {{ $errors }}
     </div>
 </form>
