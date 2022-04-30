@@ -12,6 +12,25 @@
     --warning-light:    #d4caad;
     --danger-light:     #e0acb2;
     --primary-light:    #b0c5e4;
+
+    --x-warning-m:      #ffb142;
+    --x-warning-d:      #cc8e35;
+    --x-secondary-m:    #d1ccc0;
+    --x-secondary-d:    #84817a;
+    --x-butter-m:       #ffda79;
+    --x-butter-d:       #ccae62;
+    --x-pumpkin-m:      #ff793f;
+    --x-pumpkin-d:      #cd6133;
+    --x-danger-m:       #ff5252;
+    --x-danger-d:       #b33939;
+    --x-success-m:      #33d9b2;
+    --x-success-d:      #218c74;
+    --x-primary-m:      #34ace0;
+    --x-primary-d:      #227093;
+    --x-purple-m:       #706fd3;
+    --x-purple-d:       #474787;
+    --x-ube-m:          #40407a;
+    --x-ube-d:          #2c2c54;
 }
 
 html,
@@ -80,34 +99,37 @@ body {
 
 /* DOT */
 .dot {
-    padding: 0.2rem 0.6rem;
+    padding: 0.1rem 0.6rem;
     border: 1px solid var(--bs-secondary);
     border-radius: 0.4rem;
     background-color: var(--secondary-light);
+    display: block;
+    max-width: 110px;
+    text-align: center;
 }
 
 .dot-success {
-    background-color: var(--success-light);
-    border-color: var(--bs-success);
-    color: var(--bs-success);
+    background-color: var(--x-success-m);
+    border-color: var(--x-success-d);
+    color: var(--bs-dark);
 }
 
 .dot-warning {
-    background-color: var(--warning-light);
-    border-color: var(--bs-warning);
-    color: var(--bs-warning);
+    background-color: var(--x-butter-m);
+    border-color: var(--x-butter-d);
+    color: var(--bs-dark);
 }
 
 .dot-danger {
-    background-color: var(--danger-light);
-    border-color: var(--bs-danger);
-    color: var(--bs-danger);
+    background-color: var(--x-danger-m);
+    border-color: var(--x-danger-d);
+    color: white;
 }
 
 .dot-primary {
-    background-color: var(--primary-light);
-    border-color: var(--bs-primary);
-    color: var(--bs-primary);
+    background-color: var(--x-primary-m);
+    border-color: var(--x-primary-d);
+    color: white;
 }
 
 
@@ -339,3 +361,6 @@ a {
     justify-content: end;
 }
 
+td {
+    vertical-align: baseline;
+}

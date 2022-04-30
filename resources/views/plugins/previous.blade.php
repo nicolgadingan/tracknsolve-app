@@ -1,5 +1,5 @@
-<div class="mb-4">
-    <a href="{{ url()->previous() }}" class="btn btn-secondary btn-md shadow">
+<div class="">
+    <a href="{{ $path }}" class="btn btn-secondary btn-lg shadow">
         <i class="bi bi-chevron-left"></i>
     </a>
 </div>

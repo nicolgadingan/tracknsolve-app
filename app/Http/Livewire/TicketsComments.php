@@ -12,22 +12,15 @@ class TicketsComments extends Component
     public $comment;
     protected $comments;
 
-    /**
-     * Pull comments from table with $tkey
-     */
-    public function retrieve()
+    public function mount()
     {
-        $getComments    =   Comment::where('ticket_id', $this->tkey)
-                                ->orderBy('created_at', 'desc')
-                                ->paginate(5);
-        
-        $this->comments = ($getComments == null) ? [] : $getComments;
+        // $this->ckey  =   $this->ckey;
     }
 
     /**
      * Validate and post comment
      */
-    public function post()
+    public function postComment()
     {
         $this->validate([
             'comment'   =>  'required'
@@ -45,10 +38,10 @@ class TicketsComments extends Component
 
     public function render()
     {
-        $this->retrieve();
-
-        return view('livewire.tickets-comments')->with([
-            'comments'  =>  $this->comments
+        return view('livewire.tickets-comments', [
+            'comments'  =>  Comment::where('ticket_id', $this->tkey)
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(5)
         ]);
     }
 }

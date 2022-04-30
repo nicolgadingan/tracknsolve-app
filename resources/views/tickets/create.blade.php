@@ -6,7 +6,6 @@
 
 @section('content')
 <div class="container" id="tk-create-box">
-    @include('plugins.previous')
     <div class="card card-body border-round border-forest-light pt-4">
         <div class="mb-2">
             @livewire('tickets-create', ['tkey' => $tkey])

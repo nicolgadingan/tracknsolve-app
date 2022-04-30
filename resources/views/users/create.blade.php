@@ -6,12 +6,17 @@
 
 @section('content')
 <div class="container">
-    @include('plugins.previous')
     <div class="card card-body border-round border-forest-light pt-4">
-        <h6 class="fg-forest">USER INFORMATION</h6>
-        @include('plugins.messages')
         <form method="POST" action="/users">
             @csrf
+            <div class="mb-4 d-flex justify-content-between">
+                @include('plugins.previous', ['path'    =>  '/users'])
+                <button type="submit" class="btn btn-marine btn-lg shadow">
+                    Create
+                </button>
+            </div>
+            <h6 class="fg-forest">USER INFORMATION</h6>
+            @include('plugins.messages')
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <div class="form-floating">
@@ -92,13 +97,6 @@
                         <input type="text" class="form-control" name="contact_no" id="us-contact-no" maxlength="20" placeholder="Contact No" value="{{ old('contact_no') }}">
                         <label for="us-contact-no">Contact Number</label>
                     </div>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col right">
-                    <button type="submit" class="btn btn-marine">
-                        Create
-                    </button>
                 </div>
             </div>
         </form>

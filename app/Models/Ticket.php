@@ -50,15 +50,6 @@ class Ticket extends Model
     }
 
     /**
-     * Get ticket
-     * 
-     */
-    public function fetchTicket($ticket_id)
-    {
-        return Ticket::where('tickets.id');
-    }
-
-    /**
      * Create ticket record
      * 
      * @param   Array $tdata
@@ -70,7 +61,7 @@ class Ticket extends Model
 
         $isCreated  =   Ticket::insert([
                                 'id'            =>  $tdata['tkey'],
-                                'status'        =>  $tdata['status'],
+                                'status'        =>  ($tdata['assignee'] != '') ? 'in-progress' : $tdata['status'],
                                 'priority'      =>  $tdata['priority'],
                                 'title'         =>  $tdata['title'],
                                 'description'   =>  $tdata['description'],
@@ -153,7 +144,7 @@ class Ticket extends Model
                 'description'   =>  $tdata['description'],
                 'group_id'      =>  $tdata['group'],
                 'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
-                'reporter'      =>  $tdata['caller'],
+                'reporter'      =>  $tdata['reporter'],
                 'created_by'    =>  auth()->user()->id,
                 'created_at'    =>  $tdate
             ]);
@@ -168,6 +159,13 @@ class Ticket extends Model
     public function groupUnassignedTickets($group_id)
     {
         $tickets    =   Ticket::where('group_id', $group_id)
+                            ->where('assignee', null)
+                            ->select(
+                                'tickets.id as tkey',
+                                'title',
+                                'reporter',
+                                'created_at'
+                            )
                             ->orderBy('created_at')
                             ->paginate(10);
 
@@ -183,6 +181,16 @@ class Ticket extends Model
     public function openAssignedToUser($user_id)
     {
         $tickets    =   Ticket::where('assignee', $user_id)
+                            ->where('status', '<>', 'resolved')
+                            ->where('status', '<>', 'closed')
+                            ->select(
+                                'tickets.id as tkey',
+                                'title',
+                                'status',
+                                'priority',
+                                'reporter',
+                                'created_at'
+                            )
                             ->orderBy('created_at')
                             ->paginate(10);
 
@@ -249,4 +257,22 @@ class Ticket extends Model
 
         return $tickets;
     }
+
+    /**
+     * Get ticket summary
+     * 
+     * @return  Object  $tickets
+     */
+    public function ticketSummary()
+    {
+        $tickets    =   Ticket::select(
+                            'status',
+                            DB::raw('count(1) as tkcount')
+                        )
+                        ->groupBy('status')
+                        ->get();
+
+        return $tickets;
+    }
+
 }

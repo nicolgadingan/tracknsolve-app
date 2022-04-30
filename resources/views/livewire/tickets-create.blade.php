@@ -1,5 +1,6 @@
 <form wire:submit.prevent="submitTicket">
-    <div class="mb-3 right">
+    <div class="d-flex justify-content-between mb-4">
+        @includeIf('plugins.previous', ['path' => '/tickets'])
         <button type="submit" class="btn btn-marine btn-lg shadow" id="tk-create-submit">
             Submit
         </button>

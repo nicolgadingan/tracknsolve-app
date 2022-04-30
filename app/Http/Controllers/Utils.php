@@ -8,6 +8,15 @@ use Illuminate\Support\Str;
 
 class Utils extends Controller
 {
+    public $err;
+
+    public function __construct()
+    {
+        $this->err  =   (Object) ([
+            'unexpected'    =>  'Unexpected error encountered while processing your request. Kindly report this to your administrator for checking.'
+        ]);
+    }
+
     /**
      * isAdmin checks if current user is an admin
      * 
@@ -78,4 +87,6 @@ class Utils extends Controller
             Storage::disk($disk)->append($file, $dts . ' - ' . $data);
         }
     }
+
+
 }

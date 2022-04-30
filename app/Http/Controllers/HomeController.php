@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Ticket;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $me             =   auth()->user();
+        $ticket         =   new Ticket;
+
+        $myTickets      =   $ticket->openAssignedToUser($me->id);
+        $gpUnassigned   =   $ticket->groupUnassignedTickets($me->group_id);
+        $tkSummary      =   $ticket->ticketSummary();
+
+        return view('dashboard')->with([
+            'myTickets'     =>  $myTickets,
+            'gpUnassigned'  =>  $gpUnassigned,
+            'tkSummary'     =>  $tkSummary
+        ]);
     }
 }

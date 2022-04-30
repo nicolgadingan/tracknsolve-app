@@ -1,8 +1,8 @@
 <div>
+    <h6 class="fg-forest">ATTACHMENTS</h6>
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="mb-3">
-                <label for="tk-attachment">Attachment</label>
                 <form wire:submit.prevent="save">
                     <div class="row g-3">
                         <div class="col-sm">

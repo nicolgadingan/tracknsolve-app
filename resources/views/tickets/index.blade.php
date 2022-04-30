@@ -18,70 +18,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="card card-body border-round border-forest-light">
-                <h6>
-                    <b>All Tickets</b>
-                </h6>
-                @include('plugins.messages')
-                <table class="table table-hover">
-                    <thead>
-                        <th>Key</th>
-                        <th>Status</th>
-                        <th>Priority</th>
-                        <th>Title</th>
-                        <th>Group</th>
-                        <th>Reporter</th>
-                        <th>Assignee</th>
-                        <th class="right">Created</th>
-                    </thead>
-                    <tbody>
-                        @if (count($tickets) > 0)
-                            @foreach ($tickets as $ticket)
-                                <tr>
-                                    <td>
-                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-primary">{{ $ticket->tkey }}</a>
-                                    </td>
-                                    <td>
-                                        {{ Str::ucfirst($ticket->status) }}
-                                    </td>
-                                    <td>
-                                        {{ Str::ucfirst($ticket->priority) }}
-                                    </td>
-                                    <td>
-                                        {{ $ticket->title }}
-                                    </td>
-                                    <td>
-                                        {{ $ticket->assignment->name }}
-                                    </td>
-                                    <td>
-                                        {{ $ticket->user->first_name . ' ' . $ticket->user->last_name }}
-                                    </td>
-                                    <td>
-                                        @php
-                                            if ($ticket->assignee != null ||
-                                                    $ticket->assignee != '') {
-                                                $assignee   =   $ticket->assignedTo->first_name . ' ' . $ticket->assignedTo->last_name;
-                                            } else {
-                                                $assignee   =   '';
-                                            }
-                                        @endphp
-                                        {{ $assignee }}
-                                    </td>
-                                    <td class="right">
-                                        {{ \Carbon\Carbon::create($ticket->created_at)->diffForHumans() }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="6">
-                                    No tickets.
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+            @livewire('tickets-index')
         </div>
     </div>
 </div>

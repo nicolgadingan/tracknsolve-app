@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TicketsController extends Controller
 {
@@ -184,8 +185,25 @@ class TicketsController extends Controller
             abort('404');
         }
 
+        $ticket     =  Ticket::where('tickets.id', $id)
+                            ->select(
+                                'tickets.id as tkey',
+                                'status',
+                                'priority',
+                                'title',
+                                'description',
+                                'group_id',
+                                'assignee',
+                                'reporter',
+                                'created_at as ticket_created'
+                            )->first();
+
+        $reporter   =   User::find($ticket->reporter);
+
         return view( 'tickets.edit' )->with([
             'tkey'      =>  $id,
+            'ticket'    =>  $ticket,
+            'reporter'  =>  $reporter
         ]);
     }
 
@@ -198,7 +216,81 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $utils  =   new Utils;
+
+        // Validate
+        $this->validate($request, [
+            'priority'      =>  'required',
+            'group'         =>  'required|exists:groups,id',
+            'status'        =>  'required',
+            'assignee'      =>  'nullable|exists:users,id',
+            'title'         =>  'required|min:5|max:100',
+            'description'   =>  'required|min:20|max:4000',
+        ]);
+
+        // Validate changes
+        $saved      =   Ticket::find($id);
+
+        if ($saved->priority    ==  $request->priority  &&
+            $saved->group_id    ==  $request->group     &&
+            $saved->status      ==  $request->status    &&
+            $saved->assignee    ==  $request->assignee  &&
+            $saved->title       ==  $request->title     &&
+            $saved->description ==  $request->description) {
+
+                return back()->withErrors([
+                    'message'    =>  'You do not seem to have changes on this ticket to be saved.'
+                ]);
+
+        }
+
+
+        $revised    =   [];
+
+        // Set to in-progress if it is assigned
+        if ($request->status == 'new' &&
+                $request->assignee != null) {
+
+            $revised            =   $request->toArray();
+            $revised['status']  =   'in-progress';
+
+        } else if ($request->status != 'new' &&
+            $request->assignee == null) {
+            
+            return back()->withErrors([
+                'status'    =>  'Updating ticket status is not possible if it is not assigned.'
+            ]);
+
+        }
+
+        $ticket     =   new Ticket;
+        $isUpdated  =   false;
+        $ticketData =   [];
+
+        // Process changes
+        if (count($revised) > 0) {
+            $ticketData =   $revised;
+            
+        } else {
+            $ticketData =   $request->toArray();
+        }
+
+        $isUpdated  =   $ticket->updateTicket($ticketData);        
+
+        // Check if update is successful
+        if ($isUpdated) {
+            return redirect('/tickets/' . $id . '/edit')->with([
+                'success'   =>  'Your changes have been saved successfully.'
+            ]);
+        } else {
+            $utils->loggr('TICKETS-UPDATE', 1);
+            $utils->loggr($ticketData, 0);
+
+            return back()->withErrors([
+                'message'    =>  $utils->err->unexpected
+            ]);
+        }
+
     }
 
     /**
