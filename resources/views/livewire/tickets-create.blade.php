@@ -7,7 +7,7 @@
     </div>
     @include('plugins.messages')
     <h6 class="fg-forest">STATUS</h6>
-    <div class="row mb-3">
+    <div class="row mb-3 g-3">
         <div class="col-md-6">
             <div class="form-floating mb-3">
                 <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $tkey }}" readonly>

@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Arr;
+use App\Models\Ticket;
+use App\Models\Config;
+use App\Models\Group;
+use App\Models\User;
+
 class Utils extends Controller
 {
     public $err;
@@ -87,6 +93,4 @@ class Utils extends Controller
             Storage::disk($disk)->append($file, $dts . ' - ' . $data);
         }
     }
-
-
 }

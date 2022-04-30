@@ -1,4 +1,4 @@
-<div class="card card-body border-round border-forest-light">
+<div class="card card-body border-round border-forest-light" style="overflow-x: auto;">
     <div class="d-flex justify-content-between mb-3 align-items-end">
         <h6>
             <b>All Tickets</b>
@@ -61,7 +61,7 @@
                         <td>
                             {{ Str::ucfirst($ticket->priority) }}
                         </td>
-                        <td>
+                        <td class="td-break">
                             {{ $ticket->title }}
                         </td>
                         <td>
@@ -95,4 +95,7 @@
             @endif
         </tbody>
     </table>
+    <div class="mb-3 right">
+        {{ $tickets->links() }}
+    </div>
 </div>

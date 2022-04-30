@@ -38,7 +38,7 @@ class TicketsIndex extends Component
                                     't.created_at as created'
                                 )
                                 ->orderBy('t.created_at', 'desc')
-                                ->get()
+                                ->paginate(10)
         ]);
     }
 }

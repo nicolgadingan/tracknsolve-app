@@ -36,6 +36,7 @@
 html,
 body {
     color: var(--marine-dark);
+    /* font-size: small; */
 }
 
 /* AUTH LAYOUT */
@@ -47,12 +48,12 @@ body {
 
 #brand-auth,
 #sidebar-logo {
-    max-width: 200px;
+    max-width: 170px;
 }
 
 /* SIDEBAR */
 #sidebar {
-    width: 255px;
+    min-width: 255px;
     max-width: 255px;
     background-color: var(--cheese);
     height: 100vh;
@@ -66,6 +67,7 @@ body {
 #context-body {
     max-height: 100vh;
     overflow: auto;
+    font-size: small;
 }
 
 .side-nav .side-nav-item {
@@ -104,7 +106,7 @@ body {
     border-radius: 0.4rem;
     background-color: var(--secondary-light);
     display: block;
-    max-width: 110px;
+    width: 110px;
     text-align: center;
 }
 
@@ -359,6 +361,14 @@ a {
 
 .pagination-right ul.pagination {
     justify-content: end;
+}
+
+.card {
+    overflow: auto;
+}
+
+td.td-break {
+    word-wrap: break-word;
 }
 
 td {
