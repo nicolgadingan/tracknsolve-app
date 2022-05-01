@@ -8,13 +8,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9">
-                <div class="card card-body mb-4 border-round border-forest-light">
-                    <h6>
-                        <b>Unassigned Tickets</b>
-                    </h6>
-                    <table class="table table-hover">
-                        <thead class="bg-light">
-                            <th>Key</th>
+                <div class="p-3 pb-2">
+                    <span class="fg-marine fs-sm">UNASSIGNED TICKETS</span>
+                </div>
+                <div class="card card-body mb-4 borderless border-round p-0 shadow-sm">
+                    <table class="table table-borderless table-hover">
+                        <thead class="fg-white bg-marine-dark">
+                            <th class="pt-3">Key</th>
                             <th>Title</th>
                             <th>Reporter</th>
                             <th class="right">Created</th>
@@ -49,13 +49,13 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card card-body border-round border-forest-light">
-                    <h6>
-                        <b>My Tickets</b>
-                    </h6>
-                    <table class="table table-hover">
-                        <thead class="bg-light">
-                            <th>Key</th>
+                <div class="p-3 pb-2">
+                    <span class="fg-marine fs-sm">MY TICKETS</span>
+                </div>
+                <div class="card card-body border-round borderless p-0 shadow-sm">
+                    <table class="table table-borderless table-hover">
+                        <thead class="bg-marine-dark fg-white">
+                            <th class="pt-3">Key</th>
                             <th>Priority</th>
                             <th>Status</th>
                             <th>Description</th>
@@ -100,8 +100,12 @@
                                                 {{ $tkstat }}
                                             </span>
                                         </td>
-                                        <td>
-                                            {{ $mytk->title }}
+                                        <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $mytk->title }}">
+                                            @if (Str::length($mytk->title) > 32)
+                                                {{ Str::substr($mytk->title, 0, 32) . '...' }}
+                                            @else
+                                                {{ $mytk->title }}
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $mytk->user->first_name . ' ' . $mytk->user->last_name }}
@@ -146,10 +150,10 @@
                 }
             @endphp
             <div class="col-sm">
-                <div class="card card-body border-round border-forest-light bg-forest">
-                    <h6 class="fg-white">
-                        Breakdown
-                    </h6>
+                <div class="p-3 pb-2">
+                    <span class="fg-marine fs-sm">BREAKDOWN</span>
+                </div>
+                <div class="card card-body border-round borderless bg-cheese">
                     <a href="#unassigned" class="btn btn-light mb-2">
                         <div class="d-flex justify-content-between">
                             <span class="fg-primary">

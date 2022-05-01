@@ -14,6 +14,7 @@ class Config extends Model
     /**
      * Ticket key generator
      * 
+     * @param   Integer $user_id
      * @return  string
      */
     public function getKey()

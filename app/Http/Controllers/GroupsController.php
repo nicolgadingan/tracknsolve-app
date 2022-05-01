@@ -36,18 +36,7 @@ class GroupsController extends Controller
             // abort('401');
         }
 
-        // Get users that can manage a group
-        $user   =   new User();
-        $users  =   $user->canManage();
-
-        // Get groups
-        $group  =   new Group();
-        $groups =   $group->getGroups();
-
-        return view('groups.index')->with([
-            'managers'  =>  $users,
-            'groups'    =>  $groups,
-        ]);
+        return view('groups.index');
     }
 
     /**
