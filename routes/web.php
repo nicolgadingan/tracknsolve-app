@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-Route::resource('tickets', App\Http\Controllers\TicketsController::class);
+Route::resource('tickets', App\Http\Controllers\TicketsController::class)->except(['store']);
 Route::resource('users', App\Http\Controllers\UsersController::class);
-Route::resource('groups', App\Http\Controllers\GroupsController::class);
+Route::resource('groups', App\Http\Controllers\GroupsController::class)->except(['store', 'create']);
 Route::get('/reports', [App\Http\Controllers\ReportsController::class, 'index'])->name('reports');
 Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
 

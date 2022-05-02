@@ -43,7 +43,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="hidden" name="reporter" value="{{ $ticket->reporter }}">
+                            <input type="hidden" name="caller" value="{{ $ticket->reporter }}">
                             <input type="text" class="form-control" id="tk-upd-username" value="{{ $ticket->user->username }}" readonly>
                             <label for="tk-username">Reporter</label>
                         </div>

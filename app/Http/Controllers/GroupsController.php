@@ -36,7 +36,12 @@ class GroupsController extends Controller
             // abort('401');
         }
 
-        return view('groups.index');
+        $user       =   new User();
+        $managers   =   $user->canManage();
+
+        return view('groups.index')->with([
+            'managers'  =>  $managers
+        ]);
     }
 
     /**
@@ -46,7 +51,7 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        abort('404');
+        //
     }
 
     /**
@@ -57,32 +62,7 @@ class GroupsController extends Controller
      */
     public function store(Request $request)
     {
-        // Creation of GROUPS can only be done by Admin
-        if (!$this->utils->isAdmin()) {
-            abort('401');
-        }
-
-        // Validate input
-        $this->validate($request, [
-            'name'      =>  'required|max:20|unique:groups',
-            'manager'   =>  'required|numeric'
-        ]);
-
-        $groupName      =   $request->name;
-
-        // Insert group
-        $group  =   new Group;
-        $group->name        =   $request->name;
-        $group->status      =   'A';
-        $group->owner       =   $request->manager;
-        $group->slug        =   Str::slug($request->name);
-        $group->created_by  =   auth()->user()->id;
-        $group->updated_by  =   auth()->user()->id;
-        $group->save();
-
-        return redirect('/groups')->with([
-            'success'       =>  "You have successfully created <b>" . $groupName . "</b> group."
-        ]);
+        //
     }
 
     /**

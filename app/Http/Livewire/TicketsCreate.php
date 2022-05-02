@@ -58,15 +58,6 @@ class TicketsCreate extends Component
     }
 
     /**
-     * When $assignee is updated
-     * 
-     */
-    public function updatedAssignee()
-    {
-
-    }
-
-    /**
      * When $group is updated
      * 
      */

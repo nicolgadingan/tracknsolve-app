@@ -2,17 +2,25 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Utils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Ticket extends Model
 {
+    protected $utils;
+
     use HasFactory;
 
     protected $fillable =   [
         'id'
     ];
+
+    public function __construct()
+    {
+        $this->utils    =   new Utils;
+    }
 
     /**
      * Add relationship to Comments
@@ -133,21 +141,33 @@ class Ticket extends Model
      */
     protected function addHistory($tdata)
     {
-        $tdate      =   \Carbon\Carbon::now();
+        try {
+            
+            DB::table('ticket_hists')
+                ->insert([
+                    'ticket_id'     =>  $tdata['tkey'],
+                    'status'        =>  $tdata['status'],
+                    'priority'      =>  $tdata['priority'],
+                    'title'         =>  $tdata['title'],
+                    'description'   =>  $tdata['description'],
+                    'group_id'      =>  $tdata['group'],
+                    'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
+                    'reporter'      =>  $tdata['caller'],
+                    'created_by'    =>  auth()->user()->id,
+                    'created_at'    =>  \Carbon\Carbon::now()
+                ]);
 
-        DB::table('ticket_hists')
-            ->insert([
-                'ticket_id'     =>  $tdata['tkey'],
-                'status'        =>  $tdata['status'],
-                'priority'      =>  $tdata['priority'],
-                'title'         =>  $tdata['title'],
-                'description'   =>  $tdata['description'],
-                'group_id'      =>  $tdata['group'],
-                'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
-                'reporter'      =>  $tdata['reporter'],
-                'created_by'    =>  auth()->user()->id,
-                'created_at'    =>  $tdate
-            ]);
+        } catch (\Throwable $th) {
+            
+            $this->utils->loggr('TICKETS.ADDHIST', 1);
+            $this->utils->loggr(json_encode([
+                                    'data'  =>  $tdata,
+                                    'error' =>  $th
+                                ]), 0);
+
+            return false;
+
+        }
     }
 
     /**

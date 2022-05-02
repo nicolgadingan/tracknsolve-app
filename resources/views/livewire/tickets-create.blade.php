@@ -102,7 +102,7 @@
                 <div class="form-floating mb-1">
                     <select name="assignee" wire:model="assignee" id="tk-assignee" class="form-select @error('assignee') is-invalid @enderror">
                         @if (count($users) > 0)
-                            <option>Select Assignee (optional)</option>
+                            <option value="">Select Assignee (optional)</option>
                             @foreach ($users as $udata)
                                 <option value="{{ $udata->id }}">{{ $udata->first_name . ' ' . $udata->last_name }}</option>
                             @endforeach

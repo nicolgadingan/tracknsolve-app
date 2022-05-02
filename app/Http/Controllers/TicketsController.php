@@ -72,60 +72,60 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'priority'          =>  'required',
-            'status'            =>  'required',
-            'group'             =>  'required|exists:groups,name',
-            'title'             =>  'required|min:5',
-            'description'       =>  'required|min:20',
-            'assignee'          =>  'nullable|exists:users,username'
-        ]);
+        // $this->validate($request, [
+        //     'priority'          =>  'required',
+        //     'status'            =>  'required',
+        //     'group'             =>  'required|exists:groups,name',
+        //     'title'             =>  'required|min:5',
+        //     'description'       =>  'required|min:20',
+        //     'assignee'          =>  'nullable|exists:users,username'
+        // ]);
 
-        // Get specific data from value
-        $group_id   =   Group::where('name', $request->group)->first()->id;
+        // // Get specific data from value
+        // $group_id   =   Group::where('name', $request->group)->first()->id;
 
-        if ($request->assignee != null) {
-            $user       =   User::where('username', $request->assignee)->first();
+        // if ($request->assignee != null) {
+        //     $user       =   User::where('username', $request->assignee)->first();
 
-            // Check if user belongs to the group
-            if ($user->group_id != $group_id) {
-                return back()->withErrors([
-                    'assignee'  =>  'User does not belong to the selected group.',
-                    'group'     =>  $request->group
-                ]);
-            }
-        }
+        //     // Check if user belongs to the group
+        //     if ($user->group_id != $group_id) {
+        //         return back()->withErrors([
+        //             'assignee'  =>  'User does not belong to the selected group.',
+        //             'group'     =>  $request->group
+        //         ]);
+        //     }
+        // }
         
-        $tdata  =   [
-            'id'            =>  $request->tkey,
-            'status'        =>  $request->status,
-            'priority'      =>  $request->priority,
-            'title'         =>  $request->title,
-            'description'   =>  $request->description,
-            'group_id'      =>  $group_id,
-            'assignee'      =>  $request->assignee,
-            'reporter'      =>  $request->reporter,
-            'created_at'    =>  \Carbon\Carbon::now()
-        ];
+        // $tdata  =   [
+        //     'id'            =>  $request->tkey,
+        //     'status'        =>  $request->status,
+        //     'priority'      =>  $request->priority,
+        //     'title'         =>  $request->title,
+        //     'description'   =>  $request->description,
+        //     'group_id'      =>  $group_id,
+        //     'assignee'      =>  $request->assignee,
+        //     'reporter'      =>  $request->reporter,
+        //     'created_at'    =>  \Carbon\Carbon::now()
+        // ];
 
-        $ticket =   new Ticket();
-        $status =   $ticket->createTicket($tdata);
+        // $ticket =   new Ticket();
+        // $status =   $ticket->createTicket($tdata);
 
-        if ($status->isCreated != true) {
-            return back()->withErrors([
-                'message'   =>  'We have encountered an error while saving your data.'
-            ]);
-        }
+        // if ($status->isCreated != true) {
+        //     return back()->withErrors([
+        //         'message'   =>  'We have encountered an error while saving your data.'
+        //     ]);
+        // }
 
-        if ($status->isLogged != true) {
-            return back()->withErrors([
-                'message'   =>  'Ticket data has been saved but failed in logging history.'
-            ]);
-        }
+        // if ($status->isLogged != true) {
+        //     return back()->withErrors([
+        //         'message'   =>  'Ticket data has been saved but failed in logging history.'
+        //     ]);
+        // }
         
-        return back()->with([
-            'success'   =>  'You have successfully submitted your ticket.'
-        ]);
+        // return back()->with([
+        //     'success'   =>  'You have successfully submitted your ticket.'
+        // ]);
     }
 
     /**
@@ -226,6 +226,7 @@ class TicketsController extends Controller
             'assignee'      =>  'nullable|exists:users,id',
             'title'         =>  'required|min:5|max:100',
             'description'   =>  'required|min:20|max:4000',
+            'caller'        =>  'nullable'
         ]);
 
         // Validate changes

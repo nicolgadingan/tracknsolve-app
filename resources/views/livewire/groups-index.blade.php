@@ -24,11 +24,6 @@
                         <th>Status</th>
                         <th>Manager</th>
                         <th class="right">Created</th>
-                        <th class="right">
-                            {{-- <span class="text-muted fs-lg">
-                                <i class="bi bi-three-dots"></i>
-                            </span> --}}
-                        </th>
                     </thead>
                     <tbody>
                         {{ $data }}
@@ -60,24 +55,6 @@
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($group->created_at)->diffForHumans() }}
                                     </td>
-                                    <td class="right">
-                                        <div class="btn-group dropstart no-content">
-                                            <a data-bs-toggle="dropdown" aria-expanded="false"
-                                                class="dropdown-toggle @if ($uinf->role == 'user') ? link-secondary click-disable : click-enable link-primary @endif">
-                                                <i class="bi bi-three-dots-vertical"></i>
-                                            </a>
-                                            <ul class="dropdown-menu right">
-                                                <li class="dropdown-item-text">
-                                                    <small class="text-muted">Options</small>
-                                                </li>
-                                                @if ($uinf->role == 'admin')
-                                                <li class="dropdown-item">
-                                                    <a href="#" class="link-danger">Delete</a>
-                                                </li>
-                                                @endif
-                                            </ul>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         @else
@@ -93,29 +70,11 @@
             </div>
         </div>
     </div>
-    <div class="p-3 mb-3">
+    <div class="p-3 mb-3" hidden>
         {{ 'Searching: ' . $searchgroup }}
         <br>
         {{ 'Count: ' . count($data) }}
         <br>
         {{ 'Groups: ' . $data }}
     </div>
-    <!-- Modal -->
-    {{-- <div class="modal fade" id="gr-new-group-form" tabindex="-1" aria-labelledby="gr-new-group-label" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="gr-new-group-label">New Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 </div>

@@ -406,6 +406,10 @@ ul#profile-link-body {
     transform: translate(0px, 49px) !important;
 }
 
+.pr-4 {
+    padding-right: 1.5rem;
+}
+
 /* .form-control,
 .form-select,
 .btn {

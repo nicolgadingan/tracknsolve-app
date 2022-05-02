@@ -19,10 +19,19 @@ class GroupsIndex extends Component
         return view('livewire.groups-index', [
             'data'    =>  DB::table('groups as g')
                                 ->leftJoin('users as u', 'u.id', '=', 'g.owner')
+                                ->leftJoin('users as m', 'm.group_id', '=', 'g.id')
                                 ->when($this->searchgroup, function($query, $searchgroup) {
                                     $query->where('g.name', 'like', '%' . $searchgroup . '%');
                                 })
                                 ->select('g.id',
+                                        'g.name',
+                                        'g.status',
+                                        'g.slug',
+                                        'g.created_at',
+                                        'u.first_name',
+                                        'u.last_name',
+                                        DB::raw('count(1) as members'))
+                                ->groupBy('g.id',
                                         'g.name',
                                         'g.status',
                                         'g.slug',
