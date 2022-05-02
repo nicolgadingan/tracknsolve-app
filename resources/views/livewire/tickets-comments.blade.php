@@ -19,7 +19,7 @@
         </form>
     </div>
     <hr>
-    <ul class="list-group list-group-flush">
+    <ul class="list-group list-group-flush fs-sm">
         @if(count($comments) > 0)
             @foreach ($comments as $comment)
                 <li class="list-group-item list-group-item-action">
@@ -31,7 +31,7 @@
                         </a>
                         <span>{{ \Carbon\Carbon::create($comment->created_at)->diffForHumans() }}</span>
                     </div>
-                    <span>{{ $comment->comments }}</span>
+                    <pre class="fs-sm">{{ $comment->comments }}</pre>
                 </li>
             @endforeach
         @else

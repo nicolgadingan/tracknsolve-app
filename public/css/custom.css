@@ -410,6 +410,10 @@ ul#profile-link-body {
     padding-right: 1.5rem;
 }
 
+label {
+    font-size: 11pt;
+}
+
 /* .form-control,
 .form-select,
 .btn {

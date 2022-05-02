@@ -94,12 +94,12 @@
                                     <option value="new" {{ ( $ticket->status == 'new' ) ? 'selected' : '' }}>New</option>
                                     <option value="in-progress" {{ ( $ticket->status == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
                                     <option value="on-hold" {{ ( $ticket->status == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
-                                    <option value="resvoled" {{ ( $ticket->status == 'resvoled' ) ? 'selected' : '' }}>Resolved</option>
+                                    <option value="resolved" {{ ( $ticket->status == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
                                 @else
                                     <option value="new" {{ ( old('status') == 'new' ) ? 'selected' : '' }}>New</option>
                                     <option value="in-progress" {{ ( old('status') == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
                                     <option value="on-hold" {{ ( old('status') == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
-                                    <option value="resvoled" {{ ( old('status') == 'resvoled' ) ? 'selected' : '' }}>Resolved</option>
+                                    <option value="resolved" {{ ( old('status') == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
                                 @endif
                             </select>
                             @error('status')
