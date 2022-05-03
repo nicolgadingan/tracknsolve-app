@@ -101,8 +101,8 @@
                                             </span>
                                         </td>
                                         <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $mytk->title }}">
-                                            @if (Str::length($mytk->title) > 32)
-                                                {{ Str::substr($mytk->title, 0, 32) . '...' }}
+                                            @if (Str::length($mytk->title) > 100)
+                                                {{ Str::substr($mytk->title, 0, 100) . '...' }}
                                             @else
                                                 {{ $mytk->title }}
                                             @endif

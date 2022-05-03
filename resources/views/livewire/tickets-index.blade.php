@@ -70,8 +70,8 @@
                                     </td>
                                     <td class="td-break" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $ticket->title }}">
                                         <span>
-                                            @if (Str::length($ticket->title) > 32)
-                                                {{ Str::substr($ticket->title, 0, 32) . '...' }}
+                                            @if (Str::length($ticket->title) > 100)
+                                                {{ Str::substr($ticket->title, 0, 100) . '...' }}
                                             @else
                                                 {{ $ticket->title }}
                                             @endif

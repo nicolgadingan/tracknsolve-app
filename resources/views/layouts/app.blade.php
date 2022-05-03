@@ -50,12 +50,6 @@
                         @php
                             $user   =   auth()->user();
                         @endphp
-                        {{-- <a tabindex="0" class="btn btn-lg btn-rose" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Dismissible popover"
-                            data-bs-content="Something" data-bs-placement="left" data-bs-html="true">
-                            <b class="pr-1">
-                                {{ Str::ucfirst($user->first_name[0] . $user->last_name[0]) }}
-                            </b>
-                        </a> --}}
                         <div class="dropdown">
                             <button class="btn btn-lg p-2 shadow dropdown-toggle btn-rose shadow" href="#" id="profile-link" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true">
@@ -86,7 +80,6 @@
                                         </small>
                                     </span>
                                 </li>
-                                
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
