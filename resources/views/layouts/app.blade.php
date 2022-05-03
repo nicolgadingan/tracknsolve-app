@@ -32,7 +32,7 @@
 </head>
 <body>
     <div class="d-flex">
-        <div id="sidebar" class="shadow">
+        <div id="sidebar" class="shadow-sm">
             @include('plugins.sidebar')
         </div>
         <div class="flex-grow-1 p-3 pb-5" id="context-body">

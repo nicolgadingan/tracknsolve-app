@@ -83,7 +83,7 @@ class Utils extends Controller
         $user_id    =   auth()->user()->id;
         $dts        =   \Carbon\Carbon::now();
         $disk       =   'local';
-        $file       =   'err/' . $user_id . '_' . $dts->format('Ymd') . '.log';
+        $file       =   'log/' . $user_id . '_' . $dts->format('Ymd') . '.log';
 
         if ($opt == 1) {
             Storage::disk($disk)->append($file, $dts . ' - ' . Str::padRight('', 60, '#'));

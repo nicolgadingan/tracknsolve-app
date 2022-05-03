@@ -30,14 +30,17 @@
                         <th>Username</th>
                         <th>Group</th>
                         <th class="right">Joined</th>
-                        <th class="right"></th>
                     </thead>
                     <tbody>
                         @if (count($users) > 0)
                             @foreach ($users as $user)
                                 <tr>
                                     <td>
-                                        {{ $user->first_name . ' ' . $user->last_name }}
+                                        <a href="/users/{{ $user->id }}" class="link-marine us-view-trigger">
+                                            <strong>
+                                                {{ $user->first_name . ' ' . $user->last_name }}
+                                            </strong>
+                                        </a>
                                     </td>
                                     <td>
                                         {{ Str::ucfirst($user->role) }}
@@ -70,11 +73,6 @@
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($user->created_at)->diffForHumans() }}
                                     </td>
-                                    <td class="right">
-                                        <div class="btn-group dropstart no-content">
-                                            <i class="bi bi-three-dots-vertical"></i>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         @else
@@ -97,3 +95,13 @@
         </div>
     </div>
 </div>
+<script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+    });
+
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+        trigger: 'focus'
+    });
+</script>

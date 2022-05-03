@@ -15,9 +15,9 @@
                     Create
                 </button>
             </div>
-            <h6 class="fg-forest">USER INFORMATION</h6>
+            <h6 class="fg-forest">ORGANIZATION</h6>
             @include('plugins.messages')
-            <div class="row g-3 mb-3">
+            <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <div class="form-floating">
                         <select name="group" id="us-group" class="form-select">
@@ -32,19 +32,22 @@
                         <label for="us-group">Group</label>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3 mb-3">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <select name="role" id="us-role" class="form-control">
-                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                            <option value="manager" {{ old('role') == 'manager' ? 'selected' : '' }}>Manager</option>
-                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        </select>
-                        <label for="us-role">Role</label>
+                <div class="col-md-6">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <select name="role" id="us-role" class="form-control">
+                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                <option value="manager" {{ old('role') == 'manager' ? 'selected' : '' }}>Manager</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+                            <label for="us-role">Role</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md">
+            </div>
+            <h6 class="fg-forest">USER INFORMATION</h6>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="us-username" maxlength="20" placeholder="Username" value="{{ old('username') }}">
                         @error('username')

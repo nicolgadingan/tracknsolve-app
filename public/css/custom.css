@@ -37,6 +37,7 @@ html,
 body {
     color: var(--marine-dark);
     /* font-size: small; */
+    background-color: #e9ecef;
 }
 
 /* AUTH LAYOUT */
@@ -68,7 +69,6 @@ body {
     max-height: 100vh;
     overflow: auto;
     font-size: smaller;
-    background-color: #e9ecef;
 }
 
 .side-nav .side-nav-item {
@@ -344,6 +344,61 @@ tbody tr td:last-child
 }
 
 
+/* PADDING */
+.pr-4 {
+    padding-right: 1.5rem;
+}
+
+.pl-3 {
+    padding-left: 1rem;
+}
+
+.pr-3 {
+    padding-right: 1rem;
+}
+
+.pt-3 {
+    padding-top: 1rem;
+}
+
+.pb-3 {
+    padding-bottom: 1rem;
+}
+
+.pl-2 {
+    padding-left: 0.5rem;
+}
+
+.pr-2 {
+    padding-right: 0.5rem;
+}
+
+.pt-2 {
+    padding-top: 0.5rem;
+}
+
+.pb-2 {
+    padding-bottom: 0.5rem;
+}
+
+
+/* INFORMATIONS */
+.info-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 12pt;
+}
+
+.info-icon.hover {
+    color: var(--forest);
+}
+
+.info-icon.hover:hover {
+    color: var(--marine);
+}
+
+
 /* OVERRIDE */
 a {
     text-decoration: none;
@@ -406,20 +461,10 @@ ul#profile-link-body {
     transform: translate(0px, 49px) !important;
 }
 
-.pr-4 {
-    padding-right: 1.5rem;
-}
-
-label {
+label{
     font-size: 11pt;
 }
 
-/* .form-control,
-.form-select,
-.btn {
-    font-size: inherit;
-} */
-
-/* .btn-lg {
-    font-size: 1.125rem !important;
-} */
+.invalid-feedback {
+    font-size: small;
+}

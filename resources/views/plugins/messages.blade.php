@@ -1,15 +1,13 @@
-@if (count($errors) > 0)
+@if (count($errors) > 0 && $errors->has('message'))
     <div class="alert alert-danger p-2">
         <div class="d-flex align-items-start">
-            <div class="p-2">
+            <div class="pl-2 pr-2">
                 <i class="bi bi-exclamation-diamond-fill fs-xl"></i>
             </div>
-            <div>
+            <div class="fs-sm">
                 <strong>Oopsy Daisy!</strong><br>
                 @if ($errors->has('message'))
                     {{ $errors->first() }}
-                @else
-                    Please check below error{{ count($errors) > 1 ? 's' : '' }} to proceed.
                 @endif
             </div>
         </div>

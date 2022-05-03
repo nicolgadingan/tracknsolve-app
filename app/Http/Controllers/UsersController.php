@@ -24,7 +24,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->utils    =   new Utils();
+        $this->utils    =   new Utils;
     }
 
     /**
@@ -119,7 +119,20 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user   =   User::find($id);
+
+        if ($user == null ||
+            $user == '') {
+            
+            abort("404");
+            
+        } else {
+
+            return view('users.show')->with([
+                'user'      =>  $user
+            ]);
+
+        }
     }
 
     /**
@@ -155,12 +168,17 @@ class UsersController extends Controller
     {
         // Fetch user data
         $user   =   User::find($id);
+        $model  =   new User();
+
+        $this->utils->loggr('USERS.DELETE', 1);
+        $this->utils->loggr(json_encode([
+                                    'data'  =>  $user
+                                ]), 0);
 
         // Validate fetched data
         if ($user == null) {
             // If user not exists in users table
             // Check from deleted table
-            $model      =   new User();
             $deleted    =   $model->isDeleted($id);
 
             if ($deleted != null) {
@@ -176,12 +194,18 @@ class UsersController extends Controller
             }
         } else {
             // Delete user data
-            $delete     =   new User();
-            $destroy    =   $delete->deleteUser($user);
+            $destroy    =   $model->deleteUser($user);
 
-            return redirect('/users')->with([
-                'success'   =>  "User <b>" . $user->first_name . ' ' . $user->last_name . "</b>'s account was successfully deleted."
-            ]);
+            if ($destroy == null ||
+                $destroy == true) {
+                return redirect('/users')->with([
+                    'success'   =>  "User <b>" . $user->first_name . ' ' . $user->last_name . "</b>'s account was successfully deleted."
+                ]);
+            }
+
+            return redirect('/users')->withErrors(
+                'message',  $this->utils->err->unexpected
+            );
         }
     }
 
