@@ -107,6 +107,8 @@ body {
     border-radius: 0.4rem;
     background-color: var(--secondary-light);
     display: block;
+    max-width: 100px;
+    min-width: 85px;
     text-align: center;
 }
 
@@ -346,6 +348,18 @@ tbody tr td:last-child
 /* PADDING */
 .pr-4 {
     padding-right: 1.5rem;
+}
+
+.pl-4 {
+    padding-left: 1.5rem;
+}
+
+.pt-4 {
+    padding-top: 1.5rem;
+}
+
+.pb-4 {
+    padding-bottom: 1.5rem;
 }
 
 .pl-3 {

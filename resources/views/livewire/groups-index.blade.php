@@ -31,7 +31,9 @@
                             @foreach ($data as $group)
                                 <tr>
                                     <td>
-                                        {{ $group->name }}
+                                        <a href="#view-{{ $group->slug }}" class="link-marine gr-view-group" data-value="{{ $group->id }}">
+                                            <b>{{ $group->name }}</b>
+                                        </a>
                                     </td>
                                     <td>
                                         @php

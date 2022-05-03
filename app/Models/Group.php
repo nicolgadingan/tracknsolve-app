@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Utils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,17 @@ use Illuminate\Support\Facades\DB;
 class Group extends Model
 {
     use HasFactory;
+
+    protected $utils;
+
+    public $fillable    =   [
+        'name'
+    ];
+
+    public function __construct()
+    {
+        $this->utils    =   new Utils;
+    }
 
     /**
      * Get all Groups with their managers
@@ -31,6 +43,45 @@ class Group extends Model
                         ->paginate(10);
 
         return $groups;
+    }
+
+    /**
+     * Update Group details
+     * 
+     * @param   Array   $gdata
+     * @return  Boolean $isUpdated
+     */
+    public function updGroup($gdata)
+    {
+        $isUpdated      =   false;
+
+        try {
+            
+            $isUpdated  =   Group::where('id', $gdata['group_id'])
+                                ->update([
+                                    'name'          =>  ucwords($gdata['group_name']),
+                                    'owner'         =>  $gdata['manager_id'],
+                                    'updated_by'    =>  auth()->user()->id,
+                                    'updated_at'    =>  \Carbon\Carbon::now()
+                                ]);
+
+            $this->utils->loggr(json_encode([
+                    'data'      =>  $gdata,
+                    'isUpdated' =>  $isUpdated
+                ]), 0);
+
+        } catch (\Throwable $th) {
+            
+            report($th);
+
+            $this->utils->loggr(json_encode([
+                    'data'      =>  $gdata,
+                    'isUpdated' =>  false
+                ]), 0);
+
+        }
+
+        return $isUpdated;
     }
 
     /**

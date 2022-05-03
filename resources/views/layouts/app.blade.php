@@ -53,7 +53,7 @@
                         <div class="dropdown">
                             <button class="btn btn-lg p-2 shadow dropdown-toggle btn-rose shadow" href="#" id="profile-link" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true">
-                                <b class="pr-2">
+                                <b class="">
                                     {{ Str::ucfirst($user->first_name[0] . $user->last_name[0]) }}
                                 </b>
                             </button>
