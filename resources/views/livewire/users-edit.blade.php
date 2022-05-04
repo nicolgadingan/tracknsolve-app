@@ -59,6 +59,30 @@
                 </i>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                @php
+                    $status_text    =   '';
+                    switch ($user->status) {
+                        case 'A':
+                            $status_text    =   'Active';
+                            break;
+                        case 'I':
+                            $status_text    =   'Inactive';
+                            break;
+                        case 'X':
+                            $status_text    =   'Archived';
+                            break;
+                        default:
+                            $stutus_text    =   'Unknown';
+                            break;
+                    }
+                @endphp
+                <input type="text" class="form-control" name="status" id="us-edit-status"
+                    maxlength="20" placeholder="Username" value="{{ $status_text }}" disabled>
+                <label for="us-edit-status">Username</label>
+            </div>
+        </div>
     </div>
     <div class="row g-3 mb-3">
         <div class="col-md">

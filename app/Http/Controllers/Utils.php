@@ -19,7 +19,8 @@ class Utils extends Controller
     public function __construct()
     {
         $this->err  =   (Object) ([
-            'unexpected'    =>  'Unexpected error encountered while processing your request. Kindly report this to your administrator for checking.'
+            'unexpected'    =>  'Unexpected error encountered while processing your request. Kindly report this to your administrator for checking.',
+            'nochange'      =>  'You do not seem to have an update on this record. Please check and try again.'
         ]);
     }
 

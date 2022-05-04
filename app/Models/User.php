@@ -237,4 +237,39 @@ class User extends Authenticatable
         
     }
 
+    /**
+     * Update user account
+     * 
+     * @param   Array   $udata
+     * @return  Boolean $updated
+     */
+    public function updateUser($udata)
+    {
+        $updated        =   false;
+
+        try {
+            
+            $updated    =   User::where('id', $udata['user_id'])
+                                ->update([
+                                    'group_id'      =>  $udata['group_id'],
+                                    'role'          =>  $udata['role'],
+                                    'first_name'    =>  $udata['first_name'],
+                                    'last_name'     =>  $udata['last_name'],
+                                    'contact_no'    =>  $udata['contact_no'],
+                                    'updated_by'    =>  auth()->user()->id,
+                                    'updated_at'    =>  \Carbon\Carbon::now()
+                                ]);
+
+            $this->utils->loggr('Result > Update has been processed.', 0);
+
+        } catch (\Throwable $th) {
+            
+            report($th);
+            $this->utils->loggr('Result > Update failed. See logs for more details.', 0);
+
+        }
+        
+        return $updated;
+    }
+
 }
