@@ -42,15 +42,14 @@
             <label for="gr-new-manager">Manager</label>
         </div>
     </div>
+    <div class="mb-1 p-4 pt-0 right">
     @if (auth()->user()->role == "admin")
-        <div class="mb-3 p-4 pt-0 right">
-            <button type="submit" class="btn btn-marine shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>
-                Update
-            </button>
-        </div>
+        <button type="submit" class="btn btn-marine shadow-sm mb-2" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>
+            Update
+        </button>
     @endif
+    </div>
 </form>
-
 
 <script>
     $(document).ready(function() {
