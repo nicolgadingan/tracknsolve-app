@@ -1,3 +1,6 @@
+@php
+    $role   =   auth()->user()->role;
+@endphp
 <form wire:submit.prevent="updateGroup" id="gr-edit-form-submit">
     <div class="d-flex justify-content-between p-3 align-items-center">
         <h5 class="modal-title" id="gr-edit-group-label">{{ $group['name'] }}</h5>
@@ -10,7 +13,7 @@
     <div class="p-4 pt-0">
         <div class="form-floating mb-3">
             <input type="text" class="form-control @error('group_name') is-invalid @enderror" name="group_name" placeholder="Gorup name"
-                id="gr-edit-name" wire:model.debounce.500ms="group_name" value="{{ $group_name }}">
+                id="gr-edit-name" wire:model.debounce.500ms="group_name" value="{{ $group_name }}" {{ ( $role != 'admin' ) ? 'disabled' : '' }}>
             @error('group_name')
                 <span class="invalid-feedback">
                     {{ $message }}
@@ -20,7 +23,7 @@
         </div>
         <div class="form-floating">
             <select id="gr-new-manager" class="form-select @error('manager_id') is-invalid @enderror" wire:model="manager_id"
-                aria-placeholder="Manager" {{ ( count($managers) == 0 ) ? 'disabled' : '' }}>
+                aria-placeholder="Manager" {{ ( count($managers) == 0 ) ? 'disabled' : '' }} {{ ( $role != 'admin' ) ? 'disabled' : '' }}>
                 @if (count($managers) > 0)
                     @foreach ($managers as $manager)
                         <option value="{{ $manager->id }}">
@@ -39,11 +42,13 @@
             <label for="gr-new-manager">Manager</label>
         </div>
     </div>
-    <div class="mb-3 p-4 pt-0 right">
-        <button type="submit" class="btn btn-marine shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>
-            Update
-        </button>
-    </div>
+    @if (auth()->user()->role == "admin")
+        <div class="mb-3 p-4 pt-0 right">
+            <button type="submit" class="btn btn-marine shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>
+                Update
+            </button>
+        </div>
+    @endif
 </form>
 
 
