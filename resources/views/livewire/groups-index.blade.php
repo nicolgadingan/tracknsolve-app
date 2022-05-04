@@ -11,7 +11,9 @@
             </div>
         </div>
         <div class="col-md right">
-            <button class="btn btn-marine" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
+            @if (auth()->user()->role == "admin")
+                <button class="btn btn-marine" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
+            @endif
         </div>
     </div>
     @include('plugins.messages')

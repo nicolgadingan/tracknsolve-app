@@ -71,7 +71,7 @@ class Group extends Model
                 ]), 0);
 
         } catch (\Throwable $th) {
-            
+
             report($th);
 
             $this->utils->loggr(json_encode([
