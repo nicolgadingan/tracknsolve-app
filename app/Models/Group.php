@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Group extends Model
 {
@@ -60,6 +61,7 @@ class Group extends Model
             $isUpdated  =   Group::where('id', $gdata['group_id'])
                                 ->update([
                                     'name'          =>  ucwords($gdata['group_name']),
+                                    'slug'          =>  Str::slug($gdata['group_name']),
                                     'owner'         =>  $gdata['manager_id'],
                                     'updated_by'    =>  auth()->user()->id,
                                     'updated_at'    =>  \Carbon\Carbon::now()
@@ -82,6 +84,89 @@ class Group extends Model
         }
 
         return $isUpdated;
+    }
+
+    /**
+     * Delete group
+     * 
+     * @param   int $id
+     * @return  int $isDeleted
+     */
+    public function delGroup($id)
+    {
+        $isDeleted  =   0;
+
+        try {
+            
+            $delete =   Group::find($id)
+                                ->delete();
+
+            if ($delete) {
+                $isDeleted  =   1;
+
+            }
+
+        } catch (\Throwable $th) {
+            report($th);
+
+            $isDeleted  =   255;
+            
+        }
+
+        return $isDeleted;
+    }
+
+    /**
+     * Check if group has members
+     * 
+     * @param   int $id
+     * @return  int $hasMember
+     */
+    public function hasMember($id)
+    {
+        $hasMember  =   1;
+        
+        try {
+            $members    =   User::where('group_id', $id)
+                            ->get();
+
+            $hasMember  =   count($members);
+
+        } catch (\Throwable $th) {
+            report($th);
+
+            $hasMember  =   255;
+
+        }
+
+        return $hasMember;
+    }
+
+    /**
+     * Check if exists
+     * 
+     * @param   int $id
+     * @return  Boolean $exists
+     */
+    public function exists($id)
+    {
+        $exists =   0;
+
+        try {
+            $found  =   Group::find($id);
+            
+            if ($found != null) {
+                $exists =   1;
+            }
+            
+        } catch (\Throwable $th) {
+            report($th);
+
+            $exists =   255;
+
+        }
+        
+        return $exists;
     }
 
     /**

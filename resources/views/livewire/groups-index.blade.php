@@ -26,6 +26,9 @@
                         <th>Status</th>
                         <th>Manager</th>
                         <th class="right">Created</th>
+                        @if ($uinf->role == 'admin')
+                            <th></th>
+                        @endif
                     </thead>
                     <tbody>
                         {{ $data }}
@@ -39,10 +42,17 @@
                                     </td>
                                     <td>
                                         @php
-                                            $status =   ($group->status == 'A') ? 'Active' : 'Inactive';
-                                            switch ($status) {
-                                                case 'Active':
+                                            $status =   '';
+                                            $theme  =   '';
+
+                                            switch ($group->status) {
+                                                case 'A':
+                                                    $status =   'Active';
                                                     $theme  =   'success';
+                                                    break;
+                                                case 'I':
+                                                    $status =   'Inactive';
+                                                    $theme  =   'secondary';
                                                     break;
                                                 default:
                                                     $theme  =   'secondary';
@@ -59,6 +69,26 @@
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($group->created_at)->diffForHumans() }}
                                     </td>
+                                    @if ($uinf->role == 'admin')
+                                        <td class="right">
+                                            @if ($status == 'Active')
+                                                <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate" data-value="{{ $group->id }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Deactivate group">
+                                                    <i class="bi bi-toggle-on fs-lg"></i>
+                                                </a>
+                                            @else
+                                                <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate" data-value="{{ $group->id }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Activate group">
+                                                    <i class="bi bi-toggle-off fs-lg"></i>
+                                                </a>
+                                            @endif
+                                            
+                                            <a href="#delete-{{ $group->slug }}" class="link-danger gr-delete" data-value="{{ $group->id }}"
+                                                data-bs-toggle="tooltip" data-bs-placement="left" title="Delete group" aria-label="{{ $group->name }}">
+                                                <i class="bi bi-trash-fill fs-lg"></i>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else
@@ -73,6 +103,14 @@
                 {{ $data->links() }}
             </div>
         </div>
+        <form action="" method="POST" id="gr-deac-form" class="d-none">
+            @csrf
+            @method('PUT')
+        </form>
+        <form action="" method="post" id="gr-acti-form" class="d-none">
+            @csrf
+            @method('PUT')
+        </form>
     </div>
     <div class="p-3 mb-3" hidden>
         {{ 'Searching: ' . $searchgroup }}
@@ -82,3 +120,51 @@
         {{ 'Groups: ' . $data }}
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        // Deactivate group
+        $("body").on("click", ".gr-deactivate", function() {
+            var form    =   $("#gr-deac-form"),
+                grpId   =   $(this).data("value");
+
+            event.preventDefault();
+
+            form.attr("action", "/groups/" + grpId + "/deactivate");
+            form.submit();
+
+        });
+
+        // Activate group
+        $("body").on("click", ".gr-activate", function() {
+            var form    =   $("#gr-acti-form"),
+                grpId   =   $(this).data("value");
+
+            event.preventDefault();
+
+            form.attr("action", "/groups/" + grpId + "/activate");
+            form.submit();
+
+        });
+
+        // Delete group
+        $("body").on("click", ".gr-delete", function() {
+            var modal   =   $("#gr-delt-group-modal"),
+                title   =   $("#gr-delt-group-modal #gr-delt-group-label"),
+                nameEl  =   $("#gr-delt-group-modal #gr-delt-name"),
+                grpId   =   $(this).data("value"),
+                grpName =   $(this).attr("aria-label"),
+                grpForm =   $("#gr-delt-group-form");
+
+            event.preventDefault();
+
+            grpForm.attr("action", "/groups/" + grpId);
+            title.text("Deleting " + grpName);
+            nameEl.text(grpName);
+
+            modal.modal("show");
+
+        });
+    });
+</script>

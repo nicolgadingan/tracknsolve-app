@@ -21,7 +21,12 @@ Auth::routes();
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 Route::resource('tickets', App\Http\Controllers\TicketsController::class)->except(['store']);
 Route::resource('users', App\Http\Controllers\UsersController::class)->except(['edit', 'update']);
+
+// GROUPS
 Route::resource('groups', App\Http\Controllers\GroupsController::class)->except(['store', 'create']);
+Route::put('/groups/{group}/deactivate', [App\Http\Controllers\GroupsController::class, 'deactivate']);
+Route::put('/groups/{group}/activate', [App\Http\Controllers\GroupsController::class, 'activate']);
+
 Route::get('/reports', [App\Http\Controllers\ReportsController::class, 'index'])->name('reports');
 Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
 

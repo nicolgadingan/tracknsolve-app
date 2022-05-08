@@ -16,8 +16,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="d-flex" style="height: 70vh;">
-    <main class="align-self-center" style="width: 100vw;">
+<body class="d-flex" style="height: 100vh;">
+    <main class="align-self-center" style="width: 100vw; height: 70vh;">
         <div >
             @yield('content')
         </div>
