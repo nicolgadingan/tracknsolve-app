@@ -62,5 +62,9 @@
             </div>
         </div>
     </div>
+
+    <div hidden>
+        Errors: {{ $errors }}
+    </div>
 </div>
 @endsection

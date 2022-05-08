@@ -117,18 +117,19 @@ class GroupsController extends Controller
         
         if ($exists == 1) {
             $this->utils->loggr("Result > Group exists.", 0);
+            $groupInfo  =   Group::find($id);
             
         } elseif ($exists == 0) {
             $this->utils->loggr("Result > Group does not exists.", 0);
-            return redirect('/groups')->withErrors(
-                'message', 'Group does not exists or has already been deleted.'
-            );
+            return redirect('/groups')->withErrors([
+                'message'   =>  'Group does not exists or has already been deleted.'
+            ]);
 
         } else {
             $this->utils->loggr("Result > ERROR. Check logs for more details.", 0);
-            return redirect('/groups')->withErrors(
-                'message', $this->utils->err->unexpected
-            );
+            return redirect('/groups')->withErrors([
+                'message'   =>  $this->utils->err->unexpected
+            ]);
 
         }
         
@@ -140,18 +141,18 @@ class GroupsController extends Controller
 
         if ($hasMemeber == 1) {
             $this->utils->loggr("Result > Group has members.", 0);
-            return redirect('/groups')->withErrors(
-                'message', 'Groups with members cannot be deleted.'
-            );
+            return redirect('/groups')->withErrors([
+                'message'   =>  'Group <b>' . $groupInfo->name . '</b> have members and cannot be deleted.'
+            ]);
 
         } elseif ($hasMemeber == 0) {
             $this->utils->loggr("Result > Group has NO members.", 0);
 
         } else {
             $this->utils->loggr("Result > ERROR. Check logs for more details.", 0);
-            return redirect('/groups')->withErrors(
-                'message', $this->utils->err->unexpected
-            );
+            return redirect('/groups')->withErrors([
+                'message'   =>  $this->utils->err->unexpected
+            ]);
 
         }
 
@@ -159,7 +160,6 @@ class GroupsController extends Controller
         $this->utils->loggr("GROUPS.DESTROY", 1);
         $this->utils->loggr("Action > Deleting group " . $id . ".", 0);
 
-        $groupInfo  =   Group::find($id);
         $isDeleted  =   $group->delGroup($id);
 
         if ($isDeleted == 1) {
@@ -170,15 +170,16 @@ class GroupsController extends Controller
 
         } elseif ($hasMemeber == 0) {
             $this->utils->loggr("Result > Failed to delete group.", 0);
-            return redirect('/groups')->withErrors(
-                'message', 'Failed to delete <b>' . $groupInfo->name . '</b> group. Kindly report this to your administrator for checking.'
-            );
+            return redirect('/groups')->withErrors([
+                'message'   =>  'Failed to delete <b>' . $groupInfo->name . '</b> group. Kindly report this to your administrator for checking.'
+            ]);
+            
 
         } else {
             $this->utils->loggr("Result > ERROR. Check logs for more details.", 0);
-            return redirect('/groups')->withErrors(
-                'message', $this->utils->err->unexpected
-            );
+            return redirect('/groups')->withErrors([
+                'message'   =>  $this->utils->err->unexpected
+            ]);
 
         }
 

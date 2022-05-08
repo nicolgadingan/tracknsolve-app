@@ -7,7 +7,7 @@
             <div class="fs-sm">
                 <strong>Oopsy Daisy!</strong><br>
                 @if ($errors->has('message'))
-                    {{ $errors->first() }}
+                    {!! $errors->first() !!}
                 @endif
             </div>
         </div>
