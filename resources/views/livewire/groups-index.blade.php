@@ -34,7 +34,7 @@
                         {{ $data }}
                         @if (count($data) > 0)
                             @foreach ($data as $group)
-                                <tr>
+                                <tr class="align-middle">
                                     <td>
                                         <a href="#view-{{ $group->slug }}" class="link-marine gr-view-group" data-value="{{ $group->id }}">
                                             <b>{{ $group->name }}</b>
@@ -72,12 +72,12 @@
                                     @if ($uinf->role == 'admin')
                                         <td class="right">
                                             @if ($status == 'Active')
-                                                <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate" data-value="{{ $group->id }}"
+                                                <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate mr-1" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Deactivate group">
                                                     <i class="bi bi-toggle-on fs-lg"></i>
                                                 </a>
                                             @else
-                                                <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate" data-value="{{ $group->id }}"
+                                                <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate mr-1" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Activate group">
                                                     <i class="bi bi-toggle-off fs-lg"></i>
                                                 </a>

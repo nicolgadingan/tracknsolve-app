@@ -49,7 +49,7 @@
                         Are you sure you want to proceed deleting <b id="gr-delt-name"></b>?
                     </div>
                     <div class="mb-1 p-4 pt-0 right">
-                        <button type="button" class="btn btn-light mb-2" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn btn-light mb-2 mr-2" data-bs-dismiss="modal" aria-label="Close">
                             Cancel
                         </button>
                         @if (auth()->user()->role == "admin")

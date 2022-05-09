@@ -30,11 +30,14 @@
                         <th>Username</th>
                         <th>Group</th>
                         <th class="right">Joined</th>
+                        @if ($uinf->role == 'super')
+                            <th></th>
+                        @endif
                     </thead>
                     <tbody>
                         @if (count($users) > 0)
                             @foreach ($users as $user)
-                                <tr>
+                                <tr class="align-middle">
                                     <td>
                                         <a href="/users/{{ $user->id }}" class="link-marine us-view-trigger">
                                             <strong>
@@ -73,6 +76,15 @@
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($user->created_at)->diffForHumans() }}
                                     </td>
+                                    @if ($uinf->role == 'super')
+                                        <td class="right">
+                                            <a href="#delete-{{ $user->slug }}" class="link-danger fs-lg us-del-user" data-value="{{ $user->id }}"
+                                                aria-label="{{ $user->first_name . ' ' . $user->last_name }}" data-bs-toggle="tooltip" data-bs-placement="left"
+                                                title="Delete user">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else
@@ -87,10 +99,6 @@
                 <div class="p-3 pt-0 d-flex justify-content-end">
                     {{ $users->links() }}
                 </div>
-                <form id="us-delete-form" action="" method="POST">
-                    @method("DELETE")
-                    @csrf
-                </form>
             </div>
         </div>
     </div>
@@ -101,7 +109,20 @@
         return new bootstrap.Popover(popoverTriggerEl);
     });
 
-    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
-        trigger: 'focus'
+    $(document).ready(function() {
+        $("body").on("click", ".us-del-user", function() {
+            var userId  =   $(this).data("value"),
+                userNm  =   $(this).attr("aria-label"),
+                modal   =   $("#us-delt-user-modal"),
+                label   =   $("#us-delt-user-label"),
+                uName   =   $("#us-delt-user-name"),
+                uForm   =   $("#us-delt-user-form");
+
+            label.text("Deleting " + userNm);
+            uName.text(userNm);
+            uForm.attr("action", "/groups/" + userId);
+
+            modal.modal("show");
+        });
     });
 </script>

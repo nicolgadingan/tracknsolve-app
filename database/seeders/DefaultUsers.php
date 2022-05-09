@@ -17,7 +17,7 @@ class DefaultUsers extends Seeder
      */
     public function run()
     {
-        $now    =   Carbon::carbon()->now();
+        $now    =   \Carbon\Carbon::now();
 
         DB::table('users')->insert([
             'role'              =>  'admin',

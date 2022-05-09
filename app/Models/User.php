@@ -173,7 +173,7 @@ class User extends Authenticatable
         $delete =   false;
         $backup =   '';
 
-        $this->utils->loggr('Action: Archiving user.', 0);
+        $this->utils->loggr('Action > Archiving user.', 0);
 
         try {
             
@@ -193,15 +193,14 @@ class User extends Authenticatable
                             ]);
 
         } catch (\Throwable $th) {
-        
-            $this->utils->loggr(json_encode([
-                                    'result'    =>  $backup,
-                                    'error'     =>  $th
-                                ]), 0);
+
+            report($th);
+         
+            $this->utils->loggr('Result > ' . $backup, 0);
 
         }
 
-        $this->utils->loggr('Action: Deleting user.', 0);
+        $this->utils->loggr('Action > Deleting user.', 0);
 
         try {
             
@@ -209,11 +208,10 @@ class User extends Authenticatable
             $delete    =   $user->delete();
 
         } catch (\Throwable $th) {
+
+            report($th);
             
-            $this->utils->loggr(json_encode([
-                'result'    =>  $delete,
-                'error'     =>  $th
-            ]), 0);
+            $this->utils->loggr('Result > ' . $delete, 0);
 
         }
         
@@ -235,6 +233,33 @@ class User extends Authenticatable
         
         return $check;
         
+    }
+
+    /**
+     * Check if user is managing a group
+     * 
+     * @param   int $id
+     * @return  int $managing
+     */
+    public function isManaging($id)
+    {
+        $managing   =   0;
+
+        try {
+            $groups     =   Group::where('owner', $id)
+                            ->get();
+
+        } catch (\Throwable $th) {
+            report($th);
+
+        }
+
+        if (count($groups) > 0) {
+            $managing   =   1;
+
+        }
+        
+        return $managing;
     }
 
     /**
