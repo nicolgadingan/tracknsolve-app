@@ -22,7 +22,7 @@
                     {{ ( $role != "admin" ) ? 'disabled' : '' }}>
                     @if (count($groups) > 0)
                         @foreach ($groups as $group)
-                            <option value="{{ $group->id }}" {{ $group_id == $group->id ? 'selected' : '' }}>
+                            <option value="{{ $group->id }}">
                                 {{ $group->name }}
                             </option>
                         @endforeach
