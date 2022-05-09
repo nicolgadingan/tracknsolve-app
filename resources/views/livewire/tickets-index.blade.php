@@ -23,8 +23,8 @@
                         <th>Priority</th>
                         <th>Title</th>
                         <th>Group</th>
-                        <th>Reporter</th>
                         <th>Assignee</th>
+                        <th>Reporter</th>
                         <th class="right">Created</th>
                     </thead>
                     <tbody>
@@ -81,9 +81,6 @@
                                         {{ $ticket->group_name }}
                                     </td>
                                     <td>
-                                        {{ $ticket->reporter_fn . ' ' . $ticket->reporter_ln }}
-                                    </td>
-                                    <td>
                                         @php
                                             if ($ticket->assignee_fn != null ||
                                                     $ticket->assignee_fn != '') {
@@ -93,6 +90,9 @@
                                             }
                                         @endphp
                                         {{ $assignee }}
+                                    </td>
+                                    <td>
+                                        {{ $ticket->reporter_fn . ' ' . $ticket->reporter_ln }}
                                     </td>
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($ticket->created)->diffForHumans() }}

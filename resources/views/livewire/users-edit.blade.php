@@ -76,6 +76,7 @@
                         default:
                             $stutus_text    =   'Unknown';
                             break;
+
                     }
                 @endphp
                 <input type="text" class="form-control" name="status" id="us-edit-status"
