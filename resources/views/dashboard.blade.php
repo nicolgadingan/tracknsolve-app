@@ -153,49 +153,21 @@
                 <div class="p-3 pb-2">
                     <span class="fg-marine fs-sm">BREAKDOWN</span>
                 </div>
-                <div class="card card-body border-round borderless bg-cheese">
-                    <a href="#unassigned" class="btn btn-light mb-2">
-                        <div class="d-flex justify-content-between">
-                            <span class="fg-primary">
-                                <i class="bi bi-clipboard-fill"></i>
-                                Unassigned
-                            </span>
-                            <span>{{ $ua }}</span>
-                        </div>
-                    </a>
-                    <a href="#in-progress" class="btn btn-light mb-2">
-                        <div class="d-flex justify-content-between">
-                            <span class="fg-warning">
-                                <i class="bi bi-clipboard-plus-fill"></i>
-                                In Progress
-                            </span>
-                            <span>{{ $ip }}</span>
-                        </div>
-                    </a>
-                    <a href="#on-hold" class="btn btn-light mb-2">
-                        <div class="d-flex justify-content-between">
-                            <span class="fg-secondary">
-                                <i class="bi bi-clipboard-minus-fill"></i>
-                                On Hold
-                            </span>
-                            <span>{{ $oh }}</span>
-                        </div>
-                    </a>
-                    <a href="#resolved" class="btn btn-light mb-3">
-                        <div class="d-flex justify-content-between">
-                            <span class="fg-success">
-                                <i class="bi bi-clipboard-check-fill"></i>
-                                Resolved
-                            </span>
-                            <span>{{ $rs }}</span>
-                        </div>
-                    </a>
-                    <div class="mb-3 right">
-                        <a href="/tickets/create" class="btn btn-marine shadow">
-                            New Ticket
-                        </a>
-                    </div>
+                <div class="card card-body border-round borderless pt-4 pb-4" id="db-tickets-breakdown">
                 </div>
+                <script>
+                    const chart = new Chartisan({
+                        el:     '#db-tickets-breakdown',
+                        url:    "@chart('dbTickets')",
+                        hooks:  new ChartisanHooks()
+                            .datasets('doughnut')
+                            .legend({
+                                position: 'bottom'
+                            })
+                            // .title('Tickets Breakdown')
+                            .padding(4)
+                    });
+                </script>
             </div>
         </div>
     </div>
