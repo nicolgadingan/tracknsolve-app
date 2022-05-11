@@ -71,6 +71,18 @@ body {
     font-size: smaller;
 }
 
+/* DASHBOARD */
+#db-ticket-chart {
+    padding: 2rem 1.25rem;
+
+    background: hsla(175, 15%, 86%, 1);
+    background: linear-gradient(315deg, hsla(175, 15%, 86%, 1) 0%, hsla(180, 36%, 73%, 1) 100%);
+    background: -moz-linear-gradient(315deg, hsla(175, 15%, 86%, 1) 0%, hsla(180, 36%, 73%, 1) 100%);
+    background: -webkit-linear-gradient(315deg, hsla(175, 15%, 86%, 1) 0%, hsla(180, 36%, 73%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#D6E1E0", endColorstr="#A0D2D2", GradientType=1 );
+}
+
+
 .side-nav .side-nav-item {
     text-align: left;
     padding-left: 1rem;
@@ -534,4 +546,11 @@ label{
 
 .invalid-feedback {
     font-size: small;
+}
+
+
+/* SCREEN SIZE - Desktop */
+@media only screen 
+and (min-width : 1224px) {
+
 }

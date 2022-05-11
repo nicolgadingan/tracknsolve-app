@@ -23,14 +23,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Charts $charts)
+    public function boot()
     {
         // Add Bootstrap 5 for pagination style
         Paginator::useBootstrapFive();
-
-        // Registering charts
-        $charts->register([
-            \App\Charts\DashboardTickets::class
-        ]);
     }
 }

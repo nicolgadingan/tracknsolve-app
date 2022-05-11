@@ -6,8 +6,8 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9">
+        <div class="d-flex">
+            <div class="mb-3 flex-grow-1 pr-4">
                 <div class="p-3 pb-2">
                     <span class="fg-marine fs-sm">UNASSIGNED TICKETS</span>
                 </div>
@@ -126,48 +126,56 @@
                     </table>
                 </div>
             </div>
-            @php
-                $ua =   0;
-                $ip =   0;
-                $oh =   0;
-                $rs =   0;
-
-                foreach ($tkSummary as $summary) {
-                    switch ($summary->status) {
-                        case 'new':
-                            $ua =   $summary->tkcount;
-                            break;
-                        case 'in-progress':
-                            $ip =   $summary->tkcount;
-                            break;
-                        case 'on-hold':
-                            $oh =   $summary->tkcount;
-                            break;
-                        case 'resolved':
-                            $rs =   $summary->tkcount;
-                            break;
-                    }
-                }
-            @endphp
-            <div class="col-sm">
+            <div style="width: 25%; max-width: 350px;" class="pl-2">
                 <div class="p-3 pb-2">
-                    <span class="fg-marine fs-sm">BREAKDOWN</span>
+                    <span class="fg-marine fs-sm">TICKETS BREAKDOWN</span>
                 </div>
-                <div class="card card-body border-round borderless pt-4 pb-4" id="db-tickets-breakdown">
+                <div class="card card-body border-round borderless shadow-sm" id="db-ticket-chart">
+                    <canvas id="dbTicketsBreakdown" width="300" height="300" role="img"></canvas>
+                    <div class="p-2 center">
+                        <span class="fs-xl fg-dark">
+                            {{ array_sum($chartData['counts']) }}
+                        </span><br>
+                        <span>OVERALL</span>
+                    </div>
+                    <script>
+                        const ctx   =   document.getElementById("dbTicketsBreakdown").getContext("2d");
+                        const dbtb  =   new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: {!! json_encode($chartData['labels'], JSON_HEX_TAG) !!},
+                                datasets: [{
+                                    label: 'Tickets Breakdown',
+                                    data: {!! json_encode($chartData['counts'], JSON_HEX_TAG) !!},
+                                    backgroundColor: {!! json_encode($chartData['colors'], JSON_HEX_TAG) !!},
+                                    borderColor: {!! json_encode($chartData['colors'], JSON_HEX_TAG) !!},
+                                    borderWidth: 1,
+                                    hoverOffset: 3,
+                                }]
+                            },
+                            options: {
+                                layout: {
+                                    padding: {
+                                        top: 5,
+                                        right: 5,
+                                        bottom: 5,
+                                        left: 5
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    title: {
+                                        display: false,
+                                        text: 'All Tickets'
+                                    }
+                                }
+                            }
+                            
+                        });
+                    </script>
                 </div>
-                <script>
-                    const chart = new Chartisan({
-                        el:     '#db-tickets-breakdown',
-                        url:    "@chart('dbTickets')",
-                        hooks:  new ChartisanHooks()
-                            .datasets('doughnut')
-                            .legend({
-                                position: 'bottom'
-                            })
-                            // .title('Tickets Breakdown')
-                            .padding(4)
-                    });
-                </script>
             </div>
         </div>
     </div>
