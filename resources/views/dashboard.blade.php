@@ -15,6 +15,7 @@
                     <table class="table table-borderless table-hover">
                         <thead class="fg-white bg-marine-dark">
                             <th class="pt-3">Key</th>
+                            <th>Priority</th>
                             <th>Title</th>
                             <th>Reporter</th>
                             <th class="right">Created</th>
@@ -27,6 +28,9 @@
                                             <strong>
                                                 <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-marine">{{ $unassigned->tkey }}</a>
                                             </strong>
+                                        </td>
+                                        <td>
+                                            {{ Str::ucfirst($unassigned->priority) }}
                                         </td>
                                         <td>
                                             {{ $unassigned->title }}

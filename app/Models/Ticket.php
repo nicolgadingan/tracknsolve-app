@@ -182,6 +182,7 @@ class Ticket extends Model
                             ->where('assignee', null)
                             ->select(
                                 'tickets.id as tkey',
+                                'priority',
                                 'title',
                                 'reporter',
                                 'created_at'
