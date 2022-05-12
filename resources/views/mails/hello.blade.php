@@ -1,94 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>yortik.com</title>
     <style>
-        :root {
-            --cheese: #EAD2AC;
-            --forest: #9CAFB7;
-            --marine: #4281A4;
-            --marine-dark: #326986;
-            --forest-light: #bdcfd6;
-            --rose: #FE938C;
-            --primary:  #0d6efd;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            color: var(--marine);
-            background-color: var(--forest-light);
-        }
-
-        main {
-            padding: 1rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
-
-        .container {
-            border: 1px solid var(--forest);
-            border-radius: 2rem;
-            width: 450px;
-            background-color: white;
-            -webkit-box-shadow: 2px 3px 10px 2px rgba(28, 28, 28, 0.35);
-            box-shadow: 2px 3px 10px 2px rgba(28, 28, 28, 0.35);
-        }
-
-        .p-3 {
-            padding: 1.5rem;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .btn {
-            border: 1px solid var(--forest);
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.5rem;
-            background-color: var(--marine);
-            color: white;
-            font-size: large;
-        }
-
-        .btn:hover {
-            background-color: var(--marine-dark);
-        }
-
-        hr {
-            margin: 1.5rem 0rem;
-        }
-
-        .header {
-            background-color: var(--cheese);
-            border-top-left-radius: 2rem;
-            border-top-right-radius: 2rem;
-            padding-top: 1.5rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .link-holder {
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            hyphens: auto;
-            padding: 0.5rem;
-            font-family: monospace;
-            background-color: var(--forest-light);
-            border: 1px solid var(--forest);
-            color: var(--primary);
-            border-radius: 0.5rem;
-        }
-
+        :root{--cheese:#EAD2AC;--forest:#9CAFB7;--marine:#4281A4;--marine-dark:#326986;--forest-light:#bdcfd6;--rose:#FE938C;--primary:#0d6efd}body{font-family:monospace;color:var(--marine);background-color:var(--forest-light)}main{padding:1rem;display:flex;flex-direction:row;justify-content:center}.container{border:none;border-radius:.5rem;width:450px;background-color:#fff;padding-bottom:2rem}.p-3{padding:1.5rem}.center{text-align:center}.right{text-align:right}a{text-decoration:none}.btn{border:1px solid var(--forest);padding:.4rem .8rem;border-radius:.5rem;background-color:var(--marine);color:#fff;font-size:large}.btn:hover{background-color:var(--marine-dark)}.header{background-color:var(--cheese);border-top-left-radius:inherit;border-top-right-radius:inherit;padding-top:1.5rem;padding-bottom:.5rem}#link-holder{width:100%;background-color:var(--marine);color:#fff;padding:.25rem;border:none;border-radius:.25rem}
     </style>
 </head>
 
@@ -122,9 +37,7 @@
                     <b>Having trouble with the button?</b>
                     <br>Copy and paste below link on your browser"
                 </p>
-                <div id="link-holder">
-                    {{ Request::root() . '/user/verify/' . $mailData->emailVerify->token }}
-                </div>
+                <textarea id="link-holder">{{ Request::root() . '/user/verify/' . $mailData->emailVerify->token }}</textarea>
                 <p>
                     <b>Still having trouble?</b><br>Kindly reach out to your collegues / manager for assistance.
                 </p>

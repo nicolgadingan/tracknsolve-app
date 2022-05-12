@@ -28,7 +28,7 @@
             <a href="/reports" class="btn block side-nav-item {{ $whereami == 'reports' ? 'active' : '' }}">
                 <div class="d-flex justify-content-between">
                     <span>Reports</span>
-                    <i class="bi bi-archive-fill"></i>
+                    <i class="bi bi-clipboard-data-fill"></i>
                 </div>
             </a>
         </div>
