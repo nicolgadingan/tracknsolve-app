@@ -578,17 +578,32 @@ label{
 
 .has-icon-start > .has-icon-this {
     padding-left: 0.75rem;
-    color: var(--secondary);
+    color: var(--marine);
 }
 
 .has-icon-end > .has-icon-this {
-    padding-right: 0.75rem;
-    color: var(--secondary);
+    margin-right: 0.75rem;
+    right: 0;
+    color: var(--marine);
 }
 
 .btn-lg {
     max-height: 45px;
 }
+
+
+/* BUTTONS - OVERRIDE ::export */
+.btn-primary,
+.btn-primary:disabled {
+    background-color: var(--x-primary-m);
+    border: 1px solid var(--x-primary-m);
+}
+
+.btn-primary:hover {
+    background-color: var(--x-primary-d);
+    border: 1px solid var(--x-primary-m);
+}
+
 
 /* SCREEN SIZE - Desktop */
 @media only screen 

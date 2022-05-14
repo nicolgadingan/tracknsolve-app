@@ -7,19 +7,25 @@
                     <div class="row g-3">
                         <div class="col-sm">
                             <input type="hidden" wire:model="tkey" value="{{ $tkey }}">
-                            <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="tk-attachment"
-                                aria-describedby="attachment-button" aria-label="Upload" name="attachment" wire:model="attachment">
-                            @error('attachment')
-                                <span class="invalid-feedback">
-                                    {{ $message }}
-                                </span>
-                            @enderror
+                            <div class="has-icon has-icon-end">
+                                <input type="file" class="form-control has-icon-form @error('attachment') is-invalid @enderror" id="tk-attachment"
+                                    aria-describedby="attachment-button" aria-label="Upload" name="attachment" wire:model="attachment">
+                                @error('attachment')
+                                    <span class="invalid-feedback">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                                <div wire:loading wire:target="attachment" class="spinner-grow spinner-grow-sm has-icon-this" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-outline-secondary" type="submit" id="attachment-button" {{ ($attachment == '') ? 'disabled' : '' }}>Upload</button>
+                            <button class="btn btn-primary" type="submit" id="attachment-button" {{ ($attachment == '') ? 'disabled' : '' }}>
+                                Upload
+                            </button>
                         </div>
                     </div>
-                    <div class="p-2" wire:loading wire:target="attachment">Checking...</div>
                 </form>
             </div>
             <div class="mb-3">

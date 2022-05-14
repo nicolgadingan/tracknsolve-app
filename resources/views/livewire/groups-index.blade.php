@@ -73,12 +73,14 @@
                                         <td class="right">
                                             @if ($status == 'Active')
                                                 <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate mr-1" data-value="{{ $group->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Deactivate group">
+                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Group is Active.<br>Click to deactivate."
+                                                    data-bs-html="true">
                                                     <i class="bi bi-toggle-on fs-lg"></i>
                                                 </a>
                                             @else
                                                 <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate mr-1" data-value="{{ $group->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Activate group">
+                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Group is Inactive.<br> Click to activate."
+                                                    data-bs-html="true">
                                                     <i class="bi bi-toggle-off fs-lg"></i>
                                                 </a>
                                             @endif
