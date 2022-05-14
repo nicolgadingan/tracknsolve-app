@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Config;
 
 class Configs extends Seeder
 {
@@ -50,6 +51,19 @@ class Configs extends Seeder
             'created_by'        =>  '999',
             'created_at'        =>  \Carbon\Carbon::now()
         ]);
+
+        // Ticket Auto-close configuration
+        Config::firstOrCreate(
+            [
+                'config_name'   =>  'TK_AUTO_X_DAYS'
+            ],
+            [
+                'value'         =>  5,
+                'description'   =>  "Days identifier when a resolved ticket can be closed automatically.",
+                'created_by'    =>  '999',
+                'created_at'    =>  \Carbon\Carbon::now()
+            ]
+        );
 
     }
 }

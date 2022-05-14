@@ -165,6 +165,108 @@ class Ticket extends Model
     }
 
     /**
+     * Auto close tickets resolved after
+     * CONFIGS.TK_AUTO_X_DAYS (Value) days
+     * 
+     */
+    public function autoClose()
+    {
+        info('TICKETS.AUTOCLOSE > Started');
+        info('TICKETS.AUTOCLOSE > Getting auto-close date.');
+
+        $xdate      =   Config::where('config_name', 'TK_AUTO_X_DAYS')
+                            ->select(DB::raw('current_timestamp - interval configs.value day as cut_date'))
+                            ->first()
+                            ->cut_date;
+
+        info('TICKETS.AUTOCLOSE > Auto-close date is ' . $xdate . '.');
+        info('TICKETS.AUTOCLOSE > Checking tickets resolved prior ' . $xdate . '.');
+
+        try {
+            $tickets    =   DB::table('tickets as t')
+                            ->leftJoin('ticket_hists as h', 'h.ticket_id', '=', 't.id')
+                            ->select(
+                                't.id as tkey',
+                                't.status',
+                                't.priority',
+                                't.title',
+                                't.description',
+                                't.group_id as group',
+                                't.assignee',
+                                't.reporter',
+                            )
+                            ->where('t.status', 'resolved')
+                            ->where('h.status', 'resolved')
+                            ->where('h.created_at', '<', $xdate)
+                            ->get();
+            
+            info('TICKETS.AUTOCLOSE > Found ' . count($tickets) . ' tickets to auto-close.');
+            
+        } catch (\Throwable $th) {
+            info('TICKETS.AUTOCLOSE > ERROR: Unexpected.');
+            report($th);
+
+        }
+
+        // Check if needs to proceed
+        if (count($tickets) == 0) {
+            info('TICKETS.AUTOCLOSE > Terminating task.');
+            return true;
+        }
+
+        // Process closing of tickets
+        foreach ($tickets as $tk) {
+            $tmp            =   $tk;
+            $tmp->status    =   'closed';
+
+            // Create history
+            info('TICKETS.AUTOCLOSE > Adding history for ' . $tmp->tkey . '.');
+            try {
+                DB::table('ticket_hists')
+                    ->insert([
+                        'ticket_id'     =>  $tmp->tkey,
+                        'status'        =>  'closed',
+                        'priority'      =>  $tmp->priority,
+                        'title'         =>  $tmp->title,
+                        'description'   =>  $tmp->description,
+                        'group_id'      =>  $tmp->group,
+                        'assignee'      =>  $tmp->assignee,
+                        'reporter'      =>  $tmp->reporter,
+                        'created_by'    =>  99999,
+                        'created_at'    =>  \Carbon\Carbon::now()
+                    ]);
+
+                info('TICKETS.AUTOCLOSE > Added history.');
+
+            } catch (\Throwable $th) {
+                info('TICKETS.AUTOCLOSE > ERROR. Unexpected.');
+                report($th);
+            }
+
+            // Update reserves
+            $this->updReserves($tmp->tkey, $tmp->status);
+
+            // Close the ticket
+            info('TICKETS.AUTOCLOSE > Closing ticket ' . $tmp->tkey . '.');
+            try {
+                Ticket::where('id', $tmp->tkey)
+                        ->update([
+                            'status'        =>  'closed',
+                            'updated_at'    =>  \Carbon\Carbon::now()
+                        ]);
+                info('TICKETS.AUTOCLOSE > Ticket closed.');
+
+            } catch (\Throwable $th) {
+                info('TICKETS.AUTOCLOSE > ERROR. Unexpected.');
+                report($th);
+
+            }
+
+        }
+
+    }
+
+    /**
      * Update reserved key
      * 
      * @param   String  $tkey
@@ -172,12 +274,25 @@ class Ticket extends Model
      */
     protected function updReserves($tkey, $status)
     {
-        DB::table('reserves')
-            ->where('category', 'TICKET_KEY')
-            ->where('key_id', $tkey)
-            ->update([
-                'status'    =>  $status
-            ]);
+        $this->utils->loggr('TICKETS.UPDATERESERVES', 1);
+
+        $this->utils->loggr('Action > Updating ticket ' . $tkey . ' to ' . $status . '.' , 0);
+
+        try {
+            DB::table('reserves')
+                ->where('category', 'TICKET_KEY')
+                ->where('key_id', $tkey)
+                ->update([
+                    'status'    =>  $status
+                ]);
+
+            $this->utils->loggr('Result > Done.' , 0);
+                
+        } catch (\Throwable $th) {
+            $this->utils->loggr('Result > ERROR. Unexpected.' , 0);
+            report($th);
+            
+        }
     }
 
     /**
