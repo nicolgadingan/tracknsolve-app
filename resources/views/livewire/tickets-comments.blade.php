@@ -24,7 +24,7 @@
             @foreach ($comments as $comment)
                 <li class="list-group-item list-group-item-action">
                     <div class="d-flex justify-content-between">
-                        <a href="/users/{{ $comment->user->id }}" class="link-dark">
+                        <a href="/users/{{ $comment->user->id }}" class="link-primary">
                             <strong>
                                 {{ $comment->user->first_name . ' ' . $comment->user->last_name }}
                             </strong>

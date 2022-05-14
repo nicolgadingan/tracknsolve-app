@@ -102,7 +102,7 @@
         <div class="col-md">
             <div class="form-floating">
                 <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name"
-                    id="us-edit-last-name" maxlength="50" placeholder="Last name" value="{{ $last_name }}" wire:mode="last_name"
+                    id="us-edit-last-name" maxlength="50" placeholder="Last name" value="{{ $last_name }}" wire:model="last_name"
                     {{ ( $role != "admin" ) ? 'disabled' : '' }}>
                 @error('last_name')
                     <span class="invalid-feedback" role="alert">

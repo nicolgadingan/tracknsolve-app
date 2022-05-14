@@ -120,7 +120,7 @@ body {
     border-radius: 0.4rem;
     background-color: var(--secondary-light);
     display: block;
-    max-width: 100px;
+    max-width: 110px;
     min-width: 85px;
     text-align: center;
 }
@@ -602,6 +602,17 @@ label{
 .btn-primary:hover {
     background-color: var(--x-primary-d);
     border: 1px solid var(--x-primary-m);
+}
+
+
+/* LINK - OVERRIDE ::export */
+.link-primary,
+.link-primary:disabled {
+    color: var(--x-primary-m);
+}
+
+.link-primary:hover {
+    color: var(--x-primary-d);
 }
 
 
