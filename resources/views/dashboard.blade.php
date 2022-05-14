@@ -45,7 +45,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         No unassigned tickets.
                                     </td>
                                 </tr>
@@ -121,7 +121,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="6">
                                         You do not have assigned tickets.
                                     </td>
                                 </tr>

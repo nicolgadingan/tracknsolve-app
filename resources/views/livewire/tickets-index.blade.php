@@ -1,17 +1,52 @@
 <div class="container-fluid">
-    <div class="row mb-4">
+    <div class="d-flex justify-content-between mb-4">
+        <div id="tk-group-updates" class="d-flex">
+            <div class="mr-3">
+                <div class="search" style="width: 300px;">
+                    <input type="text" class="form-control search-input borderless" placeholder="Search..."
+                        name="" id="tk-search-ticket" wire:model="search">
+                </div>
+            </div>
+            <div class="mr-3">
+                <select class="form-select borderless border-round" wire:model="filter">
+                    <option value="">All</option>
+                    <option value="new">New</option>
+                    <option value="in-progress">In-Progress</option>
+                    <option value="on-hold">On-Hold</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
+        <div id="tk-group-actions">
+            <a href="/tickets/create" class="btn btn-marine shadow">
+                New Ticket
+            </a>
+        </div>
+    </div>
+    {{-- <div class="row mb-4">
         <div class="col-sm">
             <div class="search" style="max-width: 300px;">
                 <input type="text" class="form-control search-input borderless" placeholder="Search..."
                     name="" id="tk-search-ticket" wire:model="search">
             </div>
         </div>
-        <div class="col-sm right">
+        <div class="col-auto">
+            <div>
+                <select class="form-select">
+                    <option value="all">All</option>
+                    <option value="new">New</option>
+                    <option value="in-progres">In-Progress</option>
+                    <option value="on-hold">On-Hold</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-auto right">
             <a href="/tickets/create" class="btn btn-marine shadow">
                 New Ticket
             </a>
         </div>
-    </div>
+    </div> --}}
     @include('plugins.messages')
     <div class="row">
         <div class="col">

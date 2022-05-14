@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class TicketsIndex extends Component
 {
     public $search;
+    public $filter;
 
     public function render()
     {
@@ -24,6 +25,9 @@ class TicketsIndex extends Component
                                         ->orWhere('a.first_name', 'like', '%' . $search . '%')
                                         ->orWhere('a.last_name', 'like', '%' . $search . '%')
                                         ->orWhere('g.name', 'like', '%' . $search . '%');
+                                })
+                                ->when($this->filter, function($query, $filter) {
+                                    $query->where('t.status', $filter);
                                 })
                                 ->select(
                                     't.id as tkey',
