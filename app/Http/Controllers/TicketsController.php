@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class TicketsController extends Controller
 {
+    protected $utils;
 
     /**
      * Create a new controller instance.
@@ -21,6 +22,7 @@ class TicketsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->utils    =   new Utils;
     }
 
     /**
@@ -240,4 +242,61 @@ class TicketsController extends Controller
     {
         //
     }
+
+    /**
+     * Assign ticket to self
+     * 
+     * @param   String  $id
+     * @return  \Illuminate\Http\Response
+     */
+    public function get($id)
+    {
+        $this->utils->loggr('TICKETS.ASSIGNTOME', 1);
+        
+        $access         =   auth()->user();
+        $ticket         =   new Ticket();
+
+        $this->utils->loggr('Action > Getting ticket ' . $id . ' data.', 0);
+
+        $tdata          =   Ticket::where('id', $id)
+                                ->first()
+                                ->toArray();
+        $tdata['id']    =   $id;
+
+        $this->utils->loggr('Result > ' . json_encode($tdata), 0);
+
+        $this->utils->loggr('Action > Check assignment group.', 0);
+
+        if($tdata['group_id'] !=  $access->group_id) {
+            $this->utils->loggr('Result > Assigned to different group. Terminating process.', 0);
+            return back()->withErrors([
+                'message'   =>  'Assigning ticket ticket to yourself failed as it belongs to different group. Please check and try again.'
+            ]);
+
+        }
+
+        $this->utils->loggr("Result > Assigned to user's group.", 0);
+        $this->utils->loggr("Action > Assigning to " . $access->id . ".", 0);
+
+        $rcode  =   $ticket->assignToMe($tdata);
+
+        if ($rcode  ==  1) {
+            return redirect('/tickets/' . $id . '/edit')->with([
+                'success'   =>  'Ticket <b>' . $id . '</b> was successfully assigned to you.'
+            ]);
+
+        } elseif ($rcode    ==  0) {
+            return back()->withErrors([
+                'message'   =>  'Failed to assign the ticket to you for uknown cause. Kindly contact your administrator for further checking.'
+            ]);
+
+        } else {
+            return back()->withErrors([
+                'message'   =>  $this->utils->err->unexpected
+            ]);
+
+        }
+        
+    }
+
 }

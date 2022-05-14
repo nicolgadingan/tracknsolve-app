@@ -5,22 +5,49 @@
 @endsection
 
 @section('content')
+@php
+    $access =   auth()->user();
+@endphp
 <div class="container" id="tk-create-box">
     <div class="card card-body border-round border-forest-light pt-4">
         <div class="mb-2">
+            @if ($ticket->group_id == $access->group_id &&
+                                $ticket->assignee == '')
+                <form action="/tickets/{{ $ticket->tkey }}/get" method="POST" id="tk-assigntome-form" class="d-none">
+                    @csrf
+                    @method('PUT')
+                </form>
+                <script>
+                    $(document).ready(function() {
+
+                        $("body").on("click", "#tk-assigntome", function() {
+                            event.preventDefault();
+                            $("#tk-assigntome-form").submit();
+                        })
+
+                    });
+                </script>
+            @endif
             <form method="POST" action="/tickets/{{ $ticket->tkey }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-4 d-flex justify-content-between">
                     @includeIf('plugins.previous', ['path' => '/tickets'])
-                    <button type="submit" class="btn btn-marine btn-lg shadow" id="tk-update-submit">
-                        Update
-                    </button>
+                    <div class="d-flex">
+                        @if ($ticket->group_id == $access->group_id &&
+                                $ticket->assignee == '')
+                            <div class="mr-3">
+                                <button type="button" class="btn btn-lg btn-outline-secondary" id="tk-assigntome">
+                                    Get
+                                </button>
+                            </div>
+                        @endif
+                        <button type="submit" class="btn btn-marine btn-lg shadow" id="tk-update-submit">
+                            Update
+                        </button>
+                    </div>
                 </div>
                 @include('plugins.messages')
-                @php
-                    $access =   auth()->user();
-                @endphp
                 <h6 class="fg-forest">STATUS</h6>
                 <div class="row mb-3 g-3">
                     <div class="col-md">

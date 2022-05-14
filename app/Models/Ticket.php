@@ -115,8 +115,54 @@ class Ticket extends Model
     }
 
     /**
-     * Close ticket
+     * Assign to me
+     * 
+     * @param   Object  $tdata
+     * @return  Int     $isAssigned
      */
+    public function assignToMe($tdata)
+    {
+        $access     =   auth()->user();
+        $now        =   \Carbon\Carbon::now();
+        $isAssigned =   0;
+
+        try {
+            
+            $succes =   Ticket::where('id', $tdata['id'])
+                                ->update([
+                                    'status'        =>  'in-progress',
+                                    'group_id'      =>  $access->group_id,
+                                    'assignee'      =>  $access->id,
+                                    'updated_at'    =>  $now
+                                ]);
+
+            if ($succes) {
+                $isAssigned =   1;
+
+                $this->addHistory([
+                    'ticket_id'     =>  $tdata['id'],
+                    'status'        =>  $tdata['status'],
+                    'priority'      =>  $tdata['priority'],
+                    'title'         =>  $tdata['title'],
+                    'description'   =>  $tdata['description'],
+                    'group_id'      =>  $tdata['group_id'],
+                    'assignee'      =>  $access->id,
+                    'reporter'      =>  $tdata['reporter'],
+                    'created_by'    =>  $access->id,
+                    'created_at'    =>  $now
+                ]);
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $isAssigned =   255;
+            report($th);
+
+        }
+
+        return $isAssigned;
+    }
 
     /**
      * Update reserved key

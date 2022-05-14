@@ -8,13 +8,18 @@
                 </div>
             </div>
             <div class="mr-3">
-                <select class="form-select borderless border-round" wire:model="filter">
-                    <option value="">All</option>
-                    <option value="new">New</option>
-                    <option value="in-progress">In-Progress</option>
-                    <option value="on-hold">On-Hold</option>
-                    <option value="resolved">Resolved</option>
-                </select>
+                <div class="has-icon has-icon-start">
+                    <select class="form-select borderless border-round has-icon-form" wire:model="filter">
+                        <option value="">All</option>
+                        <option value="new">New</option>
+                        <option value="in-progress">In-Progress</option>
+                        <option value="on-hold">On-Hold</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                    <span class="has-icon-this">
+                        <i class="bi bi-clipboard-check fs-re"></i>
+                    </span>
+                </div>
             </div>
         </div>
         <div id="tk-group-actions">
@@ -23,34 +28,10 @@
             </a>
         </div>
     </div>
-    {{-- <div class="row mb-4">
-        <div class="col-sm">
-            <div class="search" style="max-width: 300px;">
-                <input type="text" class="form-control search-input borderless" placeholder="Search..."
-                    name="" id="tk-search-ticket" wire:model="search">
-            </div>
-        </div>
-        <div class="col-auto">
-            <div>
-                <select class="form-select">
-                    <option value="all">All</option>
-                    <option value="new">New</option>
-                    <option value="in-progres">In-Progress</option>
-                    <option value="on-hold">On-Hold</option>
-                    <option value="resolved">Resolved</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-auto right">
-            <a href="/tickets/create" class="btn btn-marine shadow">
-                New Ticket
-            </a>
-        </div>
-    </div> --}}
     @include('plugins.messages')
     <div class="row">
         <div class="col">
-            <div class="card card-body border-round shadow-sm p-0" style="overflow-x: auto;">
+            <div class="card card-body borderless border-round shadow-sm p-0" style="overflow-x: auto;">
                 <table class="table table-borderless table-hover">
                     <thead class="bg-marine-dark fg-white">
                         <th class="pt-3">Key</th>

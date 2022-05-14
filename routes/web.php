@@ -19,7 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+// TICKETS
 Route::resource('tickets', App\Http\Controllers\TicketsController::class)->except(['store']);
+Route::put('/tickets/{ticket}/get', [App\Http\Controllers\TicketsController::class, 'get']);
+
 Route::resource('users', App\Http\Controllers\UsersController::class)->except(['edit', 'update']);
 
 // GROUPS

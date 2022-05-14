@@ -37,7 +37,8 @@ html,
 body {
     color: var(--marine-dark);
     /* font-size: small; */
-    background-color: #e9ecef;
+    /* background-color: #e9ecef; */
+    background-color: #dae6eb;
 }
 
 /* AUTH LAYOUT */
@@ -190,6 +191,10 @@ body {
     color: var(--x-primary-m);
 }
 
+.bg-less {
+    background: none !important;
+}
+
 .bg-white {
     background-color: white;
 }
@@ -291,6 +296,10 @@ a.link-marine:active {
 
 .fs-xl {
     font-size: x-large;
+}
+
+.fs-2l {
+    font-size: xx-large;
 }
 
 
@@ -548,6 +557,38 @@ label{
     font-size: small;
 }
 
+/* ICON POSITIONING */
+.has-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.has-icon-start > .has-icon-form {
+    padding-left: 2.25rem;
+}
+
+.has-icon-end > .has-icon-form {
+    padding-right: 2.25rem;
+}
+
+.has-icon > .has-icon-this {
+    position: absolute;
+}
+
+.has-icon-start > .has-icon-this {
+    padding-left: 0.75rem;
+    color: var(--secondary);
+}
+
+.has-icon-end > .has-icon-this {
+    padding-right: 0.75rem;
+    color: var(--secondary);
+}
+
+.btn-lg {
+    max-height: 45px;
+}
 
 /* SCREEN SIZE - Desktop */
 @media only screen 
