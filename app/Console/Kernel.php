@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Models\Ticket;
+use Illuminate\Support\Stringable;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -16,6 +19,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        /**
+         * Tickets - Auto close of resolved tickets based on
+         * config TK_AUTO_X_DAYS
+         */
+        $schedule->call(function() {
+            $ticket =   new Ticket();
+            $ticket->autoClose();
+        })
+        ->everyTenMinutes();
     }
 
     /**
