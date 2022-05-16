@@ -149,6 +149,18 @@ body {
     color: white;
 }
 
+.dot-dark {
+    background-color: var(--x-secondary-d);
+    border-color: var(--bs-dark);
+    color: white;
+}
+
+.dot-purple {
+    background-color: var(--x-purple-m);
+    border-color: var(--x-purple-d);
+    color: white;
+}
+
 
 /* COLORS */
 .fg-marine {

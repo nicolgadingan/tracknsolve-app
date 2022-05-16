@@ -64,7 +64,7 @@
                                                     $theme  =   'warning';
                                                     break;
                                                 case 'on-hold':
-                                                    $theme  =   'secondary';
+                                                    $theme  =   'purple';
                                                     break;
                                                 case 'resolved':
                                                     $theme  =   'success';
