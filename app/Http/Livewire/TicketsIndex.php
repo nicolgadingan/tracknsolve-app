@@ -42,7 +42,20 @@ class TicketsIndex extends Component
                                     't.created_at as created'
                                 )
                                 ->orderBy('t.created_at', 'desc')
-                                ->paginate(10)
+                                ->paginate(10),
+            'statuses'  =>  DB::table('tickets')
+                                ->select(DB::raw('distinct status'))
+                                ->orderBy(
+                                    DB::raw(
+                                        "case when status = 'new' then 1 " .
+                                        "when status = 'in-progress' then 2 " .
+                                        "when status = 'on-hold' then 3 " .
+                                        "when status = 'resolved' then 4 " .
+                                        "else 9 " .
+                                        "end"
+                                    )
+                                )
+                                ->get()
         ]);
     }
 }

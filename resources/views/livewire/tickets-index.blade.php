@@ -11,10 +11,11 @@
                 <div class="has-icon has-icon-start">
                     <select class="form-select borderless border-round has-icon-form" wire:model="filter">
                         <option value="">All</option>
-                        <option value="new">New</option>
-                        <option value="in-progress">In-Progress</option>
-                        <option value="on-hold">On-Hold</option>
-                        <option value="resolved">Resolved</option>
+                        @if (count($statuses) > 0)
+                            @foreach ($statuses as $filter)
+                                <option value="{{ $filter->status }}">{{ Str::ucfirst($filter->status) }}</option>
+                            @endforeach
+                        @endif
                     </select>
                     <span class="has-icon-this">
                         <i class="bi bi-clipboard-check fs-re"></i>
