@@ -1,25 +1,26 @@
 <div>
     <h6 class="fg-forest">COMMENTS</h6>
-    <div class="mb-2">
-        <form wire:submit.prevent="postComment">
-            <div class="row g-3">
-                <div class="col-md">
-                    <textarea name="comment" id="tk-comment" cols="30" rows="2" placeholder="Type your comment here..."
-                        class="form-control @error('comment') is-invalid @enderror" wire:model="comment"></textarea>
-                    @error('comment')
-                        <span class="invalid-feedback">
-                            {{ $message }}
-                        </span>                
-                    @enderror
+    @if ($status != 'closed')
+        <div class="mb-3">
+            <form wire:submit.prevent="postComment">
+                <div class="row g-3">
+                    <div class="col-md">
+                        <textarea name="comment" id="tk-comment" cols="30" rows="2" placeholder="Type your comment here..."
+                            class="form-control @error('comment') is-invalid @enderror" wire:model="comment"></textarea>
+                        @error('comment')
+                            <span class="invalid-feedback">
+                                {{ $message }}
+                            </span>                
+                        @enderror
+                    </div>
+                    <div class="col-sm-auto align-self-end">
+                        <button class="btn btn-primary" type="submit">Post</button>
+                    </div>
                 </div>
-                <div class="col-sm-auto">
-                    <button class="btn btn-primary" type="submit">Post</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <hr>
-    <ul class="list-group list-group-flush fs-sm">
+            </form>
+        </div>
+    @endif
+    <ul class="list-group fs-sm">
         @if(count($comments) > 0)
             @foreach ($comments as $comment)
                 <li class="list-group-item list-group-item-action">

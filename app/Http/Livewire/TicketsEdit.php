@@ -12,6 +12,7 @@ class TicketsEdit extends Component
 {
     public $group;
     public $assignee;
+    public $status;
 
     public function mount()
     {

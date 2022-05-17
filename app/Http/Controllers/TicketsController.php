@@ -34,10 +34,10 @@ class TicketsController extends Controller
     {
         // $user   =   auth()->user();
         $ticket     =   new Ticket();
-        $tickets    =   $ticket->allTickets();
+        // $tickets    =   $ticket->allTickets();
 
         return view('tickets.index')->with([
-            'tickets'   =>  $tickets
+            // 'tickets'   =>  $tickets
         ]);
     }
 

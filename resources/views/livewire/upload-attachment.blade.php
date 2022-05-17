@@ -2,32 +2,34 @@
     <h6 class="fg-forest">ATTACHMENTS</h6>
     <div class="row mb-3">
         <div class="col-md-6">
-            <div class="mb-3">
-                <form wire:submit.prevent="save">
-                    <div class="row g-3">
-                        <div class="col-sm">
-                            <input type="hidden" wire:model="tkey" value="{{ $tkey }}">
-                            <div class="has-icon has-icon-end">
-                                <input type="file" class="form-control has-icon-form @error('attachment') is-invalid @enderror" id="tk-attachment"
-                                    aria-describedby="attachment-button" aria-label="Upload" name="attachment" wire:model="attachment">
-                                @error('attachment')
-                                    <span class="invalid-feedback">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                                <div wire:loading wire:target="attachment" class="spinner-grow spinner-grow-sm has-icon-this" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+            @if ($status != 'closed')
+                <div class="mb-3">
+                    <form wire:submit.prevent="save">
+                        <div class="row g-3">
+                            <div class="col-sm">
+                                <input type="hidden" wire:model="tkey" value="{{ $tkey }}">
+                                <div class="has-icon has-icon-end">
+                                    <input type="file" class="form-control has-icon-form @error('attachment') is-invalid @enderror" id="tk-attachment"
+                                        aria-describedby="attachment-button" aria-label="Upload" name="attachment" wire:model="attachment">
+                                    @error('attachment')
+                                        <span class="invalid-feedback">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                    <div wire:loading wire:target="attachment" class="spinner-grow spinner-grow-sm has-icon-this" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary" type="submit" id="attachment-button" {{ ($attachment == '') ? 'disabled' : '' }}>
+                                    Upload
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <button class="btn btn-primary" type="submit" id="attachment-button" {{ ($attachment == '') ? 'disabled' : '' }}>
-                                Upload
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            @endif
             <div class="mb-3">
                 @if (count($files) > 0)
                     <input type="hidden" wire:model="xfile" id="tk-delatt-id">

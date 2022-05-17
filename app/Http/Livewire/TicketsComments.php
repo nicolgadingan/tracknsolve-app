@@ -10,6 +10,7 @@ class TicketsComments extends Component
 {
     public $tkey;
     public $comment;
+    public $status;
     protected $comments;
 
     public function mount()

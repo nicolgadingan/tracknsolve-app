@@ -42,9 +42,11 @@
                                 </button>
                             </div>
                         @endif
-                        <button type="submit" class="btn btn-marine btn-lg shadow" id="tk-update-submit">
-                            Update
-                        </button>
+                        @if ($ticket->status != 'closed')
+                            <button type="submit" class="btn btn-marine btn-lg shadow" id="tk-update-submit">
+                                Update
+                            </button>
+                        @endif
                     </div>
                 </div>
                 @include('plugins.messages')
@@ -100,7 +102,8 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <select name="priority" id="tk-upd-priority" wire:model="priority" class="form-select @error('priority') is-invalid @enderror">
+                            <select name="priority" id="tk-upd-priority" wire:model="priority" class="form-select @error('priority') is-invalid @enderror"
+                                @if($ticket->status == 'closed') disabled @endif>
                                 <option value="urgent" {{ ( $ticket->priority == 'urgent' ) ? 'selected' : '' }}>Urgent</option>
                                 <option value="important" {{ ( $ticket->priority == 'important' ) ? 'selected' : '' }}>Important</option>
                                 <option value="task" {{ ( $ticket->priority == 'task' ) ? 'selected' : '' }}>Task</option>
@@ -116,17 +119,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <select name="status" id="tk-upd-status" class="form-select @error('status') is-invalid @enderror" wire:model="status">
+                            <select name="status" id="tk-upd-status" class="form-select @error('status') is-invalid @enderror" wire:model="status"
+                                @if($ticket->status == 'closed') disabled @endif>
                                 @if (old('status') == '' || old('status') == null)
                                     <option value="new" {{ ( $ticket->status == 'new' ) ? 'selected' : '' }}>New</option>
                                     <option value="in-progress" {{ ( $ticket->status == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
                                     <option value="on-hold" {{ ( $ticket->status == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
                                     <option value="resolved" {{ ( $ticket->status == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
+                                    <option value="closed" {{ ( $ticket->status == 'closed' ) ? 'selected' : '' }}>Closed</option>
                                 @else
                                     <option value="new" {{ ( old('status') == 'new' ) ? 'selected' : '' }}>New</option>
                                     <option value="in-progress" {{ ( old('status') == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
                                     <option value="on-hold" {{ ( old('status') == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
                                     <option value="resolved" {{ ( old('status') == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
+                                    <option value="closed" {{ (  old('status') == 'closed' ) ? 'selected' : '' }}>Closed</option>
                                 @endif
                             </select>
                             @error('status')
@@ -141,6 +147,7 @@
                 @livewire('tickets-edit', [
                     'group'     =>  $ticket->group_id,
                     'assignee'  =>  $ticket->assignee,
+                    'status'    =>  $ticket->status
                 ])
                 <h6 class="fg-forest">DETAILS</h6>
                 <div class="row mb-3">
@@ -148,7 +155,7 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
                                 placeholder="Title" value="{{ $ticket->title }}" maxlength="100" wire:model.debounce.1000ms="title"
-                                {{ ( $access->group_id != $ticket->user->group_id ) ? 'readonly' : '' }}>
+                                {{ ( $access->group_id != $ticket->user->group_id ) ? 'readonly' : '' }} @if($ticket->status == 'closed') disabled @endif>
                             @error('title')
                                 <span class="invalid-feedback">
                                     {{ $message }}
@@ -160,7 +167,8 @@
                             <textarea name="description" id="tk-upd-description" cols="30" rows="20"
                                 class="form-control @error('description') is-invalid @enderror" wire:model.debounce.1000ms="description"
                                 placeholder="Type the ticket description here.." style="min-height: 147px;" maxlength="4000"
-                                {{ ( $access->group_id != $ticket->user->group_id ) ? 'readonly' : '' }}>{!! $ticket->description !!}</textarea>
+                                {{ ( $access->group_id != $ticket->user->group_id ) ? 'readonly' : '' }}
+                                @if($ticket->status == 'closed') disabled @endif>{!! $ticket->description !!}</textarea>
                             @error('description')
                                 <span class="invalid-feedback">
                                     {{ $message }}
@@ -177,10 +185,16 @@
             </form>
         </div>
         <div class="mb-2">
-            @livewire('upload-attachment', ['tkey' => $ticket->tkey])
+            @livewire('upload-attachment', [
+                    'tkey'      =>  $ticket->tkey,
+                    'status'    =>  $ticket->status
+                ])
         </div>
         <div class="mb-3">
-            @livewire('tickets-comments', ['tkey' => $ticket->tkey])
+            @livewire('tickets-comments', [
+                    'tkey'      =>  $ticket->tkey,
+                    'status'    =>  $ticket->status
+                ])
         </div>
     </div>
 </div>

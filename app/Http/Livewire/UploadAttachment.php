@@ -17,6 +17,7 @@ class UploadAttachment extends Component
     public $files;
     public $xfile;
     public $notif;
+    public $status;
 
     public function mount()
     {
