@@ -63,6 +63,7 @@ class HomeController extends Controller
                                                 when t.status = 'in-progress' then 2
                                                 when t.status = 'on-hold' then 3
                                                 when t.status = 'resolved' then 4
+                                                else 9
                                             end")
                             ->get();
 
@@ -79,10 +80,13 @@ class HomeController extends Controller
                     $colors[]   =   '#ffda79';
                     break;
                 case 'on-hold':
-                    $colors[]   =   '#bcc1c7';
+                    $colors[]   =   '#706fd3';
                     break;
                 case 'resolved':
                     $colors[]   =   '#33d9b2';
+                    break;
+                default:
+                    $colors[]   =   '#84817a';
                     break;
             }
         }
