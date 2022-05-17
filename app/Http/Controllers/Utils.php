@@ -76,12 +76,18 @@ class Utils extends Controller
     /**
      * Event logger
      * 
-     * @param   String $data
-     * @param   Integer $opt
+     * @param   String  $data
+     * @param   Int     $opt
      */
     public function loggr($data, $opt)
     {
-        $user_id    =   auth()->user()->id;
+
+        try {
+            $user_id    =   auth()->user()->id;
+        } catch (\Throwable $th) {
+            $user_id    =   99999;
+        }
+        
         $dts        =   \Carbon\Carbon::now();
         $disk       =   'local';
         $file       =   'log/' . $user_id . '_' . $dts->format('Ymd') . '.log';
