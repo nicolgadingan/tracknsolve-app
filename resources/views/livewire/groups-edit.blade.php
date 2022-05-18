@@ -42,7 +42,7 @@
             <label for="gr-new-manager">Manager</label>
         </div>
     </div>
-    <div class="mb-1 p-4 pt-0 right">
+    <div class="mb-1 pl-4 pr-4 right">
     @if (auth()->user()->role == "admin")
         <button type="submit" class="btn btn-marine shadow-sm mb-2" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>
             Update
@@ -50,6 +50,30 @@
     @endif
     </div>
 </form>
+<div class="p-4 pt-0">
+    <hr>
+    <h6 class="fg-forest">MEMBERS</h6>
+    <ul class="list-group">
+        @if (count($members) > 0)
+            @foreach ($members as $member)
+                <li class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div></div>
+                        <i class="bi-check-circle-fill fg-{{ ($member->status == 'A') ? 'success' : 'secondary' }}"></i>
+                    </div>
+                </li>
+            @endforeach
+        @else
+            <li class="list-group-item list-group-item-action">
+                No members.
+            </li>
+        @endif
+    </ul>
+    <div hidden>
+        Group ID: {{ $group_id }} <br>
+        Members: {!! json_encode($group_id) !!}
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -58,9 +82,10 @@
                 modal   =   $("#gr-edit-group-form");
 
             @this.group_id  =   gval;
+            @this.reload();
             modal.modal("show");
 
-            @this.reload();
+            console.log(@this.members);
         });
     });
 </script>

@@ -25,6 +25,7 @@
                         <th class="pt-3">Name</th>
                         <th>Status</th>
                         <th>Manager</th>
+                        <th>Members</th>
                         <th class="right">Created</th>
                         @if ($uinf->role == 'admin')
                             <th></th>
@@ -65,6 +66,9 @@
                                     </td>
                                     <td>
                                         {{ $group->first_name . ' ' . $group->last_name }}
+                                    </td>
+                                    <td>
+                                        {{ $group->members }}
                                     </td>
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($group->created_at)->diffForHumans() }}

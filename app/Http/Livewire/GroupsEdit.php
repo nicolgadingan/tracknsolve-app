@@ -19,6 +19,8 @@ class GroupsEdit extends Component
     public $user;
     public $group;
 
+    public $members;
+
     protected $rules    =   [
                                 'group_name'    =>  'required|min:2|max:50',
                                 'manager_id'    =>  'required|exists:users,id'
@@ -30,6 +32,7 @@ class GroupsEdit extends Component
         $this->group        =   [ 'name' => '' ];
         $this->group_name   =   $this->group['name'];
         $this->manager_id   =   '';
+        $this->members      =   [];
     }
 
     /**
@@ -48,6 +51,17 @@ class GroupsEdit extends Component
         $this->group        =   Group::where('id', $this->group_id)
                                     ->first()
                                     ->toArray();
+
+        // Get members
+        $this->members      =   User::where('group_id', '=', $this->group_id)
+                                    ->select(
+                                        'id as uid',
+                                        'first_name',
+                                        'last_name',
+                                        'role',
+                                        'status'
+                                    )
+                                    ->get();
 
         // Fetch managers
         $this->managers     =   User::whereIn('role', array('admin', 'manager'))
