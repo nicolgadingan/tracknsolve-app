@@ -125,8 +125,13 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="p-3 pt-0 right">
-                    {{ $tickets->links() }}
+                <div class="p-3 pt-0 d-flex justify-content-between">
+                    <span class="fg-forest">
+                        {{ 'Showing ' . $tickets->total() . ' tickets' }}
+                    </span>
+                    <span>
+                        {{ $tickets->links() }}
+                    </span>
                 </div>
             </div>
         </div>

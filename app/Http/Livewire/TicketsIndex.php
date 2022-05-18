@@ -5,10 +5,26 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
+use Livewire\WithPagination;
+
 class TicketsIndex extends Component
 {
+    use WithPagination;
+    
+    protected $paginationTheme  =   'bootstrap';
+
     public $search;
     public $filter;
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedFilter()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
