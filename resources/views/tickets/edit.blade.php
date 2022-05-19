@@ -121,18 +121,21 @@
                         <div class="form-floating mb-3">
                             <select name="status" id="tk-upd-status" class="form-select @error('status') is-invalid @enderror" wire:model="status"
                                 @if($ticket->status == 'closed') disabled @endif>
-                                @if (old('status') == '' || old('status') == null)
-                                    <option value="new" {{ ( $ticket->status == 'new' ) ? 'selected' : '' }}>New</option>
-                                    <option value="in-progress" {{ ( $ticket->status == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
-                                    <option value="on-hold" {{ ( $ticket->status == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
-                                    <option value="resolved" {{ ( $ticket->status == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
+                                
+                                @if ($ticket->status == 'closed')
                                     <option value="closed" {{ ( $ticket->status == 'closed' ) ? 'selected' : '' }}>Closed</option>
                                 @else
-                                    <option value="new" {{ ( old('status') == 'new' ) ? 'selected' : '' }}>New</option>
-                                    <option value="in-progress" {{ ( old('status') == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
-                                    <option value="on-hold" {{ ( old('status') == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
-                                    <option value="resolved" {{ ( old('status') == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
-                                    <option value="closed" {{ (  old('status') == 'closed' ) ? 'selected' : '' }}>Closed</option>
+                                    @if (old('status') == '' || old('status') == null)
+                                        <option value="new" {{ ( $ticket->status == 'new' ) ? 'selected' : '' }}>New</option>
+                                        <option value="in-progress" {{ ( $ticket->status == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
+                                        <option value="on-hold" {{ ( $ticket->status == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
+                                        <option value="resolved" {{ ( $ticket->status == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
+                                    @else
+                                        <option value="new" {{ ( old('status') == 'new' ) ? 'selected' : '' }}>New</option>
+                                        <option value="in-progress" {{ ( old('status') == 'in-progress' ) ? 'selected' : '' }}>In Progress</option>
+                                        <option value="on-hold" {{ ( old('status') == 'on-hold' ) ? 'selected' : '' }}>On Hold</option>
+                                        <option value="resolved" {{ ( old('status') == 'resolved' ) ? 'selected' : '' }}>Resolved</option>
+                                    @endif
                                 @endif
                             </select>
                             @error('status')
