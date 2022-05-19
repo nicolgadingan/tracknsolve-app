@@ -113,8 +113,16 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="p-3 pt-0 d-flex justify-content-end">
-                    {{ $users->links() }}
+                <div class="p-3 pt-0 d-flex justify-content-between">
+                    <span class="fg-forest">
+                        @php
+                            $_tail   =   ($users->total() > 1) ? 's' : '';
+                        @endphp
+                        {{ 'Showing ' . $users->total() . ' user' . $_tail }}
+                    </span>
+                    <span>
+                        {{ $users->links() }}
+                    </span>
                 </div>
             </div>
         </div>
