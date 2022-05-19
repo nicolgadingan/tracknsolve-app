@@ -14,6 +14,7 @@ class UsersSearchUser extends Component
     protected $paginationTheme  =   'bootstrap';
 
     public $keyword;
+    public $fltrRole;
 
     /**
      * Mount the variables
@@ -35,8 +36,15 @@ class UsersSearchUser extends Component
                                                 ->orWhere('email', 'like', "%$keyword%")
                                                 ->orWhere('username', 'like', "%$keyword%");
                                 })
+                                ->when($this->fltrRole, function($query, $fltrRole) {
+                                    return $query->where('role', $fltrRole);
+                                })
                                 ->orderBy('first_name')
-                                ->paginate(10)
+                                ->paginate(10),
+                                
+            'roles'     =>  User::select('role')
+                                ->distinct()
+                                ->get()
         ]);
     }
 }

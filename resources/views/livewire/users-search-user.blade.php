@@ -2,14 +2,31 @@
     @php
         $uinf    =   auth()->user();
     @endphp
-    <div class="row mb-4"> 
-        <div class="col-sm">
-            <div class="search" style="max-width: 300px;">
-                <input type="text" class="form-control search-input borderless" placeholder="Search..."
-                    name="user_search" id="us-search-user" wire:model="keyword">
+    <div class="d-flex justify-content-between mb-4">
+        <div id="us-group-updates" class="d-flex">
+            <div class="mr-3">
+                <div class="search" style="max-width: 300px;">
+                    <input type="text" class="form-control search-input borderless" placeholder="Search..."
+                        name="user_search" id="us-search-user" wire:model="keyword">
+                </div>
+            </div>
+            <div class="mr-3">
+                <div class="has-icon has-icon-start">
+                    <select class="form-select borderless border-round has-icon-form" wire:model="fltrRole">
+                        <option value="">All</option>
+                        @if (count($roles) > 0)
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->role }}">{{ Str::ucfirst($role->role) }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <span class="has-icon-this">
+                        <i class="bi bi-person-bounding-box fs-re"></i>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-sm right">
+        <div id="us-group-actions">
             @if ($uinf->role == 'admin')
                 <a href="/users/create" class="btn btn-marine shadow">
                     New User
