@@ -106,7 +106,14 @@
                         @endif
                     </tbody>
                 </table>
-                {{ $data->links() }}
+                <div class="p-3 pt-0 d-flex justify-content-between">
+                    <span class="fg-forest">
+                        {{ 'Showing ' . $data->total() . ' groups' }}
+                    </span>
+                    <span>
+                        {{ $data->links() }}
+                    </span>
+                </div>
             </div>
         </div>
         <form action="" method="POST" id="gr-deac-form" class="d-none">
