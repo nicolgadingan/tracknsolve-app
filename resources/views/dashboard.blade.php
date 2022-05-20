@@ -36,7 +36,9 @@
                                             {{ $unassigned->title }}
                                         </td>
                                         <td>
-                                            {{ $unassigned->user->first_name . ' ' . $unassigned->user->last_name }}
+                                            <a href="/users/{{ $unassigned->user->id }}" class="link-marine">
+                                                {{ $unassigned->user->first_name . ' ' . $unassigned->user->last_name }}
+                                            </a>
                                         </td>
                                         <td class="right">
                                             {{ \Carbon\Carbon::create($unassigned->created_at)->diffForHumans() }}
@@ -112,7 +114,9 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $mytk->user->first_name . ' ' . $mytk->user->last_name }}
+                                            <a href="/users/{{ $mytk->user->id }}" class="link-marine">
+                                                {{ $mytk->user->first_name . ' ' . $mytk->user->last_name }}
+                                            </a>
                                         </td>
                                         <td class="right">
                                             {{ \Carbon\Carbon::create($mytk->created_at)->diffForHumans() }}
@@ -122,7 +126,7 @@
                             @else
                                 <tr>
                                     <td colspan="6">
-                                        You do not have assigned tickets.
+                                        No tickets assigned to you.
                                     </td>
                                 </tr>
                             @endif
