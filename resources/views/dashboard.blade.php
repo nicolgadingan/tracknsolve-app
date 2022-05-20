@@ -54,6 +54,16 @@
                             @endif
                         </tbody>
                     </table>
+                    <div class="p-3 pt-0 d-flex justify-content-between">
+                        <span class="fg-forest">
+                            @if (count($gpUnassigned) > 0)
+                                {{ 'Showing ' . $gpUnassigned->total() . ' tickets' }}
+                            @endif
+                        </span>
+                        <span>
+                            {{ $gpUnassigned->links() }}
+                        </span>
+                    </div>
                 </div>
                 <div class="p-3 pb-2">
                     <span class="fg-marine fs-sm">MY TICKETS</span>
@@ -132,6 +142,16 @@
                             @endif
                         </tbody>
                     </table>
+                    <div class="p-3 pt-0 d-flex justify-content-between">
+                        <span class="fg-forest">
+                            @if (count($myTickets) > 0)
+                                {{ 'Showing ' . $myTickets->total() . ' tickets' }}
+                            @endif
+                        </span>
+                        <span>
+                            {{ $myTickets->links() }}
+                        </span>
+                    </div>
                 </div>
             </div>
             <div style="width: 25%; max-width: 350px;" class="pl-2">
