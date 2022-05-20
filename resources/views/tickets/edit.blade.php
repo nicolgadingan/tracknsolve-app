@@ -51,7 +51,7 @@
                 </div>
                 @include('plugins.messages')
                 <h6 class="fg-forest">STATUS</h6>
-                <div class="row mb-3 g-3">
+                <div class="row g-3">
                     <div class="col-md">
                         <div class="form-floating mb-3">
                             <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $ticket->tkey }}" readonly wire:model="tkey">
@@ -65,6 +65,26 @@
                                 <label for="tk-upd-created-at">Create Date</label>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row mb-3 g-3">
+                    <div class="col-md">
+                        @if ($ticket->status == 'resolved' || $ticket->status == 'closed')
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="tk-resolved-date" value="{{ $ticket->resolved_at }}"
+                                    placeholder="Resolved Date" readonly>
+                                <label for="tk-resolved-date">Resolved Date</label>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-md">
+                        @if ($ticket->status == 'closed')
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="tk-closed-date" value="{{ $ticket->closed_at }}"
+                                    placeholder="Closed Date" readonly>
+                                <label for="tk-closed-date">Closed Date</label>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <h6 class="fg-forest">REPORTER</h6>

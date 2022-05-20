@@ -133,8 +133,21 @@ class TicketsController extends Controller
                                 'group_id',
                                 'assignee',
                                 'reporter',
-                                'created_at as ticket_created'
-                            )->first();
+                                'created_at as ticket_created',
+                                DB::raw("(select created_at
+                                            from ticket_hists
+                                           where ticket_id = tickets.id
+                                             and status = 'resolved'
+                                           order by id desc
+                                           limit 1) as resolved_at"),
+                                DB::raw("(select created_at
+                                            from ticket_hists
+                                           where ticket_id = tickets.id
+                                             and status = 'closed'
+                                           order by id desc
+                                           limit 1) as closed_at")
+                            )
+                            ->first();
 
         $reporter   =   User::find($ticket->reporter);
 
