@@ -51,8 +51,10 @@ class TicketsIndex extends Component
                                     'priority',
                                     'title',
                                     'g.name as group_name',
+                                    'r.id as reporter_id',
                                     'r.first_name as reporter_fn',
                                     'r.last_name as reporter_ln',
+                                    'a.id as assignee_id',
                                     'a.first_name as assignee_fn',
                                     'a.last_name as assignee_ln',
                                     't.created_at as created'

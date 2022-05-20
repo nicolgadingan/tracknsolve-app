@@ -106,10 +106,14 @@
                                                 $assignee   =   '';
                                             }
                                         @endphp
-                                        {{ $assignee }}
+                                        <a href="/users/{{ $ticket->assignee_id }}" class="link-marine">
+                                            {{ $assignee }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ $ticket->reporter_fn . ' ' . $ticket->reporter_ln }}
+                                        <a href="/users/{{ $ticket->reporter_id }}" class="link-marine">
+                                            {{ $ticket->reporter_fn . ' ' . $ticket->reporter_ln }}
+                                        </a>
                                     </td>
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($ticket->created)->diffForHumans() }}
