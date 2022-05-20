@@ -1,5 +1,12 @@
 <div>
-    <h6 class="fg-forest">ATTACHMENTS</h6>
+    <div class="d-flex align-items-center mb-2">
+        <h6 class="fg-forest mb-0">
+            ATTACHMENTS
+        </h6>
+        <span class="badge bg-cheese fg-marine fs-sm ml-2">
+            {{ count($files) }}
+        </span>
+    </div>
     <div class="row mb-3">
         <div class="col-md-6">
             @if ($status != 'closed')

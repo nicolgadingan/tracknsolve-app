@@ -1,5 +1,12 @@
 <div>
-    <h6 class="fg-forest">COMMENTS</h6>
+    <div class="d-flex align-items-center mb-2">
+        <h6 class="fg-forest mb-0">
+            COMMENTS
+        </h6>
+        <span class="badge bg-cheese fg-marine fs-sm ml-2">
+            {{ count($comments) }}
+        </span>
+    </div>
     @if ($status != 'closed')
         <div class="mb-3">
             <form wire:submit.prevent="postComment">
