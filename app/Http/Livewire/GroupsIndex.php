@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use App\Models\Group;
+use App\Models\User;
 
 class GroupsIndex extends Component
 {
@@ -17,29 +19,7 @@ class GroupsIndex extends Component
     public function render()
     {
         return view('livewire.groups-index', [
-            'data'    =>  DB::table('groups as g')
-                                ->leftJoin('users as u', 'u.id', '=', 'g.owner')
-                                ->leftJoin('users as m', 'm.group_id', '=', 'g.id')
-                                ->when($this->searchgroup, function($query, $searchgroup) {
-                                    $query->where('g.name', 'like', '%' . $searchgroup . '%');
-                                })
-                                ->select('g.id',
-                                        'g.name',
-                                        'g.status',
-                                        'g.slug',
-                                        'g.created_at',
-                                        'u.first_name',
-                                        'u.last_name',
-                                        DB::raw('count(1) as members'))
-                                ->groupBy('g.id',
-                                        'g.name',
-                                        'g.status',
-                                        'g.slug',
-                                        'g.created_at',
-                                        'u.first_name',
-                                        'u.last_name')
-                                ->orderBy('g.name')
-                                ->paginate(10)
+            'data'      =>  Group::paginate(10)
         ]);
     }
 }

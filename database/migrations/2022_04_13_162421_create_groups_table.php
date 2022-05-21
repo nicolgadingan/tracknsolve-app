@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('description', 255)->nullable();
             $table->string('status', 1);
             $table->integer('owner');
             $table->string('slug');

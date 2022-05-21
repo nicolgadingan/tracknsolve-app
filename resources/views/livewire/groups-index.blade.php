@@ -65,10 +65,12 @@
                                         </span>
                                     </td>
                                     <td>
-                                        {{ $group->first_name . ' ' . $group->last_name }}
+                                        <a href="/users/{{ $group->manager->id }}" class="link-marine">
+                                            {{ $group->manager->first_name . ' ' . $group->manager->last_name }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ $group->members }}
+                                        {{ count($group->members) }}
                                     </td>
                                     <td class="right">
                                         {{ \Carbon\Carbon::create($group->created_at)->diffForHumans() }}

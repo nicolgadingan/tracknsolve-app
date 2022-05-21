@@ -11,12 +11,8 @@
     {{-- New Group Form --}}
     <div class="modal fade" id="gr-new-group-form" tabindex="-1" aria-labelledby="gr-new-group-label"
         aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="d-flex justify-content-between p-3 align-items-center">
-                    <h5 class="modal-title" id="gr-new-group-label">New Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-round">
                 @livewire('groups-create', ['managers' => $managers])
             </div>
         </div>

@@ -1,5 +1,10 @@
-<form wire:submit.prevent="createGroup">
-    <div class="p-4 pt-0">
+<form wire:submit.prevent="saveGroup">
+    <div class="modal-header">
+        <h5 class="modal-title" id="gr-new-group-label">New Group</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body" x-data="{ remain: 255 }" x-init="remain = $refs.descn.maxLength; chars = $refs.descn.value.length">
+        @include('plugins.messages')
         <div class="form-floating mb-3">
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Gorup name"
                 id="gr-new-name" wire:model.debounce.500ms="name">
@@ -9,6 +14,14 @@
                 </span>
             @enderror
             <label for="gr-new-name">Group Name</label>
+        </div>
+        <div class="form-floating">
+            <textarea id="gr-new-description" cols="30" rows="20" class="form-control" maxlength="255" wire:model="descn"
+                x-ref="descn" x-on:keyup="chars = $refs.descn.value.length; remain = $refs.descn.maxLength - chars"></textarea>
+            <label for="gr-new-description">Description</label>
+        </div>
+        <div class="mb-3 pt-1 pl-2">
+            <span x-html="remain"></span> characters left
         </div>
         <div class="form-floating">
             <select id="gr-new-manager" class="form-select @error('manager') is-invalid @enderror" wire:model="manager"
@@ -30,7 +43,8 @@
             <label for="gr-new-manager">Manager</label>
         </div>
     </div>
-    <div class="mb-3 p-4 pt-0 right">
-        <button type="submit" class="btn btn-marine shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>Submit</button>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-marine btn-lg shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>Submit</button>
     </div>
+    <div hidden>{{ $errors }}</div>
 </form>

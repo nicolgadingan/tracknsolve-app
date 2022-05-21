@@ -147,6 +147,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Add relationship to Group as a manager
+     * 
+     */
+    public function managed()
+    {
+        return $this->hasMany(Group::class, 'owner', 'id');
+    }
+
+    /**
      * Add relationship to Comments
      */
     public function comments()

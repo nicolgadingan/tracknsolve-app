@@ -47,6 +47,46 @@ class Group extends Model
     }
 
     /**
+     * Create group
+     * 
+     * @param   Array   $data
+     * @return  Int     $result
+     */
+    public function createGroup($data)
+    {
+        $result =   0;
+        $userid =   auth()->user()->id;
+        $group  =   new Group();
+
+        info($data);
+
+        try {
+            $group->name        =   $data['name'];
+            $group->description =   $data['description'];
+            $group->status      =   'A';
+            $group->owner       =   $data['owner'];
+            $group->slug        =   $data['slug'];
+            $group->created_by  =   $userid;
+            $group->updated_by  =   $userid;
+
+            $group->save();
+
+            info($group);
+            
+            if (!empty($group)) {
+                $result =   1;
+            }
+
+        } catch (\Throwable $th) {
+            $result     =   255;
+            report($th);
+
+        }
+
+        return $result;
+    }
+
+    /**
      * Update Group details
      * 
      * @param   Array   $gdata
@@ -170,12 +210,21 @@ class Group extends Model
     }
 
     /**
-     * Add relationship to user
+     * Add relationship to user as members
      * 
      */
-    public function users()
+    public function members()
     {
-        return $this->hasMany(User::class, 'group_id');
+        return $this->hasMany(User::class, 'group_id', 'id');
+    }
+
+    /**
+     * Add relationship to user as owner
+     * 
+     */
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'owner');
     }
 
     /**

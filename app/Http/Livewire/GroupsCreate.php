@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\Utils;
 use Livewire\Component;
 use App\Models\Group;
 use Illuminate\Support\Str;
@@ -10,11 +11,13 @@ class GroupsCreate extends Component
 {
     public $managers;
     public $manager;
+    public $descn;
     public $name;
 
     protected $rules    =   [
-        'manager'   =>  'required',
-        'name'      =>  'required|min:2|unique:groups,name'
+        'name'          =>  'required|min:2|unique:groups,name',
+        'descn'         =>  'required|max:255',
+        'manager'       =>  'required'
     ];
 
     public function updated($input)
@@ -22,23 +25,45 @@ class GroupsCreate extends Component
         $this->validateOnly($input);
     }
 
-    public function createGroup()
+    public function saveGroup()
     {
-        $user               =   auth()->user();
-        $validated          =   $this->validate();
+        $utils                  =   new Utils;
+        $utils->loggr('GROUPS.CREATE', 1);
+        
+        $utils->loggr('Action > Validating inputs.', 0);
+        $validated              =   $this->validate();
 
-        $group              =   new Group();
-        $group->name        =   ucwords($validated['name']);
-        $group->status      =   'A';
-        $group->owner       =   $validated['manager'];
-        $group->slug        =   Str::slug($validated['name'], '-');
-        $group->created_by  =   $user->id;
-        $group->updated_by  =   $user->id;
-        $group->created_at  =   \Carbon\Carbon::now();
+        $utils->loggr('Result > Success.', 0);
 
-        $group->save();
+        $user                   =   auth()->user();
+        $group                  =   new Group();
+        
+        $data['name']           =   $validated['name'];
+        $data['description']    =   $validated['descn'];
+        $data['owner']          =   $validated['manager'];
+        $data['slug']           =   Str::slug($validated['name'], '-');
 
-        return redirect('/groups');
+        $utils->loggr('Data > ' . json_encode($data), 0);
+        $utils->loggr('Action > Creating group.', 0);
+        $created                =   $group->createGroup($data);
+
+        if ($created == 1) {
+            $utils->loggr('Result > Success.', 0);
+
+            return redirect('/groups')->with([
+                'success'   =>  'Group <b>' .  $data['name'] . '</b> was successfully created.'
+            ]);
+
+        } else if ($created == 0) {
+            $utils->loggr('Result > Failed. Check global logs for more details.', 0);
+            $this->addError('message', 'Creating your group failed. ' . $utils->err->calltheguy);
+
+        } else {
+            $utils->loggr('Result > ' . $utils->err->unexpected, 0);
+            $this->addError('message', $utils->err->unexpected);
+
+        }
+
     }
 
     public function render()

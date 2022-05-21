@@ -27,6 +27,7 @@
         crossorigin="anonymous"></script>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Charting library -->
     <script src="https://unpkg.com/chart.js@^2.9.3/dist/Chart.min.js"></script>

@@ -20,7 +20,8 @@ class Utils extends Controller
     {
         $this->err  =   (Object) ([
             'unexpected'    =>  'Unexpected error encountered while processing your request. Kindly report this to your administrator for checking.',
-            'nochange'      =>  'You do not seem to have an update on this record. Please check and try again.'
+            'nochange'      =>  'You do not seem to have an update on this record. Please check and try again.',
+            'calltheguy'    =>  'Kindly report this to your administrator for further checking.',
         ]);
     }
 
