@@ -45,27 +45,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -73,30 +52,23 @@ class GroupsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $canEdit    =   false;
+        $group      =   Group::find($id);
+        $user       =   new User();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if (empty($group)) {
+            abort(404);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        if (auth()->user()->role == 'admin') {
+            $canEdit = true;
+        }
+
+        return view('groups.view')->with([
+            'group'     =>  $group,
+            'canEdit'   =>  $canEdit,
+            'managers'  =>  $user->canManage()
+        ]);
     }
 
     /**

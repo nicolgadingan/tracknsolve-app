@@ -7,119 +7,129 @@ use Livewire\Component;
 use App\Models\Group;
 use App\Models\User;
 
-use Exception;
-
 class GroupsEdit extends Component
 {
-    public $managers;
-    public $manager_id;
-    public $group_name;
-    public $group_id;
-
-    public $user;
+    public $gid;
+    public $isEditable;
     public $group;
+    public $hasUpdate;
 
-    public $members;
+    // Inputs
+    public $group_name;
+    public $description;
+    public $manager_id;
 
-    protected $rules    =   [
-                                'group_name'    =>  'required|min:2|max:50',
-                                'manager_id'    =>  'required|exists:users,id'
-                            ];
+    // Validation
+    protected $rules        =   [
+        'group_name'        =>  'required',
+        'description'       =>  'required|max:255',
+        'manager_id'        =>  'required|exists:users,id'
+    ];
 
     public function mount()
     {
-        $this->user         =   new User;
-        $this->group        =   [ 'name' => '' ];
-        $this->group_name   =   $this->group['name'];
-        $this->manager_id   =   '';
-        $this->members      =   [];
+        $this->hasUpdate    =   false;
+        $this->isEditable   =   (auth()->user()->role == 'admin') ? true : false;
+
+        $this->group        =   Group::find($this->gid);
+
+        $this->group_name   =   $this->group->name;
+        $this->description  =   $this->group->description;
+        $this->manager_id   =   $this->group->owner;
+    }
+
+    public function updated($input)
+    {
+        $this->hasUpdate    =   true;
+        $this->validateOnly($input);
     }
 
     /**
-     * Reload the data collection
-     * This occurs when a group is selected for viewing
+     * When $group_name is updated
      * 
-     * @return  void
      */
-    public function reload()
+    public function updatedGroupName()
     {
-        // Intialize Utilities
+        if ($this->isGroupExist()) {
+            $this->addError('group_name',  'The group name ' . $this->group_name . ' already taken.');
+
+        }
+    }
+
+    /**
+     * Check group if exists
+     * 
+     */
+    public function isGroupExist()
+    {
+        $exists         =   false;
+
+        $groupExists    =   Group::where('name', '=', $this->group_name)
+                                ->where('id', '!=', $this->group->id)
+                                ->get();
+
+        if (count($groupExists) > 0) {
+            $exists     =   true;
+        }
+
+        return $exists;
+    }
+
+    /**
+     * Save group detail changes
+     * 
+     */
+    public function saveUpdate()
+    {
         $utils              =   new Utils;
-        $utils->loggr('GROUPS.VIEW', 1);
-
-        // Fetch group data
-        $this->group        =   Group::where('id', $this->group_id)
-                                    ->first()
-                                    ->toArray();
-
-        // Get members
-        $this->members      =   User::where('group_id', '=', $this->group_id)
-                                    ->select(
-                                        'id as uid',
-                                        'first_name',
-                                        'last_name',
-                                        'role',
-                                        'status'
-                                    )
-                                    ->get();
-
-        // Fetch managers
-        $this->managers     =   User::whereIn('role', array('admin', 'manager'))
-                                    ->where('status', 'A')
-                                    ->select('id'
-                                            ,'first_name'
-                                            ,'last_name')
-                                    ->orderBy('first_name')
-                                    ->get();
-
-        // Assignment
-        $this->group_name   =   $this->group['name'];
-        $this->manager_id   =   $this->group['owner'];
-
-        // Log fetched data
-        $utils->loggr(json_encode([
-                'data'  =>  [
-                                'groupName' =>  $this->group_name,
-                                'groupId'   =>  $this->group_id,
-                                'managerId' =>  $this->manager_id
-                            ]
-            ]), 0);
-    }
-
-    /**
-     * Validate every input
-     * 
-     */
-    public function updated($inputs)
-    {
-        $this->validateOnly($inputs);
-    }
-
-    public function updateGroup()
-    {
-        $utils      =   new Utils;
-        $group      =   new Group();
         $utils->loggr('GROUPS.UPDATE', 1);
+        $utils->loggr('Action > Validating inputs.', 0);
 
-        $validated  =   $this->validate();
-        $validated['group_id']  =   $this->group_id;
+        $validated          =   $this->validate();
 
-        $isUpdated  =   $group->updGroup($validated);
+        if ($this->isGroupExist()) {
+            $this->addError('group_name',  'The group name ' . $this->group_name . ' already taken.');
 
-        if ($isUpdated) {
-            return redirect('/groups')->with([
-                'success'   =>  'Group has been successfully updated.'
-            ]);
         } else {
-            $this->addError(
-                'message',  $utils->err->unexpected
-            );
+            $validated['group_id']      =   $this->gid;
+            $validated['group_name']    =   $this->group_name;
+            
+        }
+
+        $utils->loggr('Result > Validating completed.', 0);
+        $utils->loggr(json_encode([
+            'data'  =>  $validated
+        ]), 0);
+
+        $utils->loggr('Action > Updating group.', 0);
+        $group              =   new Group();
+        $isUpdated          =   $group->updGroup($validated);
+
+        if ($isUpdated == 1) {
+            $utils->loggr('Result > Success.', 0);
+            return redirect('/groups/' . $this->group->id)->with([
+                'success'   =>  'Group <b>' . $this->group_name . '</b> has been updated successfully.'
+            ]);
+
+        } else if ($isUpdated == 0) {
+            $utils->loggr('Result > Failed.', 0);
+            $this->addError('message', 'Failed to save your changes. ' . $utils->err->calltheguy);
+
+        } else {
+            $utils->loggr('Result > Unexpected Error.', 0);
+            $this->addError('message', $utils->err->unexpected);
+
         }
 
     }
 
     public function render()
     {
-        return view('livewire.groups-edit');
+        $user   =   new User();
+
+        return view('livewire.groups-edit', [
+            'members'       =>  $this->group->members,
+            'managers'      =>  $user->canManage()
+        ]);
     }
 }

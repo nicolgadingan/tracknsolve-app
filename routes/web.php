@@ -27,7 +27,7 @@ Route::put('/tickets/{ticket}/get', [App\Http\Controllers\TicketsController::cla
 Route::resource('users', App\Http\Controllers\UsersController::class)->except(['edit', 'update']);
 
 // GROUPS
-Route::resource('groups', App\Http\Controllers\GroupsController::class)->except(['store']);
+Route::resource('groups', App\Http\Controllers\GroupsController::class)->except(['store', 'edit', 'update']);
 Route::put('/groups/{group}/deactivate', [App\Http\Controllers\GroupsController::class, 'deactivate']);
 Route::put('/groups/{group}/activate', [App\Http\Controllers\GroupsController::class, 'activate']);
 

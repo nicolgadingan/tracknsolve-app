@@ -9,7 +9,7 @@
     $access =   auth()->user();
 @endphp
 <div class="container" id="tk-create-box">
-    <div class="card card-body border-round border-forest-light pt-4">
+    <div class="card card-body border-round borderless shadow-sm pt-4">
         <div class="mb-2">
             @if ($ticket->group_id == $access->group_id &&
                                 $ticket->assignee == '')

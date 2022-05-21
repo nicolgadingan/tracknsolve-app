@@ -58,8 +58,6 @@ class Group extends Model
         $userid =   auth()->user()->id;
         $group  =   new Group();
 
-        info($data);
-
         try {
             $group->name        =   $data['name'];
             $group->description =   $data['description'];
@@ -70,8 +68,6 @@ class Group extends Model
             $group->updated_by  =   $userid;
 
             $group->save();
-
-            info($group);
             
             if (!empty($group)) {
                 $result =   1;
@@ -94,18 +90,23 @@ class Group extends Model
      */
     public function updGroup($gdata)
     {
-        $isUpdated      =   false;
+        $retcode        =   0;
 
         try {
             
             $isUpdated  =   Group::where('id', $gdata['group_id'])
                                 ->update([
                                     'name'          =>  ucwords($gdata['group_name']),
+                                    'description'   =>  $gdata['description'],
                                     'slug'          =>  Str::slug($gdata['group_name']),
                                     'owner'         =>  $gdata['manager_id'],
                                     'updated_by'    =>  auth()->user()->id,
                                     'updated_at'    =>  \Carbon\Carbon::now()
                                 ]);
+
+            if ($isUpdated) {
+                $retcode    =   1;
+            }
 
             $this->utils->loggr(json_encode([
                     'data'      =>  $gdata,
@@ -113,7 +114,6 @@ class Group extends Model
                 ]), 0);
 
         } catch (\Throwable $th) {
-
             report($th);
 
             $this->utils->loggr(json_encode([
@@ -121,9 +121,11 @@ class Group extends Model
                     'isUpdated' =>  false
                 ]), 0);
 
+            $retcode        =   255;
+
         }
 
-        return $isUpdated;
+        return $retcode;
     }
 
     /**

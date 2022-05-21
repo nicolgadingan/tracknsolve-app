@@ -18,16 +18,6 @@
         </div>
     </div>
 
-    {{-- Edit Group Form --}}
-    <div class="modal fade" id="gr-edit-group-form" tabindex="-1" aria-labelledby="gr-edit-group-label"
-        aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                @livewire('groups-edit', ['managers' => $managers])
-            </div>
-        </div>
-    </div>
-
     {{-- Delete Group Form --}}
     <div class="modal fade" id="gr-delt-group-modal" tabindex="-1" aria-labelledby="gr-delt-group-label"
         aria-hidden="true" data-bs-backdrop="static">
@@ -57,10 +47,6 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    <div hidden>
-        Errors: {{ $errors }}
     </div>
 </div>
 @endsection

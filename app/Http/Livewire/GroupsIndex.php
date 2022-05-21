@@ -19,7 +19,8 @@ class GroupsIndex extends Component
     public function render()
     {
         return view('livewire.groups-index', [
-            'data'      =>  Group::paginate(10)
+            'data'      =>  Group::orderBy('name')
+                                ->paginate(10)
         ]);
     }
 }
