@@ -349,7 +349,7 @@ class Ticket extends Model
                                 'created_at'
                             )
                             ->orderBy('created_at')
-                            ->paginate(10, ['*'], 'unassignedPages');
+                            ->paginate(10, ['*'], 'unassignedPage');
 
         return $tickets;
     }
@@ -374,7 +374,7 @@ class Ticket extends Model
                                 'created_at'
                             )
                             ->orderBy('created_at')
-                            ->paginate(10, ['*'], 'assignedPages');
+                            ->paginate(10, ['*'], 'assignedPage');
 
         return $tickets;
     }

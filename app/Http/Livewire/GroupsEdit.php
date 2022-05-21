@@ -128,7 +128,7 @@ class GroupsEdit extends Component
         $user   =   new User();
 
         return view('livewire.groups-edit', [
-            'members'       =>  $this->group->members,
+            'members'       =>  $this->group->members->sortBy('first_name'),
             'managers'      =>  $user->canManage()
         ]);
     }

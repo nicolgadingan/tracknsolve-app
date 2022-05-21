@@ -65,17 +65,28 @@
             </div>
         </div>
         </form>
-        <h6 class="fg-forest pt-2" hidden>MEMBERS</h6>
-        <ul class="list-group" hidden>
+        <h6 class="fg-forest pt-2">MEMBERS</h6>
+        <ul class="list-group mb-4">
             @if (count($members) > 0)
                 @foreach ($members as $member)
+                    @php
+                        if ($member->status == 'A') {
+                            $ms_theme   =   'success';
+                            $ms_tip     =   'active';
+                        } else {
+                            $ms_theme   =   'secondary';
+                            $ms_tip     =   'inactive';
+                        }
+                        
+                    @endphp
                     <li class="list-group-item list-group-item-action">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
                                 <strong>{{ ucwords($member->first_name . ' ' . $member->last_name) }}</strong><br>
-                                <span>{{ $member }}</span>
+                                <span>{{ ucwords($member->role) }}</span>
                             </div>
-                            <i class="bi-check-circle-fill fg-{{ ($member->status == 'A') ? 'success' : 'secondary' }}"></i>
+                            <i class="bi-check-circle-fill fg-{{ $ms_theme }}"
+                                data-bs-toggle="tooltip" title="User account is {{ $ms_tip }}." data-bs-placement="left"></i>
                         </div>
                     </li>
                 @endforeach
