@@ -82,7 +82,10 @@
                                         </span>
                                     </td>
                                     <td>
-                                        {{ $user->email }}
+                                        <a href="mailto:{{ str_replace('.', '@@', $user->email) }}" class="link-marine"
+                                            onclick="this.href=this.href.replace('@@', '.')">
+                                            {{ $user->email }}
+                                        </a>
                                     </td>
                                     <td>
                                         {{ $user->username }}
