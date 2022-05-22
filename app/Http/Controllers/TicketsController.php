@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Arr;
 
 class TicketsController extends Controller
 {
@@ -244,6 +244,58 @@ class TicketsController extends Controller
         }
 
     }
+
+    /**
+     * Resolve ticket
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function resolve(Request $request, $id)
+    {
+        $utils      =   new Utils;
+        $ticket     =   new Ticket();
+        $access     =   auth()->user();
+
+        $utils->loggr('TICKETS.RESOLVE', 1);
+        
+        $utils->loggr('Action > Fetching data.', 0);
+        $tdata      =   Ticket::find($id);
+
+        $utils->loggr('Result > Completed.', 0);
+        $utils->loggr(json_encode(['data' => $tdata]), 0);
+
+        $tdata['tkey']      =   $id;
+        $tdata['status']    =   'resolved';
+        $tdata['assignee']  =   $access->id;
+
+        $tdata              =   Arr::except($tdata, ['id']);
+        
+        $utils->loggr('Action > Resolving ticket ' . $id . '.', 0);
+        $retcode    =   $ticket->resolveTicket($tdata);
+
+        if ($retcode == 1) {
+            $utils->loggr('Result > Success.', 0);
+            return redirect('/tickets/' . $id . '/edit')->with([
+                'success'   =>  'Ticket <b>' . $id . '</b> has been resolved.'
+            ]);
+
+        } else if ($retcode == 0) {
+            $utils->loggr('Result > Failed. ' . $utils->err->calltheguy, 0);
+            return back()->withErrors([
+                'message'   =>  'Failed to resolve ticket. ' . $utils->err->calltheguy
+            ]);
+
+        } else {
+            return back()->withErrors([
+                'message'   =>  $utils->err->unexpected
+            ]);
+
+        }
+        
+    }
+
 
     /**
      * Remove the specified resource from storage.

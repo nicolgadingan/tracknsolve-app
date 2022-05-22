@@ -165,6 +165,41 @@ class Ticket extends Model
     }
 
     /**
+     * Resolve ticket
+     * 
+     * @param   Object  $tdata
+     * @return  Int     $retcode
+     */
+    public function resolveTicket($tdata)
+    {
+        $now        =   \Carbon\Carbon::now();
+        $retcode    =   0;
+
+        try {
+            $isUpdated  =   Ticket::where('id', $tdata['tkey'])
+                            ->update([
+                                'status'        =>  $tdata['status'],
+                                'assignee'      =>  $tdata['assignee'],
+                                'updated_at'    =>  $now
+                            ]);
+
+            if ($isUpdated) {
+                $retcode    =   1;
+                $this->addHistory($tdata);
+
+            }
+            
+        } catch (\Throwable $th) {
+            $retcode    =   255;
+            report($th);
+            
+        }
+
+        return $retcode;
+    }
+
+
+    /**
      * Auto close tickets resolved after
      * CONFIGS.TK_AUTO_X_DAYS (Value) days
      * 

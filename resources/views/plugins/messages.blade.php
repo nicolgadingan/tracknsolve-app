@@ -18,21 +18,21 @@
 @endif
 
 @if (session('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success fs-sm">
         <strong>Hooray!</strong>
         {!! session('success') !!}
     </div>
 @endif
 
 @if (session('warning'))
-    <div class="alert alert-warning">
+    <div class="alert alert-warning fs-sm">
         <strong>Holy Guacamole!</strong>
         {!! session('warning') !!}
     </div>
 @endif
 
 @if (session('error'))
-    <div class="alert alert-danger">
+    <div class="alert alert-danger fs-sm">
         <strong>Oh Snap!</strong>
         {!! session('error') !!}
     </div>

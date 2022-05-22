@@ -19,12 +19,25 @@
                 </form>
                 <script>
                     $(document).ready(function() {
-
                         $("body").on("click", "#tk-assigntome", function() {
                             event.preventDefault();
                             $("#tk-assigntome-form").submit();
                         })
-
+                    });
+                </script>
+            @endif
+            @if ($ticket->status == 'in-progress' &&
+                    $ticket->assignee == $access->id)
+                <form method="POST" action="/tickets/{{ $ticket->tkey }}/resolve" id="tk-resolve-form" class="d-none">
+                    @csrf
+                    @method('PUT')
+                </form>
+                <script>
+                    $(document).ready(function() {
+                        $("body").on("click", "#tk-resolve-ticket", function() {
+                            event.preventDefault();
+                            $("#tk-resolve-form").submit();
+                        });
                     });
                 </script>
             @endif
@@ -34,6 +47,14 @@
                 <div class="mb-4 d-flex justify-content-between">
                     @includeIf('plugins.previous', ['path' => '/tickets'])
                     <div class="d-flex">
+                        @if ($ticket->status == 'in-progress' &&
+                                $ticket->assignee == $access->id)
+                            <div class="mr-3">
+                                <button type="button" class="btn btn-lg btn-outline-secondary shadow" id="tk-resolve-ticket">
+                                    Resolve
+                                </button>
+                            </div>
+                        @endif
                         @if ($ticket->group_id == $access->group_id &&
                                 $ticket->assignee == '')
                             <div class="mr-3">
