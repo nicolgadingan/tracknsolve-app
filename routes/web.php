@@ -39,3 +39,7 @@ Route::get('send-mail', [App\Http\Controllers\MailsController::class, 'index']);
 
 Route::get('/user/verify/{token}', [App\Http\Controllers\AccessesController::class, 'verification']);
 Route::post('/user/verify', [App\Http\Controllers\AccessesController::class, 'verify'])->name('verify');
+
+Route::get('/hello', function() {
+    return view('mails/hello');
+});
