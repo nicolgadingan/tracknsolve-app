@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifiedMail;
 
 class AccessesController extends Controller
 {
@@ -41,11 +43,11 @@ class AccessesController extends Controller
                 $message    =   '<b>Hmmm!</b><br>Your account has already been verified. Have you forgotten your password?';
             } else {
                 $status     =   'not-verified';
-                $message    =   "<b>Yay! Almost there.</b><br>Just confirm your password and you're ready to go.";
+                $message    =   "<b>Almost there!</b><br>Just confirm your password and you're ready to go.";
             }
         } else {
             $status     =   'not-exists';
-            $message    =   "<b>Oh no!</b><br>Your verification link has expired. Kindly contact your administrator to assist you.";
+            $message    =   "<b>Oh no!</b><br>Your verification link has expired. Kindly contact your administrator for assistance.";
         }
         
         return view('accesses.verify')->with([
@@ -90,6 +92,8 @@ class AccessesController extends Controller
                 $request->user_id . 'NOTFOUND.'
             ]);
         }
+
+        Mail::to($user->email)->send(new VerifiedMail($user));
 
         return redirect('/login')->with([
             'success'   =>  "You have successfully verified your account."

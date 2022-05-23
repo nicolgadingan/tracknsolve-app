@@ -12,8 +12,10 @@
         </div>
         @if ($status != "not-exists")
             @if ($status == "not-verified")
-                <div class="p-2 justify">
-                    <h5>{!! $message !!}</h5>
+                <div class="alert alert-primary">
+                    <div class="justify">
+                        {!! $message !!}
+                    </div>
                 </div>
                 @include('plugins.messages')
                 <form action="{{ route('verify') }}" method="POST">
@@ -44,14 +46,18 @@
                     </div>
                 </form>
             @else
-                <div class="p-2 justify">
-                    <h5>{!! $message !!}</h5>
+                <div class="alert alert-warning">
+                    <div class="justify">
+                        {!! $message !!}
+                    </div>
                 </div>
             @endif
         @else
-            <div class="p-2 justify">
-                <h5>{!! $message !!}</h5>
+        <div class="alert alert-warning">
+            <div class="justify">
+                {!! $message !!}
             </div>
+        </div>
         @endif
         <div class="pt-5 center">
             <small class="text-muted">

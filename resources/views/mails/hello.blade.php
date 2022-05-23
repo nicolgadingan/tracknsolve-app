@@ -1,96 +1,25 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="x-apple-disable-message-reformatting">
-    <style>
-        :root{
-            --cheese:       #EAD2AC;
-            --forest:       #9CAFB7;
-            --marine:       #4281A4;
-            --marine-dark:  #326986;
-            --forest-light: #bdcfd6;
-            --rose:         #FE938C;
-            --primary:      #0d6efd;
-        }
+@extends('layouts.email')
 
-        @media only screen and (min-width: 520px) {
-            .container {
-                width: 500px;
-            }
-        }
-
-        @media (max-width: 520px) {
-            .container {
-                width: 100% !important;
-                padding: 0px !important;
-            }
-        }
-
-        body {
-            font-family:        Calibri;
-            color:              #4281A4;
-            background-color:   #e7e7e7;
-            margin:             0px;
-            display:            flex;
-            justify-content:    center;
-        }
-
-        .p-1    {   padding: 0.5rem;    }
-        .p-2    {   padding: 1rem;      }
-        .p-3    {   padding: 1.5rem;    }
-        .p-4    {   padding: 2rem;      }
-
-        .center {
-            text-align: center;
-        }
-
-        .bg-white {
-            background-color: white;
-        }
-        
-        a.link-button {
-            text-decoration: none;
-            background-color: #0d6efd;
-            color: white;
-            padding: 0.5rem 1.5rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="container p-3">
-        <div class="p-3">
-            <img height="75px" src="{{ asset('imgs/yortik.svg') }}" alt="Yortik logo">
-        </div>
-        <div class="center bg-white p-3">
-            <div>
-                <img height="100px" src="{{ asset('imgs/email-notice.svg') }}" alt="Yortik logo">
-            </div>
-            <span class="center" style="font-size: x-large;">Email Verification!</span><br><br> 
-            <p class="center">
-                You’ve received this message because your email address has been registered with yortik.com.
-            </p>
-            <p>
-                Please click the button below to verify your email address and confirm your password to complete your registration.
-            </p>
-            <p>
-                If you did not register with us, please disregard this email.
-            </p>
-            <div class="center p-2">
-                <a href="https://yortik.app/demo-link-for-verification" class="link-button">
-                    Verify Now
-                </a>
-            </div>
-            <p class="center">
-                Once verified, you can now use the app right away.
-            </p>
-        </div>
-        <div class="p-2 center">
-            <small style="color: #889ca5;">
-                This email is sent to specifically to you and should not be shared with others.
-            </small>
-        </div>
-    </div> 
-</body>
-</html>
+@section('content')
+    <div>
+        <img height="100px" src="{{ asset('imgs/email-notice.svg') }}" alt="Yortik logo">
+    </div>
+    <span style="font-size: x-large;">Email Verification!</span><br><br> 
+    <p>
+        You’ve received this message because your email address has been registered with yortik.com.
+    </p>
+    <p>
+        Please click the button below to verify your email address and confirm your password to complete your registration.
+    </p>
+    <p style="color: #0d6efd;">
+        Please note, your username is <b>{{ $mailData->username }}</b>. 
+    </p>
+    <div class="p-2">
+        <a href="{{ Request::root() }}/user/verify/{{ $mailData->emailVerify->token }}" class="link-button">
+            Verify Now
+        </a>
+    </div>
+    <p>
+        If you did not register with us, please disregard this email.
+    </p>
+@endsection
