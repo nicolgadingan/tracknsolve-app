@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Mail\VerifiedMail;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +44,15 @@ Route::post('/user/verify', [App\Http\Controllers\AccessesController::class, 've
 
 Route::get('/hello', function() {
     return view('mails/hello');
+});
+
+// Test Email
+Route::get('email-test', function() {
+
+    $user                   =   User::find(700001);
+    $details['content']     =   new VerifiedMail($user);
+    $details['email']       =   'nicolgadingan@gmail.com';
+    dispatch(new App\Jobs\Mailman($details));
+    dd('done');
+
 });
