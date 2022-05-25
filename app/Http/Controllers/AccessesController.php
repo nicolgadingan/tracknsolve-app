@@ -8,9 +8,9 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifiedMail;
 use App\Jobs\Mailman;
+use App\Models\Event;
 
 class AccessesController extends Controller
 {
@@ -93,6 +93,14 @@ class AccessesController extends Controller
                 $request->user_id . 'NOTFOUND.'
             ]);
         }
+
+        // Create event
+        $event          =   new Event();
+        $event->create([
+            'category'      =>  'user',
+            'action'        =>  'verify',
+            'key_id1'       =>  $user->id,
+        ]);
 
         // Queue email to user
         info('USERS.REGISTER', [

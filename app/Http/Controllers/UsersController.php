@@ -11,7 +11,7 @@ use App\Http\Controllers\Utils;
 use App\Jobs\Mailman;
 use App\Mail\HelloMail;
 use App\Models\EmailVerify;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Event;
 
 class UsersController extends Controller
 {
@@ -102,6 +102,14 @@ class UsersController extends Controller
         $token  =   EmailVerify::create([
             'user_id'   =>  $user->id,
             'token'     =>  Str::random(32)
+        ]);
+
+        // Create event
+        $event          =   new Event();
+        $event->create( [
+            'category'      =>  'user',
+            'action'        =>  'create',
+            'key_id1'       =>  $user->id,
         ]);
 
         // Queue email to user
