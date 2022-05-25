@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <img height="100px" src="{{ asset('imgs/email-notice.svg') }}" alt="Yortik logo">
+        <img height="100px" src="{{ config('app.url', '') . '/imgs/email-notice.svg' }}" alt="Yortik logo">
     </div>
     <span style="font-size: x-large;">Email Verification!</span><br><br> 
     <p>
@@ -15,7 +15,7 @@
         Please note, your username is <b>{{ $mailData->username }}</b>. 
     </p>
     <div class="p-2">
-        <a href="{{ Request::root() }}/user/verify/{{ $mailData->emailVerify->token }}" class="link-button">
+        <a href="{{ config('app.url', '') . '/user/verify/' . $mailData->emailVerify->token }}" class="link-button">
             Verify Now
         </a>
     </div>

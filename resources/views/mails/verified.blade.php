@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <img height="100px" src="{{ asset('imgs/email-notice.svg') }}" alt="Yortik logo">
+        <img height="100px" src="{{ config('app.url', '') . '/imgs/email-notice.svg' }}" alt="Yortik logo">
     </div>
     <span class="center" style="font-size: x-large;">Account Verified!</span><br><br> 
     <p>
@@ -12,7 +12,7 @@
         Login to your account and start your journey with yortik. 
     </p>
     <div class="p-2">
-        <a href="{{ Request::root() }}/login" class="link-button">
+        <a href="{{ config('app.url', '') }}/login" class="link-button">
             Login
         </a>
     </div>

@@ -8,6 +8,7 @@ use App\Models\Group;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Utils;
+use App\Jobs\Mailman;
 use App\Mail\HelloMail;
 use App\Models\EmailVerify;
 use Illuminate\Support\Facades\Mail;
@@ -103,8 +104,25 @@ class UsersController extends Controller
             'token'     =>  Str::random(32)
         ]);
 
-        // Send a hello to the user
-        Mail::to($user->email)->send(new HelloMail($user));
+        // Queue email to user
+        info('USERS.REGISTER', [
+            'action'    =>  'send',
+            'message'   =>  'verification',
+            'subject'   =>  $user->email
+        ]);
+
+        try {
+            $email['to']        =   $user->email;
+            $email['content']   =   new HelloMail($user);
+
+            dispatch(new Mailman($email));
+            info('USERS.REGISTER', ['result' => 'queued']);
+
+        } catch (\Throwable $th) {
+            info('USERS.REGISTER', ['result' => 'error']);
+            report($th);
+
+        }
 
         return redirect('/users')->with([
             'success'   =>  "You have successfully created <b>" . $name . "</b>'s account.",

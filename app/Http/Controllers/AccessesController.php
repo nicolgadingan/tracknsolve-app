@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifiedMail;
+use App\Jobs\Mailman;
 
 class AccessesController extends Controller
 {
@@ -93,7 +94,26 @@ class AccessesController extends Controller
             ]);
         }
 
-        Mail::to($user->email)->send(new VerifiedMail($user));
+        // Queue email to user
+        info('USERS.REGISTER', [
+            'action'    =>  'send',
+            'message'   =>  'verified',
+            'subject'   =>  $user->email
+        ]);
+
+        try {
+            $email['to']        =   $user->email;
+            $email['content']   =   new VerifiedMail($user);
+
+            dispatch(new Mailman($email));
+            info('USERS.REGISTER', ['result' => 'queued']);
+
+        } catch (\Throwable $th) {
+            info('USERS.REGISTER', ['result' => 'error']);
+            report($th);
+
+        }
+
 
         return redirect('/login')->with([
             'success'   =>  "You have successfully verified your account."

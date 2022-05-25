@@ -65,14 +65,14 @@
 <body>
     <div class="container p-3">
         <div class="p-3">
-            <img width="170px" src="{{ asset('imgs/yortik.svg') }}" alt="Yortik logo">
+            <img width="170px" src="{{ config('app.url', '') . '/imgs/yortik.svg' }}" alt="Yortik logo">
         </div>
         <div class="center bg-white p-3">
             @yield('content')
         </div>
         <div class="p-2 center">
             <small style="color: #889ca5;">
-                This email is sent to specifically to you and should not be shared with others.
+                This email is sent specifically to you and should not be shared with others.
             </small>
         </div>
     </div> 

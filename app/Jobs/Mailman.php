@@ -34,6 +34,6 @@ class Mailman implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->mailData['email'])->send($this->mailData['content']);
+        Mail::to($this->mailData['to'])->send($this->mailData['content']);
     }
 }
