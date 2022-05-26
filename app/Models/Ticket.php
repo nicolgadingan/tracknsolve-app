@@ -302,6 +302,46 @@ class Ticket extends Model
     }
 
     /**
+     * Clean-up unused reservations for 24hrs
+     * 
+     */
+    public function cleanupReservations()
+    {
+        $hours  =   24;
+
+        try {
+            
+            $reservations   =   DB::table('reserves')
+                                    ->where('created_at', '<', DB::raw('current_timestamp - interval ' . $hours . ' hour'))
+                                    ->where('category', '=', 'TICKET_KEY')
+                                    ->whereNotIn('key_id', DB::table('tickets')
+                                                                ->select('id'));
+
+            $data           =   [];
+
+            foreach ($reservations->select('key_id')->get() as $res) {
+                $data[]     =   $res->key_id;
+            }
+
+            $total          =   count($data);
+
+            $reservations->delete();
+
+            info('RESERVES.UNUSED', [
+                'deleted'   =>  $total,
+                'data'      =>  $data
+            ]);
+
+        } catch (\Throwable $th) {
+            info('RESERVES.UNUSED', [
+                'status'    =>  'error'
+            ]);
+
+            report($th);
+        }
+    }
+
+    /**
      * Update reserved key
      * 
      * @param   String  $tkey

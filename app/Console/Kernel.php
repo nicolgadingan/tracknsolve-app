@@ -18,8 +18,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-
         /**
          * Tickets - Auto close of resolved tickets based on
          * config TK_AUTO_X_DAYS
@@ -29,6 +27,15 @@ class Kernel extends ConsoleKernel
             $ticket->autoClose();
         })
         ->everyTenMinutes();
+
+        /**
+         * Tickets - Delete unused ticket_id reservations
+         */
+        $schedule->call(function() {
+            $ticket =   new Ticket();
+            $ticket->cleanupReservations();
+        })
+        ->daily();
     }
 
     /**
