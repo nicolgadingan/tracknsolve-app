@@ -6,7 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use App\Models\Ticket;
-use Illuminate\Support\Stringable;
+use App\Http\Controllers\Utils;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
             $ticket =   new Ticket();
             $ticket->autoClose();
         })
-        ->everyTenMinutes();
+        ->everyFiveMinutes();
 
         /**
          * Tickets - Delete unused ticket_id reservations
@@ -36,6 +36,16 @@ class Kernel extends ConsoleKernel
             $ticket->cleanupReservations();
         })
         ->daily();
+
+        /**
+         * Tickets - Delete unused ticket attachments
+         */
+        $schedule->call(function() {
+            $utils      =   new Utils;
+            $utils->attCleanup();
+        })
+        ->daily();
+
     }
 
     /**

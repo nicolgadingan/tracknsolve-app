@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class Utils extends Controller
 {
@@ -94,4 +96,77 @@ class Utils extends Controller
             Storage::disk($disk)->append($file, $dts . ' - ' . $data);
         }
     }
+
+    /**
+     * Clean-up unused attachments
+     * 
+     */
+    public function attCleanup()
+    {
+        $app_name   =   'UTILS.ATTCLNUP';
+        $file_dir   =   public_path() . '\storage\att';
+        $arch_dir   =   $file_dir . '\archive';
+
+        // Init
+        info($app_name, ['status' => 'started']);
+
+        // Get all unused tickets
+        $tickets    =   DB::table('ticket_atts')
+                                ->whereNotIn('ticket_id', DB::table('tickets')
+                                                            ->select('id'))
+                                ->select('ticket_id');
+        
+        // Get total
+        $total      =   count($tickets->get());
+
+        // Display total
+        info($app_name, ['found' => $total]);
+
+        // Create archive if not exists
+        File::ensureDirectoryExists($arch_dir);
+
+        // Check count
+        if ($total > 0) {
+            // Archive each ticket folder
+            foreach ($tickets->get() as $ticket) {
+                info($app_name, [
+                    'action'    =>  'archiving',
+                    'ticket'    =>  $ticket->ticket_id
+                ]);
+
+                try {
+                    File::moveDirectory(
+                        $file_dir . "/" . $ticket->ticket_id,
+                        $arch_dir . "/" . $ticket->ticket_id,
+                        false
+                    );
+
+                    if (File::exists($arch_dir . "/" . $ticket->ticket_id)) {
+                        info($app_name, ['status' => 'success']);
+
+                        $isDeleted  =   DB::table('ticket_atts')
+                                            ->where('ticket_id', $ticket->ticket_id)
+                                            ->delete();
+
+                        info($app_name, [
+                            'action'    =>  'delete',
+                            'status'    =>  $isDeleted
+                        ]);
+
+                    } else {
+                        info($app_name, ['status' => 'failed']);
+                    }
+
+                } catch (\Throwable $th) {
+                    info($app_name, ['status' => 'error']);
+                    report($th);
+                }
+
+            }
+        }
+        
+        info($app_name, ['action' => 'completing']);
+
+    }
+
 }

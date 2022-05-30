@@ -36,8 +36,6 @@ class TicketsController extends Controller
         $ticket     =   new Ticket();
         // $tickets    =   $ticket->allTickets();
 
-        $ticket->cleanupReservations();
-
         return view('tickets.index')->with([
             // 'tickets'   =>  $tickets
         ]);
