@@ -25,7 +25,7 @@
                     <i class="bi bi-bookmark-star-fill"></i>
                 </div>
             </a>
-            <a href="/reports" class="btn block side-nav-item {{ $whereami == 'reports' ? 'active' : '' }}">
+            <a href="/reports" class="btn block side-nav-item {{ $whereami == 'reports' ? 'active' : '' }}" hidden>
                 <div class="d-flex justify-content-between">
                     <span>Reports</span>
                     <i class="bi bi-clipboard-data-fill"></i>
@@ -52,7 +52,7 @@
                 </div>
             </a>
             @if ($whatami == 'admin')
-            <a href="/settings" class="btn block side-nav-item {{ $whereami == 'settings' ? 'active' : '' }}">
+            <a href="/settings" class="btn block side-nav-item {{ $whereami == 'settings' ? 'active' : '' }}" hidden>
                 <div class="d-flex justify-content-between">
                     <span>Settings</span>
                     <i class="bi bi-toggles2"></i>

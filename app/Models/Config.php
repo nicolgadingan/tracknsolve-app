@@ -52,4 +52,47 @@ class Config extends Model
 
         return $config->value;
     }
+
+    /**
+     * Reconfigure ticket sequence
+     * 
+     * @return  Int $retCode
+     */
+    public function tkSeqReconf()
+    {
+        $retCode    =   0;
+        $reconData  =   DB::table('tickets as t')
+                            ->select(
+                                DB::raw("(select length(value) from configs where config_name = 'ORG_KEY') as org_len"),
+                                DB::raw('max(t.id) as max_seq'),
+                                DB::raw("(select value from configs where config_name = 'LAST_TK_SEQ') as last_seq")
+                            )
+                            ->first();
+
+        $maxSeq     =   substr($reconData->max_seq, $reconData->org_len);
+
+        if ($maxSeq >= $reconData->last_seq) {
+            try {
+                $isReconfd  =   DB::table('configs')
+                                    ->where('config_name', 'LAST_TK_SEQ')
+                                    ->update([
+                                        'value' =>  $maxSeq + 1
+                                    ]);
+
+                if ($isReconfd) {
+                    $retCode    =   1;
+                }
+
+            } catch (\Throwable $th) {
+                $retCode        =   255;
+                report($th);
+
+            }
+
+        }
+
+        return $retCode;
+        
+    }
+
 }
