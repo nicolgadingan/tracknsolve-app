@@ -32,6 +32,24 @@ class Config extends Model
         $org_key    =   $this->getOrg();
         $newKey     =   $org_key . $last_tk_seq->value;
 
+        // Validate if sequence is reused
+        $reUsed     =   DB::table('reserves')
+                            ->where('key_id', $newKey)
+                            ->where('category', 'TICKET_KEY')
+                            ->selectRaw('count(id) as reserved')
+                            ->first();
+        
+        if ($reUsed->reserved > 1) {
+            // Ticket sequence is reused > Reconfigure
+            $this->tkSeqReconf();
+
+            $getSeq =   Config::where('config_name', 'LAST_TK_SEQ')
+                            ->select('value')
+                            ->first();
+
+            $newKey     =   $org_key . $getSeq->value;
+        }
+
         // Reserve Key
         DB::table('reserves')
                 ->insert([
