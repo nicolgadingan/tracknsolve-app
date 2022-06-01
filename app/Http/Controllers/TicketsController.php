@@ -172,7 +172,7 @@ class TicketsController extends Controller
         // Validate
         $this->validate($request, [
             'priority'      =>  'required',
-            'group'         =>  'required|exists:groups,id',
+            'group_id'      =>  'required|exists:groups,id',
             'status'        =>  'required',
             'assignee'      =>  'nullable|exists:users,id',
             'title'         =>  'required|min:5|max:100',

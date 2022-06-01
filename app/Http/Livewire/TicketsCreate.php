@@ -16,7 +16,7 @@ class TicketsCreate extends Component
     public $priority;          // 
     public $status;            // 
     public $groups;            // group list
-    public $group;             // ticket assignment group
+    public $group_id;          // ticket assignment group
     public $users;             // user list
     public $assignee;          // ticket is assigned to
     public $title;
@@ -27,7 +27,7 @@ class TicketsCreate extends Component
         'tkey'          =>  'required|exists:reserves,key_id',
         'caller'        =>  'required|exists:users,id',
         'priority'      =>  'required',
-        'group'         =>  'required|exists:groups,id',
+        'group_id'      =>  'required|exists:groups,id',
         'status'        =>  'required',
         'assignee'      =>  'nullable|exists:users,id',
         'title'         =>  'required|min:5|max:100',
@@ -61,9 +61,9 @@ class TicketsCreate extends Component
      * When $group is updated
      * 
      */
-    public function updatedGroup()
+    public function updatedGroupId()
     {
-        $this->users    =   User::where('group_id', $this->group)
+        $this->users    =   User::where('group_id', $this->group_id)
                                 ->get();
     }
 

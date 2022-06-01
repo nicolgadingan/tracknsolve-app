@@ -73,7 +73,7 @@ class Ticket extends Model
                                 'priority'      =>  $tdata['priority'],
                                 'title'         =>  $tdata['title'],
                                 'description'   =>  $tdata['description'],
-                                'group_id'      =>  $tdata['group'],
+                                'group_id'      =>  $tdata['group_id'],
                                 'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
                                 'reporter'      =>  $tdata['caller'],
                                 'created_at'    =>  $tdate
@@ -103,7 +103,7 @@ class Ticket extends Model
                                 'status'        =>  $tdata['status'],
                                 'title'         =>  $tdata['title'],
                                 'description'   =>  $tdata['description'],
-                                'group_id'      =>  $tdata['group'],
+                                'group_id'      =>  $tdata['group_id'],
                                 'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
                                 'updated_at'    =>  $tdate
                             ]);
@@ -386,7 +386,7 @@ class Ticket extends Model
                     'priority'      =>  $tdata['priority'],
                     'title'         =>  $tdata['title'],
                     'description'   =>  $tdata['description'],
-                    'group_id'      =>  $tdata['group'],
+                    'group_id'      =>  $tdata['group_id'],
                     'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
                     'reporter'      =>  $tdata['caller'],
                     'created_by'    =>  auth()->user()->id,

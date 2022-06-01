@@ -10,7 +10,7 @@ use App\Http\Controllers\Utils;
 
 class TicketsEdit extends Component
 {
-    public $group;
+    public $group_id;
     public $assignee;
     public $status;
 
@@ -19,7 +19,7 @@ class TicketsEdit extends Component
         $this->assignee     =   $this->assignee;
     }
 
-    public function updatedGroup()
+    public function updatedGroupId()
     {
         $this->assignee =   null;
     }
@@ -28,8 +28,8 @@ class TicketsEdit extends Component
     {
         return view('livewire.tickets-edit', [
             'groups'    =>  Group::where('status', 'A')->get(),
-            'users'     =>  User::when($this->group, function($query, $group) {
-                                    $query->where('group_id', $group);
+            'users'     =>  User::when($this->group_id, function($query, $group_id) {
+                                    $query->where('group_id', $group_id);
                                 })
                                 ->select(
                                     'id as user_id',

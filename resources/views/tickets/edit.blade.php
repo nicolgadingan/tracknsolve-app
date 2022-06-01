@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 @livewire('tickets-edit', [
-                    'group'     =>  $ticket->group_id,
+                    'group_id'  =>  $ticket->group_id,
                     'assignee'  =>  $ticket->assignee,
                     'status'    =>  $ticket->status
                 ])

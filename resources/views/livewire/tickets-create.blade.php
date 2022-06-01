@@ -81,7 +81,7 @@
     <div class="row g-3 mb-3">
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <select name="group" id="tk-assignment" class="form-select @error('group') is-invalid @enderror" placeholder="Group name" wire:model="group">
+                <select name="group" id="tk-assignment" class="form-select @error('group') is-invalid @enderror" placeholder="Group name" wire:model="group_id">
                     @if (count($groups) > 0)
                         <option value="999">Select Assignment Group</option>
                         @foreach ($groups as $grp)
