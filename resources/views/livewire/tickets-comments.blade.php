@@ -39,7 +39,7 @@
                         </a>
                         <span>{{ \Carbon\Carbon::create($comment->created_at)->diffForHumans() }}</span>
                     </div>
-                    <pre class="fs-sm">{{ $comment->comments }}</pre>
+                    <pre class="fs-sm breakline">{{ $comment->comments }}</pre>
                 </li>
             @endforeach
         @else
