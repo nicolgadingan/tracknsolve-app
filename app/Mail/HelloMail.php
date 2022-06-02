@@ -32,6 +32,6 @@ class HelloMail extends Mailable
     {
         // return $this->view('view.name');
         return $this->subject('Hello from Yortik!')
-            ->view('mails.hello');
+                    ->view('mails.hello');
     }
 }

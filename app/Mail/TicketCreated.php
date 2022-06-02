@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerifiedMail extends Mailable
+class TicketCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailData;
+    public $mail;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mailData)
+    public function __construct($mail)
     {
-        $this->mailData =   $mailData;
+        $this->mail =   $mail;
     }
 
     /**
@@ -30,8 +30,7 @@ class VerifiedMail extends Mailable
      */
     public function build()
     {
-        // return $this->view('view.name');
-        return $this->subject('Account Verified!')
-                    ->view('mails.verified');
+        return $this->subject($this->mail->subject)
+                    ->view('mails.tkcreated');
     }
 }

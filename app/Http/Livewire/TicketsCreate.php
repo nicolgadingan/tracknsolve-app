@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\Ticket;
+use App\Jobs\Mailman;
+use App\Mail\TicketCreated;
 
 class TicketsCreate extends Component
 {
@@ -88,22 +90,49 @@ class TicketsCreate extends Component
         $ticket     =   new Ticket();
         $creResult  =   $ticket->createTicket($tdata);
 
-        if ($creResult != true) {
+        if ($creResult == true) {
+            // Get recipients
+            $recipients =   User::where('group_id', $tdata['group_id'])
+                                ->select(
+                                    'id as uid',
+                                    'email',
+                                )
+                                ->get()
+                                ->toArray();
+
+            // Queue email to be sent
+            foreach ($recipients as $rcpt) {
+                if ($rcpt['uid'] == $tdata['assignee']) {
+                    $subject    =   'Ticket ' . $tdata['tkey'] . ' has been assigned to you.';
+                } else {
+                    $subject    =   'Ticket ' . $tdata['tkey'] . ' has been assigned to your group.';
+                }
+                
+                $email['to']        =   $rcpt['email'];
+                $email['content']   =   new TicketCreated((object) [
+                                            'subject'   =>  $subject,
+                                            'user'      =>  $rcpt,
+                                            'ticket'    =>  $tdata
+                                        ]);
+
+                dispatch(new Mailman($email));
+            }
+
+            return redirect('/tickets')->with([
+                'success'   =>  'You have successfully created and assigned your ticket.'
+            ]);
+
+        } else {
             return redirect('/tickets')->withErrors([
                 'Saving ticket data encountered an unexpected error. Please report this to your administrator for checking.'
             ]);
 
-        } else {
-            return redirect('/tickets')->with([
-                'success'   =>  'You have successfully created and assigned your ticket.'
-            ]);
         }
     }
 
     public function render()
     {
         $this->getGroups();
-
         return view('livewire.tickets-create');
     }
 }
