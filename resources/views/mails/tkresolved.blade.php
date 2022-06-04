@@ -1,25 +1,12 @@
 @extends('layouts.email')
 
 @section('content')
-    @php
-        $extn       =   '';
-        $icon       =   '';
-
-        if ($mail->ticket['assignee'] == $mail->user['uid']) {
-            $extn   =   '';
-            $icon   =   'warn';
-        } else {
-            $extn   =   'r group';
-            $icon   =   'plus';
-        }
-        
-    @endphp
     <div style="display: flex; align-items: center; justify-content: space-between;">
         <span class="left" style="font-size: large;">
           <b>{{ $mail->ticket['tkey'] }}</b><br>
-          Ticket is assigned to you{{ $extn }}.
+          Your ticket has been resolved.
         </span>
-        <img height="100px" src="{{ config('app.url', '') }}/imgs/email-{{ $icon }}.svg" alt="Email logo">
+        <img height="100px" src="{{ config('app.url', '') }}/imgs/email-check.svg" alt="Email logo">
     </div>
     <p class="left">
         <b>Title</b><br>

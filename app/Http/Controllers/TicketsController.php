@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Group;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
+use App\Mail\TicketResolved;
+use App\Jobs\Mailman;
 
 class TicketsController extends Controller
 {
@@ -276,14 +277,32 @@ class TicketsController extends Controller
 
         if ($retcode == 1) {
             $utils->loggr('Result > Success.', 0);
+
+            // Send email
+            $reporter           =   User::where('id', $tdata['reporter'])
+                                        ->select(
+                                            'email',
+                                            'id as uid'
+                                        )
+                                        ->first()
+                                        ->toArray();
+
+            $email['to']        =   $reporter['email'];
+            $email['content']   =   new TicketResolved((object) [
+                                        'subject'   =>  'Your ticket ' . $tdata['tkey'] . ' has been resolved.',
+                                        'ticket'    =>  $tdata
+                                    ]);
+
+            dispatch(new Mailman($email));
+            
             return redirect('/tickets/' . $id . '/edit')->with([
-                'success'   =>  'Ticket <b>' . $id . '</b> has been resolved.'
+                'success'       =>  'Ticket <b>' . $id . '</b> has been resolved.'
             ]);
 
         } else if ($retcode == 0) {
             $utils->loggr('Result > Failed. ' . $utils->err->calltheguy, 0);
             return back()->withErrors([
-                'message'   =>  'Failed to resolve ticket. ' . $utils->err->calltheguy
+                'message'       =>  'Failed to resolve ticket. ' . $utils->err->calltheguy
             ]);
 
         } else {
