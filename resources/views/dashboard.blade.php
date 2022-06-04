@@ -14,11 +14,11 @@
                 <div class="card card-body mb-4 borderless border-round p-0 shadow-sm">
                     <table class="table table-borderless table-hover">
                         <thead class="fg-white bg-marine-dark">
-                            <th class="pt-3">Key</th>
-                            <th>Priority</th>
-                            <th>Title</th>
-                            <th>Reporter</th>
-                            <th class="right">Created</th>
+                            <td class="pt-3">Key</td>
+                            <td>Priority</td>
+                            <td>Title</td>
+                            <td>Reporter</td>
+                            <td class="right">Created</td>
                         </thead>
                         <tbody>
                             @if (count($gpUnassigned) > 0)
@@ -71,12 +71,12 @@
                 <div class="card card-body border-round borderless p-0 shadow-sm">
                     <table class="table table-borderless table-hover">
                         <thead class="bg-marine-dark fg-white">
-                            <th class="pt-3">Key</th>
-                            <th>Priority</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                            <th>Reporter</th>
-                            <th class="right">Created</th>
+                            <td class="pt-3">Key</td>
+                            <td>Priority</td>
+                            <td>Status</td>
+                            <td>Description</td>
+                            <td>Reporter</td>
+                            <td class="right">Created</td>
                         </thead>
                         <tbody>
                             @if (count($myTickets) > 0)

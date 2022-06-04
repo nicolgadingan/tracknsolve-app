@@ -22,13 +22,13 @@
             <div class="card card-body border-round borderless shadow-sm p-0">
                 <table class="table table-borderless table-hover">
                     <thead class="bg-marine-dark fg-white">
-                        <th class="pt-3">Name</th>
-                        <th>Status</th>
-                        <th>Manager</th>
-                        <th>Members</th>
-                        <th class="right">Created</th>
+                        <td class="pt-3">Name</td>
+                        <td>Status</td>
+                        <td>Manager</td>
+                        <td>Members</td>
+                        <td class="right">Created</td>
                         @if ($uinf->role == 'admin')
-                            <th></th>
+                            <td></td>
                         @endif
                     </thead>
                     <tbody>

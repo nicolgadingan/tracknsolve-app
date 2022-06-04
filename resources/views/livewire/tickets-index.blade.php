@@ -35,14 +35,14 @@
             <div class="card card-body borderless border-round shadow-sm p-0" style="overflow-x: auto;">
                 <table class="table table-borderless table-hover">
                     <thead class="bg-marine-dark fg-white">
-                        <th class="pt-3">Key</th>
-                        <th>Status</th>
-                        <th>Priority</th>
-                        <th>Title</th>
-                        <th>Group</th>
-                        <th>Assignee</th>
-                        <th>Reporter</th>
-                        <th class="right">Created</th>
+                        <td class="pt-3">Key</td>
+                        <td>Status</td>
+                        <td>Priority</td>
+                        <td>Title</td>
+                        <td>Group</td>
+                        <td>Assignee</td>
+                        <td>Reporter</td>
+                        <td class="right">Created</td>
                     </thead>
                     <tbody>
                         @if (count($tickets) > 0)

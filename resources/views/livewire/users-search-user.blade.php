@@ -40,15 +40,15 @@
             <div class="card card-body border-round p-0 shadow-sm">
                 <table class="table table-hover table-borderless">
                     <thead class="fg-white bg-marine-dark">
-                        <th class="pt-3">Name</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Email</th>
-                        <th>Username</th>
-                        <th>Group</th>
-                        <th class="right">Joined</th>
+                        <td class="pt-3">Name</td>
+                        <td>Role</td>
+                        <td>Status</td>
+                        <td>Email</td>
+                        <td>Username</td>
+                        <td>Group</td>
+                        <td class="right">Joined</td>
                         @if ($uinf->role == 'super')
-                            <th></th>
+                            <td></td>
                         @endif
                     </thead>
                     <tbody>
