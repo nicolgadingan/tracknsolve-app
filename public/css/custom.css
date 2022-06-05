@@ -6,6 +6,7 @@
     --rose:         #FE938C;
     --rose-dark:    #d87770;
     --marine-dark:  #326986;
+    --cheese-dark:  #cfb180;
 
     --success-light:    #a8d3bf;
     --secondary-light:  #bcc1c7;
@@ -300,6 +301,11 @@ body {
     color: var(--marine);
 }
 
+.btn-cheese {
+    background-color: var(--cheese);
+    color: var(--marine)
+}
+
 .btn-marine:hover,
 .btn-marine:active {
     background-color: var(--marine-dark);
@@ -309,6 +315,12 @@ body {
 .btn-rose:hover,
 .btn-rose:active {
     background-color: var(--rose-dark);
+    color: var(--marine);
+}
+
+.btn-cheese:hover,
+.btn-cheese:active {
+    background-color: var(--cheese-dark);
     color: var(--marine);
 }
 

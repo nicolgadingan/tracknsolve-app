@@ -96,10 +96,15 @@
         </div>
         <div class="center bg-white p-3">
             @yield('content')
-        </div>
-        <div class="p-2 center">
-            <small style="color: #889ca5;">
+            <hr>
+            <span class="left">
                 This email is sent specifically to you and should not be shared with external contacts.
+            </span>
+        </div>
+        <div class="p-3 pt-2 center">
+            <small style="color: #889ca5;">
+                This is an auto-generated email base on the process triggered from your application.
+                Please do not reply to this email as it is only for sending and not being monitored.
             </small>
         </div>
     </div> 
