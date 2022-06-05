@@ -31,7 +31,7 @@ class HelloMail extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->subject('Hello from Yortik!')
+        return $this->subject('Hello from tracknsolve!')
                     ->view('mails.hello');
     }
 }

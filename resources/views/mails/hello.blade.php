@@ -2,11 +2,11 @@
 
 @section('content')
     <div>
-        <img height="100px" src="{{ config('app.url', '') . '/imgs/email-notice.svg' }}" alt="Yortik logo">
+        <img height="100px" src="{{ config('app.url', '') . '/imgs/email-notice.svg' }}" alt="Track N' Solve logo">
     </div>
     <span style="font-size: x-large;">Email Verification!</span><br><br> 
     <p>
-        You’ve received this message because your email address has been registered with yortik.com.
+        You’ve received this message because your email address has been registered with tracknsolve.com.
     </p>
     <p>
         Please click the button below to verify your email address and confirm your password to complete your registration.

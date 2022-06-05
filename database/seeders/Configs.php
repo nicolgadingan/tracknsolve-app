@@ -20,11 +20,6 @@ class Configs extends Seeder
         /** ---------------------------------------
          *   CLEANUP
          *  --------------------------------------- */
-
-        DB::table('configs')
-            ->where('config_name', 'ORG_KEY')
-            ->delete();
-
         DB::table('configs')
             ->where('config_name', 'LAST_TK_SEQ')
             ->delete();
@@ -33,15 +28,18 @@ class Configs extends Seeder
         /** ---------------------------------------
          *   LOADING OF CONFIGURATION
          *  --------------------------------------- */
-
         // Organization Key
-        DB::table('configs')->insert([
-            'config_name'       =>  'ORG_KEY',
-            'value'             =>  'YRTK',
-            'description'       =>  "This is the organizations' 2 to 4 character key identifier.",
-            'created_by'        =>  '999',
-            'created_at'        =>  \Carbon\Carbon::now()
-        ]);
+        $tmpOrgKey              =   Config::firstOrCreate(
+                                        [
+                                            'config_name'   =>  'ORG_KEY',
+                                        ],
+                                        [
+                                            'value'         =>  'YRTK',
+                                            'description'   =>  "This is the organizations' 2 to 4 character key identifier.",
+                                            'created_by'    =>  '999',
+                                            'created_at'    =>  \Carbon\Carbon::now()
+                                        ]
+                                    );
 
         // Ticket Sequence
         DB::table('configs')->insert([
@@ -53,17 +51,17 @@ class Configs extends Seeder
         ]);
 
         // Ticket Auto-close configuration
-        Config::firstOrCreate(
-            [
-                'config_name'   =>  'TK_AUTO_X_DAYS'
-            ],
-            [
-                'value'         =>  5,
-                'description'   =>  "Days identifier when a resolved ticket can be closed automatically.",
-                'created_by'    =>  '999',
-                'created_at'    =>  \Carbon\Carbon::now()
-            ]
-        );
+        $tmpAutoClosse  =   Config::firstOrCreate(
+                                [
+                                    'config_name'   =>  'TK_AUTO_X_DAYS'
+                                ],
+                                [
+                                    'value'         =>  5,
+                                    'description'   =>  "Days identifier when a resolved ticket can be closed automatically.",
+                                    'created_by'    =>  '999',
+                                    'created_at'    =>  \Carbon\Carbon::now()
+                                ]
+                            );
 
     }
 }
