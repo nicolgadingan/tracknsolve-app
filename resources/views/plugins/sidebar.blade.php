@@ -1,14 +1,17 @@
 <div class="">
-    <div class="pt-4 center">
-        <a href="/">
-            <img src="{{ asset('imgs/yortik.svg') }}" alt="Yorik logo" id="sidebar-logo">
+    <div class="center" id="sidebar-brand-box">
+        <a href="/" class="link-marine brand">
+            <img src="{{ asset('imgs/tns-icon.svg') }}" alt="Track N' Solve logo" id="sidebar-logo">
+            <span class="text fs-xl">
+                tracknsolve
+            </span>
         </a>
     </div>
     @php
         $whereami   =   explode("/", request()->path())[0];
         $whatami    =   auth()->user()->role;
     @endphp
-    <div class="p-4">
+    <div class="p-3">
         <h6 class="fg-forest">
             GENERAL
         </h6>
@@ -34,7 +37,7 @@
         </div>
     </div>
     @if (true)
-    <div class="p-4">
+    <div class="p-3">
         <h6 class="fg-forest">
             ADMIN
         </h6>

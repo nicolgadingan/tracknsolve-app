@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="d-flex">
             <div class="mb-3 flex-grow-1 pr-4">
-                <div class="p-3 pb-2">
+                <div class="pl-3 pr-3 pb-2">
                     <span class="fg-marine fs-sm">UNASSIGNED TICKETS</span>
                 </div>
                 <div class="card card-body mb-4 borderless border-round p-0 shadow-sm">

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Yortik') }} - @yield('page')</title>
+    <title>@yield('page')</title>
 
-    <link rel="shortcut icon" href="{{ asset('imgs/yortik-icon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('imgs/tns-icon.svg') }}" type="image/x-icon">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -37,6 +37,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
         integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap" rel="stylesheet">
 
     @livewireStyles
 </head>
@@ -46,7 +50,7 @@
             @include('plugins.sidebar')
         </div>
         <div class="flex-grow-1 p-3 pb-5" id="context-body">
-            <header class="container-fluid">
+            <header class="container-fluid" style="height: 90px;">
                 <div class="row">
                     <div class="col-sm d-flex align-items-end fs-lg fg-marine-light">
                         <strong>
@@ -115,7 +119,7 @@
                     </div>
                 </div>
             </header>
-            <main class="pt-5">
+            <main class="">
                 @yield('content')
             </main>
         </div>
