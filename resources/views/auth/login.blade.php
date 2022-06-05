@@ -8,10 +8,8 @@
     <div class="d-flex justify-content-center">
         <div class="card card-body borderless shadow-sm border-bubble pb-2" id="box-login">
             <div class="center mb-3 p-2 brand">
-                <img src="{{ asset('imgs/tns-icon.svg') }}" alt="Track N' Solve logo" id="brand-auth" class="icon">
-                <span class="text fs-2l">
-                    tracknsolve
-                </span>
+                @include('plugins.tnsicon')
+                @include('plugins.tnstext')
             </div>
             @include('plugins.messages')
             <form action="{{ route('login') }}" method="POST">
@@ -21,13 +19,14 @@
                         class="form-control center borderless @error('username') is-invalid @enderror">
                     @error('username')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <span>{{ $message }}</span>
                         </span>
                     @enderror
                     <label for="li-username">Username</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" id="li-password" class="form-control center borderless" name="password" placeholder="Password">
+                    <input type="password" id="li-password" class="form-control center borderless @error('username') is-invalid @enderror"
+                        name="password" placeholder="Password">
                     <label for="li-password">Password</label>
                 </div>
                 <div class="mb-3">

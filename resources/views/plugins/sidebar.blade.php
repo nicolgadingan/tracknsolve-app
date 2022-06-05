@@ -1,17 +1,15 @@
 <div class="">
     <div class="center" id="sidebar-brand-box">
         <a href="/" class="link-marine brand">
-            <img src="{{ asset('imgs/tns-icon.svg') }}" alt="Track N' Solve logo" id="sidebar-logo">
-            <span class="text fs-xl">
-                tracknsolve
-            </span>
+            @include('plugins.tnsicon')
+            @include('plugins.tnstext')
         </a>
     </div>
     @php
         $whereami   =   explode("/", request()->path())[0];
         $whatami    =   auth()->user()->role;
     @endphp
-    <div class="p-3">
+    <div class="p-4 pt-3 pb-3">
         <h6 class="fg-forest">
             GENERAL
         </h6>
@@ -37,7 +35,7 @@
         </div>
     </div>
     @if (true)
-    <div class="p-3">
+    <div class="p-4 pt-3 pb-3">
         <h6 class="fg-forest">
             ADMIN
         </h6>

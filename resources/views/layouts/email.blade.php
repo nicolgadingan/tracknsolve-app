@@ -4,6 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="x-apple-disable-message-reformatting">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap" rel="stylesheet">
+
     <style>
         :root{
             --cheese:       #EAD2AC;
@@ -60,19 +65,41 @@
             color: white;
             padding: 0.5rem 1.5rem;
         }
+
+        .brand {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            fill: var(--marine);
+        }
+
+        .brand #tns-icon {
+            max-height: 64px;
+            fill: var(--marine);
+        }
+
+        .brand #tns-text {
+            width: 70%;
+            max-width: 200px;
+            padding: 0.5rem;
+            fill: var(--marine);
+        }
     </style>
 </head>
 <body>
     <div class="container p-3">
         <div class="p-3">
-            <img width="170px" src="{{ config('app.url', '') . '/imgs/yortik.svg' }}" alt="Yortik logo">
+            <a href="{{ config('app.url', '') }}" class="link-marine brand">
+                @include('plugins.tnsicon')
+                @include('plugins.tnstext')
+            </a>
         </div>
         <div class="center bg-white p-3">
             @yield('content')
         </div>
         <div class="p-2 center">
             <small style="color: #889ca5;">
-                This email is sent specifically to you and should not be shared with others.
+                This email is sent specifically to you and should not be shared with external contacts.
             </small>
         </div>
     </div> 
