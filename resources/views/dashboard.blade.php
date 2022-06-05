@@ -155,7 +155,7 @@
                 </div>
             </div>
             <div style="width: 25%; max-width: 350px;" class="pl-2">
-                <div class="p-3 pb-2">
+                <div class="pl-3 pr-3 pb-2">
                     <span class="fg-marine fs-sm">TICKETS BREAKDOWN</span>
                 </div>
                 <div class="card card-body border-round borderless shadow-sm" id="db-ticket-chart">
