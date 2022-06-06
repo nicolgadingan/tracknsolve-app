@@ -33,8 +33,8 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        // $user   =   auth()->user();
-        // $ticket     =   new Ticket();
+        $config =   new Config;
+        $config->setBasic();
 
         return view('tickets.index')->with([
             // 'tickets'   =>  $tickets
