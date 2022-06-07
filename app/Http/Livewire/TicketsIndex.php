@@ -15,6 +15,7 @@ class TicketsIndex extends Component
 
     public $search;
     public $filter;
+    public $dueDays;
 
     public function updatedSearch()
     {

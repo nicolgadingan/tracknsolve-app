@@ -22,6 +22,7 @@
     --x-butter-d:       #ccae62;
     --x-pumpkin-m:      #ff793f;
     --x-pumpkin-d:      #cd6133;
+    --x-pumpkin-l:      #ffe0d3;
     --x-danger-m:       #ff5252;
     --x-danger-d:       #b33939;
     --x-success-m:      #33d9b2;
@@ -195,6 +196,12 @@ body {
     color: white;
 }
 
+.dot-pumpkin {
+    background-color: var(--x-pumpkin-m);
+    border-color: var(--x-pumpkin-d);
+    color: white;
+}
+
 
 /* COLORS */
 .fg-marine {
@@ -287,6 +294,10 @@ body {
 
 .bg-forest-light {
     background-color: var(--forest-light);
+}
+
+.bg-pumpkin-light {
+    background-color: var(--x-pumpkin-l);
 }
 
 

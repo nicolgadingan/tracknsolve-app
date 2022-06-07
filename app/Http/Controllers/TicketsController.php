@@ -33,11 +33,15 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        $config =   new Config;
-        $config->setBasic();
+        $config     =   new Config;
+        // $config->setBasic();
+        $configs    =   $config->allConfig();
+
+        $track      =   'OVERDUE_DAYS';
+        $dueDays    =   $this->utils->parseConfig($configs, $track);
 
         return view('tickets.index')->with([
-            // 'tickets'   =>  $tickets
+            'dueDays'   =>  $dueDays
         ]);
     }
 

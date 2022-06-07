@@ -141,7 +141,8 @@ class Config extends Model
                             'ORG_KEY',
                             'LAST_TK_SEQ',
                             'TK_AUTO_X_DAYS',
-                            'SUBS_TYPE'
+                            'SUBS_TYPE',
+                            'OVERDUE_DAYS'
                         ];
 
         $allConfig  =   Config::select('config_name')
@@ -178,31 +179,31 @@ class Config extends Model
 
         $user   =   [
             [
-                'config_name'   =>  'CAN$SEE_USER',
+                'config_name'   =>  'CAN#SEE_USER',
                 'value'         =>  'Y',
                 'description'   =>  'See user.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$ADD_USER',
+                'config_name'   =>  'CAN#ADD_USER',
                 'value'         =>  'Y',
                 'description'   =>  'Add user.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$UPD_USER',
+                'config_name'   =>  'CAN#UPD_USER',
                 'value'         =>  'N',
                 'description'   =>  'Modify user.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$DEL_USER',
+                'config_name'   =>  'CAN#DEL_USER',
                 'value'         =>  'N',
                 'description'   =>  'Delete user.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$RAS_USER',
+                'config_name'   =>  'CAN#RAS_USER',
                 'value'         =>  'N',
                 'description'   =>  'Reassign user.',
                 'created_by'    =>  99999
@@ -211,25 +212,25 @@ class Config extends Model
 
         $group  =   [
             [
-                'config_name'   =>  'CAN$SEE_GROUP',
+                'config_name'   =>  'CAN#SEE_GROUP',
                 'value'         =>  'Y',
                 'description'   =>  'See group.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$ADD_GROUP',
+                'config_name'   =>  'CAN#ADD_GROUP',
                 'value'         =>  'Y',
                 'description'   =>  'Add group.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$UPD_GROUP',
+                'config_name'   =>  'CAN#UPD_GROUP',
                 'value'         =>  'Y',
                 'description'   =>  'Modify group.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$DEL_GROUP',
+                'config_name'   =>  'CAN#DEL_GROUP',
                 'value'         =>  'N',
                 'description'   =>  'Delete group.',
                 'created_by'    =>  99999
@@ -238,37 +239,37 @@ class Config extends Model
 
         $ticket =   [
             [
-                'config_name'   =>  'CAN$SEE_TICKET',
+                'config_name'   =>  'CAN#SEE_TICKET',
                 'value'         =>  'Y',
                 'description'   =>  'See ticket.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$ADD_TICKET',
+                'config_name'   =>  'CAN#ADD_TICKET',
                 'value'         =>  'Y',
                 'description'   =>  'Add ticket.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$UPD_TICKET',
+                'config_name'   =>  'CAN#UPD_TICKET',
                 'value'         =>  'Y',
                 'description'   =>  'Modify ticket.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$DEL_TICKET',
+                'config_name'   =>  'CAN#DEL_TICKET',
                 'value'         =>  'N',
                 'description'   =>  'Delete ticket.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$ADD_COMMENT',
+                'config_name'   =>  'CAN#ADD_COMMENT',
                 'value'         =>  'Y',
                 'description'   =>  'Add comments.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$ADD_ATTACHMENT',
+                'config_name'   =>  'CAN#ADD_ATTACHMENT',
                 'value'         =>  'Y',
                 'description'   =>  'Add attachments.',
                 'created_by'    =>  99999
@@ -277,7 +278,7 @@ class Config extends Model
 
         $admin  =   [
             [
-                'config_name'   =>  'CAN$SEE_USAGE',
+                'config_name'   =>  'CAN#SEE_USAGE',
                 'value'         =>  'Y',
                 'description'   =>  'See usage.',
                 'created_by'    =>  99999
@@ -286,13 +287,13 @@ class Config extends Model
 
         $extra  =   [
             [
-                'config_name'   =>  'CAN$EXP_TICKET',
+                'config_name'   =>  'CAN#EXP_TICKET',
                 'value'         =>  'Y',
                 'description'   =>  'Export tickets.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$SEE_REPORT',
+                'config_name'   =>  'CAN#SEE_REPORT',
                 'value'         =>  'Y',
                 'description'   =>  'See reports.',
                 'created_by'    =>  99999
@@ -301,25 +302,25 @@ class Config extends Model
         
         $mobile =   [
             [
-                'config_name'   =>  'CAN$MOB_TICKET',
+                'config_name'   =>  'CAN#MOB_TICKET',
                 'value'         =>  'Y',
                 'description'   =>  'Tickets availability in mobile.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$MOB_GROUP',
+                'config_name'   =>  'CAN#MOB_GROUP',
                 'value'         =>  'Y',
                 'description'   =>  'Groups availability in mobile.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$MOB_REPORT',
+                'config_name'   =>  'CAN#MOB_REPORT',
                 'value'         =>  'N',
                 'description'   =>  'Reports availability in mobile.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$MOB_ADMIN',
+                'config_name'   =>  'CAN#MOB_ADMIN',
                 'value'         =>  'N',
                 'description'   =>  'Admin availability in mobile.',
                 'created_by'    =>  99999
@@ -328,43 +329,43 @@ class Config extends Model
 
         $email  =   [
             [
-                'config_name'   =>  'CAN$EML_NEW_USER',
+                'config_name'   =>  'CAN#EML_NEW_USER',
                 'value'         =>  'Y',
                 'description'   =>  'Send email to registered user.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$EML_VFY_USER',
+                'config_name'   =>  'CAN#EML_VFY_USER',
                 'value'         =>  'Y',
                 'description'   =>  'Send email to verified user.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$EML_TK_ASSIGN',
+                'config_name'   =>  'CAN#EML_TK_ASSIGN',
                 'value'         =>  'Y',
                 'description'   =>  'Send email when ticket assigned.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$EML_TK_RESOLVED',
+                'config_name'   =>  'CAN#EML_TK_RESOLVED',
                 'value'         =>  'Y',
                 'description'   =>  'Send email when ticket resolved.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$EML_TK_COMMENT',
+                'config_name'   =>  'CAN#EML_TK_COMMENT',
                 'value'         =>  'Y',
                 'description'   =>  'Send email when ticket has new comment.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$EML_TK_CLOSE',
+                'config_name'   =>  'CAN#EML_TK_CLOSE',
                 'value'         =>  'Y',
                 'description'   =>  'Send email when ticket is closed.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$EML_SUBS_ALERT',
+                'config_name'   =>  'CAN#EML_SUBS_ALERT',
                 'value'         =>  'Y',
                 'description'   =>  'Send email subscription alerts.',
                 'created_by'    =>  99999
@@ -374,31 +375,31 @@ class Config extends Model
 
         $notif  =   [
             [
-                'config_name'   =>  'CAN$GUI_TK_ASSIGN',
+                'config_name'   =>  'CAN#GUI_TK_ASSIGN',
                 'value'         =>  'Y',
                 'description'   =>  'Send notif when ticket assigned.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$GUI_TK_RESOLVED',
+                'config_name'   =>  'CAN#GUI_TK_RESOLVED',
                 'value'         =>  'N',
                 'description'   =>  'Send notif when ticket resolved.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$GUI_TK_CLOSE',
+                'config_name'   =>  'CAN#GUI_TK_CLOSE',
                 'value'         =>  'N',
                 'description'   =>  'Send notif when ticket is closed.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$GUI_TK_COMMENT',
+                'config_name'   =>  'CAN#GUI_TK_COMMENT',
                 'value'         =>  'Y',
                 'description'   =>  'Send notif when ticket has new comment.',
                 'created_by'    =>  99999
             ],
             [
-                'config_name'   =>  'CAN$GUI_RAS_USER',
+                'config_name'   =>  'CAN#GUI_RAS_USER',
                 'value'         =>  'N',
                 'description'   =>  'Send notif when user is reassigned.',
                 'created_by'    =>  99999
@@ -411,7 +412,7 @@ class Config extends Model
         ]);
 
         // Clear existing configuration
-        Config::where('config_name', 'like', 'CAN$%')
+        Config::where('config_name', 'like', 'CAN#%')
                 ->delete();
 
         info('CONFIG.SETBASIC', [
@@ -433,6 +434,19 @@ class Config extends Model
             'status'    =>  'complete',
             'config'    =>  'applied'
         ]);
+
+    }
+
+    /**
+     * Get all configs
+     * 
+     * @return  Object
+     */
+    public function allConfig()
+    {
+        return  Config::select('config_name', 'value')
+                    ->get()
+                    ->toArray();
 
     }
 }

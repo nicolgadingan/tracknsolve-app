@@ -47,37 +47,50 @@
                     <tbody>
                         @if (count($tickets) > 0)
                             @foreach ($tickets as $ticket)
-                                <tr>
+                                @php
+                                    $dateDue    =   \Carbon\Carbon::now()->subDays($dueDays);
+                                    $theme      =   '';
+                                    $rowTheme   =   '';
+                                    $tkstatus   =   ucwords(Str::replace('-', ' ', $ticket->status));
+                                    $forDueChk  =   false;
+                                    switch ($ticket->status) {
+                                        case 'new':
+                                            $theme      =   'primary';
+                                            $forDueChk  =   true;
+                                            break;
+                                        case 'in-progress':
+                                            $theme      =   'warning';
+                                            $forDueChk  =   true;
+                                            break;
+                                        case 'on-hold':
+                                            $theme      =   'purple';
+                                            $forDueChk  =   true;
+                                            break;
+                                        case 'resolved':
+                                            $theme      =   'success';
+                                            break;
+                                        case 'closed':
+                                            $theme      =   'dark';
+                                            break;
+                                        default:
+                                            $theme      =   'secondary';
+                                            break;
+                                    }
+
+                                    if ($forDueChk == true &&
+                                        $ticket->created < $dateDue) {
+
+                                        $theme      =   'pumpkin';
+                                        $rowTheme   =   'bg-pumpkin-light';
+                                    }
+                                @endphp
+                                <tr class="{{ $rowTheme }}">
                                     <td>
                                         <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-marine">
                                             <strong>{{ $ticket->tkey }}</strong>
                                         </a>
                                     </td>
                                     <td>
-                                        @php
-                                            $theme      =   '';
-                                            $tkstatus   =   ucwords(Str::replace('-', ' ', $ticket->status));
-                                            switch ($ticket->status) {
-                                                case 'new':
-                                                    $theme  =   'primary';
-                                                    break;
-                                                case 'in-progress':
-                                                    $theme  =   'warning';
-                                                    break;
-                                                case 'on-hold':
-                                                    $theme  =   'purple';
-                                                    break;
-                                                case 'resolved':
-                                                    $theme  =   'success';
-                                                    break;
-                                                case 'closed':
-                                                    $theme  =   'dark';
-                                                    break;
-                                                default:
-                                                    $theme  =   'secondary';
-                                                    break;
-                                            }
-                                        @endphp
                                         <span class="dot dot-{{ $theme }}">
                                             {{ Str::ucfirst($ticket->status) }}
                                         </span>

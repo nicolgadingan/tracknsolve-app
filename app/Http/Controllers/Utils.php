@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Arr;
 
 class Utils extends Controller
 {
@@ -167,6 +168,26 @@ class Utils extends Controller
         
         info($app_name, ['action' => 'completing']);
 
+    }
+
+    /**
+     * Parse config
+     * 
+     * @param   Array   $configs
+     * @return  Value
+     */
+    public function parseConfig($configs, $track)
+    {
+        $remap  =   [];
+        foreach ($configs as $conf) {
+            $remap    =   Arr::add($remap, $conf['config_name'],  $conf['value']);
+        }
+
+        $value  =   Arr::first($remap, function($value, $key) use ($track) {
+            return $key == $track;
+        });
+
+        return $value;
     }
 
 }

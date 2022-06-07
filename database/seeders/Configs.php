@@ -69,5 +69,18 @@ class Configs extends Seeder
                                 ]
                             );
 
+        // Overdue days
+        $tmpOverdue     =   Config::firstOrCreate(
+            [
+                'config_name'   =>  'OVERDUE_DAYS'
+            ],
+            [
+                'value'         =>  7,
+                'description'   =>  "Days till a ticket will be flagged as overdue.",
+                'created_by'    =>  99999,
+                'created_at'    =>  \Carbon\Carbon::now()
+            ]
+        );
+
     }
 }

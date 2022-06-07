@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    @livewire('tickets-index')
+    @livewire('tickets-index', ['dueDays'   =>  $dueDays])
 @endsection
