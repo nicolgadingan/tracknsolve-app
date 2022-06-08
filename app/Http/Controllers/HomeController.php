@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
+use Database\Seeders\Configs;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+    protected $utils;
+
     /**
      * Create a new controller instance.
      *
@@ -16,6 +20,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->utils    =   new Utils;
     }
 
     /**
@@ -27,6 +32,7 @@ class HomeController extends Controller
     {
         $me             =   auth()->user();
         $ticket         =   new Ticket;
+        $config         =   new Config();
 
         $myTickets      =   $ticket->openAssignedToUser($me->id);
         $gpUnassigned   =   $ticket->groupUnassignedTickets($me->group_id);
@@ -35,11 +41,15 @@ class HomeController extends Controller
         // Get Chart Data
         $cData          =   $this->chartBreakdown();
 
+        $configs        =   $config->allConfig();
+        $overDue        =   $this->utils->parseConfig($configs, 'OVERDUE_DAYS');
+
         return view('dashboard')->with([
             'myTickets'     =>  $myTickets,
             'gpUnassigned'  =>  $gpUnassigned,
             'tkSummary'     =>  $tkSummary,
-            'chartData'     =>  $cData
+            'chartData'     =>  $cData,
+            'dueDate'       =>  \Carbon\Carbon::now()->subDays($overDue)
         ]);
     }
 

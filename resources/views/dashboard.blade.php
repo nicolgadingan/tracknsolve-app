@@ -23,10 +23,22 @@
                         <tbody>
                             @if (count($gpUnassigned) > 0)
                                 @foreach ($gpUnassigned as $unassigned)
-                                    <tr>
+                                    @php
+                                        $overdue    =   '';
+                                        $createdAt  =   \Carbon\Carbon::create($unassigned->created_at);
+
+                                        if ($createdAt < $dueDate) {
+                                            $overdue    =   'overdue';
+                                        }
+                                    @endphp
+                                    <tr class="{{ $overdue }} ">
                                         <td>
                                             <strong>
-                                                <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-marine">{{ $unassigned->tkey }}</a>
+                                                <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-marine"
+                                                    @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
+                                                    data-bs-placement="bottom">
+                                                    {{ $unassigned->tkey }}
+                                                </a>
                                             </strong>
                                         </td>
                                         <td>
@@ -81,37 +93,50 @@
                         <tbody>
                             @if (count($myTickets) > 0)
                                 @foreach ($myTickets as $mytk)
-                                    <tr>
+                                    @php
+                                        $theme      =   '';
+                                        $overdue    =   '';
+
+                                        $createdAt  =   \Carbon\Carbon::create($mytk->created_at);
+                                        $tkstat     =   ucwords(Str::replace('-', ' ', $mytk->status));
+
+                                        switch ($mytk->status) {
+                                            case 'new':
+                                                $theme  =   'primary';
+                                                break;
+                                            case 'in-progress':
+                                                $theme  =   'warning';
+                                                break;
+                                            case 'on-hold':
+                                                $theme  =   'secondary';
+                                                break;
+                                            case 'resolved':
+                                                $theme  =   'success';
+                                                break;
+                                            default:
+                                                $theme  =   'secondary';
+                                                break;
+                                        }
+                                        
+                                        if ($createdAt < $dueDate) {
+                                            $theme      =   'pumpkin';
+                                            $overdue    =   'overdue';
+                                        }
+                                    @endphp
+                                    <tr class="{{ $overdue }}">
                                         <td>
                                             <strong>
-                                                <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-marine">{{ $mytk->tkey }}</a>
+                                                <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-marine"
+                                                    @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
+                                                    data-bs-placement="bottom">
+                                                    {{ $mytk->tkey }}
+                                                </a>
                                             </strong>
                                         </td>
                                         <td>
                                             {{ Str::ucfirst($mytk->priority) }}
                                         </td>
                                         <td>
-                                            @php
-                                                $theme  =   '';
-                                                $tkstat =   ucwords(Str::replace('-', ' ', $mytk->status));
-                                                switch ($mytk->status) {
-                                                    case 'new':
-                                                        $theme  =   'primary';
-                                                        break;
-                                                    case 'in-progress':
-                                                        $theme  =   'warning';
-                                                        break;
-                                                    case 'on-hold':
-                                                        $theme  =   'secondary';
-                                                        break;
-                                                    case 'resolved':
-                                                        $theme  =   'success';
-                                                        break;
-                                                    default:
-                                                        $theme  =   'secondary';
-                                                        break;
-                                                }
-                                            @endphp
                                             <span class="dot dot-{{ $theme }}">
                                                 {{ $tkstat }}
                                             </span>

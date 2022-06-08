@@ -244,6 +244,10 @@ body {
     color: var(--x-primary-m);
 }
 
+.fg-pumpkin {
+    color: var(--x-pumpkin-m);
+}
+
 .bg-less {
     background: none !important;
 }
@@ -342,6 +346,12 @@ a.link-marine {
 a.link-marine:hover,
 a.link-marine:active {
     color: var(--marine-dark);
+}
+
+
+.overdue {
+    background-color: var(--x-pumpkin-l);
+    /* border-left: 3px solid var(--x-pumpkin-m); */
 }
 
 

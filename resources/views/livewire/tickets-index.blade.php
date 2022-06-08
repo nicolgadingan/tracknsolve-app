@@ -50,7 +50,7 @@
                                 @php
                                     $dateDue    =   \Carbon\Carbon::now()->subDays($dueDays);
                                     $theme      =   '';
-                                    $rowTheme   =   '';
+                                    $recStatus  =   '';
                                     $tkstatus   =   ucwords(Str::replace('-', ' ', $ticket->status));
                                     $forDueChk  =   false;
                                     switch ($ticket->status) {
@@ -81,12 +81,14 @@
                                         $ticket->created < $dateDue) {
 
                                         $theme      =   'pumpkin';
-                                        $rowTheme   =   'bg-pumpkin-light';
+                                        $recStatus  =   'overdue';
                                     }
                                 @endphp
-                                <tr class="{{ $rowTheme }}">
+                                <tr class="{{ $recStatus }}">
                                     <td>
-                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-marine">
+                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-marine"
+                                            @if ($recStatus == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
+                                            data-bs-placement="bottom">
                                             <strong>{{ $ticket->tkey }}</strong>
                                         </a>
                                     </td>
