@@ -12,6 +12,7 @@ use App\Jobs\Mailman;
 use App\Mail\HelloMail;
 use App\Models\EmailVerify;
 use App\Models\Event;
+use Illuminate\Support\Facades\URL;
 
 class UsersController extends Controller
 {
@@ -121,7 +122,10 @@ class UsersController extends Controller
 
         try {
             $email['to']        =   $user->email;
-            $email['content']   =   new HelloMail($user);
+            $email['content']   =   new HelloMail((object) [
+                                            'user'      =>  $user,
+                                            'baseURL'   =>  URL::to('')
+                                        ]);
 
             dispatch(new Mailman($email));
             info('USERS.REGISTER', ['result' => 'queued']);

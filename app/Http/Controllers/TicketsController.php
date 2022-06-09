@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use App\Mail\TicketResolved;
 use App\Jobs\Mailman;
+use Illuminate\Support\Facades\URL;
 
 class TicketsController extends Controller
 {
@@ -294,7 +295,8 @@ class TicketsController extends Controller
             $email['to']        =   $reporter['email'];
             $email['content']   =   new TicketResolved((object) [
                                         'subject'   =>  'Your ticket ' . $tdata['tkey'] . ' has been resolved.',
-                                        'ticket'    =>  $tdata
+                                        'ticket'    =>  $tdata,
+                                        'baseURL'   =>  URL::to('')
                                     ]);
 
             dispatch(new Mailman($email));

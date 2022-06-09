@@ -7,8 +7,9 @@
 @section('content')
 <div class="d-flex justify-content-center">
     <div class="card card-body borderless shadow-sm border-bubble pb-2" id="box-login">
-        <div class="center mb-3 p-2">
-            <img src="{{ asset('imgs/yortik.svg') }}" alt="Yortik logo" id="brand-auth">
+        <div class="center mb-3 p-2 brand">
+            @include('plugins.tnsicon')
+            @include('plugins.tnstext')
         </div>
         @if ($status != "not-exists")
             @if ($status == "not-verified")

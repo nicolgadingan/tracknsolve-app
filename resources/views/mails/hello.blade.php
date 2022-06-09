@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <img height="100px" src="{{ config('app.url', '') . '/imgs/email-notice.svg' }}" alt="Track N' Solve logo">
+        <img height="100px" src="{{ $mailData->baseURL . '/imgs/email-notice.svg' }}" alt="Track N' Solve logo">
     </div>
     <span style="font-size: x-large;">Email Verification!</span><br><br> 
     <p>
@@ -12,10 +12,10 @@
         Please click the button below to verify your email address and confirm your password to complete your registration.
     </p>
     <p style="color: #0d6efd;">
-        Please note, your username is <b>{{ $mailData->username }}</b>. 
+        Please note, your username is <b>{{ $mailData->user->username }}</b>. 
     </p>
     <div class="p-2">
-        <a href="{{ config('app.url', '') . '/user/verify/' . $mailData->emailVerify->token }}" class="link-button">
+        <a href="{{ $mailData->baseURL . '/user/verify/' . $mailData->user->emailVerify->token }}" class="link-button">
             Verify Now
         </a>
     </div>

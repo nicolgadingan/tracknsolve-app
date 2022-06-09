@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\VerifiedMail;
 use App\Jobs\Mailman;
 use App\Models\Event;
+use Illuminate\Support\Facades\URL;
 
 class AccessesController extends Controller
 {
@@ -111,7 +112,10 @@ class AccessesController extends Controller
 
         try {
             $email['to']        =   $user->email;
-            $email['content']   =   new VerifiedMail($user);
+            $email['content']   =   new VerifiedMail((object) [
+                                        'user'      =>  $user,
+                                        'baseURL'   =>  URL::to('')
+                                    ]);
 
             dispatch(new Mailman($email));
             info('USERS.REGISTER', ['result' => 'queued']);

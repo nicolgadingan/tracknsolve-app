@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Ticket;
 use App\Jobs\Mailman;
 use App\Mail\TicketCreated;
+use Illuminate\Support\Facades\URL;
 
 class TicketsCreate extends Component
 {
@@ -112,7 +113,8 @@ class TicketsCreate extends Component
                 $email['content']   =   new TicketCreated((object) [
                                             'subject'   =>  $subject,
                                             'user'      =>  $rcpt,
-                                            'ticket'    =>  $tdata
+                                            'ticket'    =>  $tdata,
+                                            'baseURL'   =>  URL::to('')
                                         ]);
 
                 dispatch(new Mailman($email));

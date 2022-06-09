@@ -31,7 +31,8 @@ class HelloMail extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->subject('Hello from tracknsolve!')
+        return $this->subject('Tracknsolve - Verify registration')
+                    ->from('hello@tracknsolve.com', 'Hello')
                     ->view('mails.hello');
     }
 }

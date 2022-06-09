@@ -11,16 +11,16 @@ class VerifiedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailData;
+    public $mail;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mailData)
+    public function __construct($mail)
     {
-        $this->mailData =   $mailData;
+        $this->mail =   $mail;
     }
 
     /**
@@ -30,8 +30,8 @@ class VerifiedMail extends Mailable
      */
     public function build()
     {
-        // return $this->view('view.name');
-        return $this->subject('Account Verified!')
+        return $this->subject('Your account is now verified!')
+                    ->from('hello@tracknsolve.com', 'Hello')
                     ->view('mails.verified');
     }
 }

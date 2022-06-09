@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Mail\VerifiedMail;
+use App\Mail\TicketCreated;
 use App\Models\User;
+use App\Models\Ticket;
+use Illuminate\Support\Facades\URL;
+use App\Mail\VerifiedMail;
+use App\Mail\HelloMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,10 +53,56 @@ Route::get('/hello', function() {
 // Test Email
 Route::get('email-test', function() {
 
-    $user                   =   User::find(700001);
-    $details['content']     =   new VerifiedMail($user);
-    $details['email']       =   'nicolgadingan@gmail.com';
-    dispatch(new App\Jobs\Mailman($details));
+    $rcpt                   =   User::where('id', 700001)
+                                    ->select('users.id as uid')
+                                    ->first()
+                                    ->toArray();
+
+    $tdata                  =   Ticket::where('id', '=', 'YRTK842538125')
+                                    ->first()
+                                    ->toArray();
+
+    $tdata['tkey']          =   'YRTK842538125';
+
+    $email['to']        =   'mgadingan@tracknsolve.com';
+    $email['content']   =   new TicketCreated((object) [
+                                'subject'   =>  'Ticket XXXXXXXXXXXX has been assigned to your group',
+                                'user'      =>  $rcpt,
+                                'ticket'    =>  $tdata,
+                                'baseURL'   =>  URL::to('')
+                            ]);
+
+    dispatch(new App\Jobs\Mailman($email));
+
     dd('done');
 
+});
+
+Route::get('user-verify', function() {
+    $user               =   User::where('id', 700001)
+                                    ->first()
+                                    ->toArray();
+
+    $email['to']        =   $user['email'];
+    $email['content']   =   new VerifiedMail((object) [
+                                'user'      =>  $user,
+                                'baseURL'   =>  URL::to('')
+                            ]);
+
+    dispatch(new App\Jobs\Mailman($email));
+    dd('done');
+});
+
+Route::get('user-hello', function() {
+    $user               =   User::where('id', 700036)
+                                    ->first();
+    $email['to']        =   $user->email;
+    $email['content']   =   new HelloMail((object) [
+                                    'user'      =>  $user,
+                                    'baseURL'   =>  URL::to('')
+                                ]);
+
+    dispatch(new App\Jobs\Mailman($email));
+
+    dd("DONE");
 });
