@@ -31,6 +31,7 @@ class TicketResolved extends Mailable
     public function build()
     {
         return $this->subject($this->mail->subject)
+                    ->from('noreply@tracknsolve.com', 'Mailer from Tracknsolve')
                     ->view('mails.tkresolved');
     }
 }

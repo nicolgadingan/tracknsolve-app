@@ -32,7 +32,7 @@ class HelloMail extends Mailable
     {
         // return $this->view('view.name');
         return $this->subject('Tracknsolve - Verify registration')
-                    ->from('hello@tracknsolve.com', 'Hello')
+                    ->from('hello@tracknsolve.com', 'Hello from Tracknsolve')
                     ->view('mails.hello');
     }
 }

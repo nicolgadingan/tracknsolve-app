@@ -31,7 +31,7 @@ class VerifiedMail extends Mailable
     public function build()
     {
         return $this->subject('Your account is now verified!')
-                    ->from('hello@tracknsolve.com', 'Hello')
+                    ->from('hello@tracknsolve.com', 'Hello from Tracknsolve')
                     ->view('mails.verified');
     }
 }
