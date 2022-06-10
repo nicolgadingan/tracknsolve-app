@@ -10,28 +10,31 @@
     <div class="row mb-3 g-3">
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $tkey }}" readonly>
+                <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $ticket_id }}" disabled>
                 <label for="tk-tkey">Key</label>
             </div>
         </div>
         <div class="col-md-6 right">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="tk-created-at" value="{{ \Carbon\Carbon::now() }}" readonly>
+                <input type="text" class="form-control" id="tk-created-at" value="{{ \Carbon\Carbon::now() }}" disabled>
                 <label for="tk-created-at">Create Date</label>
             </div>
         </div>
     </div>
     <h6 class="fg-forest">REPORTER</h6>
+    @php
+        $creator    =   auth()->user();
+    @endphp
     <div class="row g-3">
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="tk-username" value="{{ $reporter->username }}" readonly>
+                <input type="text" class="form-control" id="tk-username" value="{{ $creator->username }}" disabled>
                 <label for="tk-username">Reporter</label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="tk-fullname" value="{{ $reporter->first_name . ' ' . $reporter->last_name }}" readonly>
+                <input type="text" class="form-control" id="tk-fullname" value="{{ $creator->first_name . ' ' . $creator->last_name }}" disabled>
                 <label for="tk-fullname">Name</label>
             </div>
         </div>
@@ -39,13 +42,13 @@
     <div class="row g-3 mb-3">
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="tk-email" value="{{ $reporter->email }}" readonly>
+                <input type="text" class="form-control" id="tk-email" value="{{ $creator->email }}" disabled>
                 <label for="tk-email">Email</label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="tk-group" value="{{ $reporter->group->name }}" readonly>
+                <input type="text" class="form-control" id="tk-group" value="{{ $creator->group->name }}" disabled>
                 <label for="tk-group">Group</label>
             </div>
         </div>

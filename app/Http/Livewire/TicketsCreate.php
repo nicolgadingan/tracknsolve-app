@@ -9,13 +9,16 @@ use App\Models\Ticket;
 use App\Jobs\Mailman;
 use App\Mail\TicketCreated;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Utils;
 
 class TicketsCreate extends Component
 {
+    // Protected
+    protected $uid;
+
     // Declaration
-    public $tkey;              // ticket key
-    public $caller;            // ticket creator
-    public $reporter;          // 
+    public $ticket_id;         // ticket key
+    public $reporter;          // ticket creator
     public $priority;          // 
     public $status;            // 
     public $groups;            // group list
@@ -27,8 +30,8 @@ class TicketsCreate extends Component
     public $response;
 
     protected $rules    =   [
-        'tkey'          =>  'required|exists:reserves,key_id',
-        'caller'        =>  'required|exists:users,id',
+        'ticket_id'     =>  'required|exists:reserves,key_id',
+        'reporter'      =>  'required|exists:users,id',
         'priority'      =>  'required',
         'group_id'      =>  'required|exists:groups,id',
         'status'        =>  'required',
@@ -43,11 +46,12 @@ class TicketsCreate extends Component
      */
     public function mount()
     {
-        $this->reporter     =   auth()->user();
+        $this->uid          =   auth()->user()->id;
+
         $this->status       =   'new';
         $this->users        =   [];
         $this->priority     =   '';
-        $this->caller       =   $this->reporter->id;
+        $this->reporter     =   $this->uid;
         $this->assignee     =   '';
     }
 
@@ -89,9 +93,9 @@ class TicketsCreate extends Component
         $tdata      =   $this->validate();
 
         $ticket     =   new Ticket();
-        $creResult  =   $ticket->createTicket($tdata);
+        $retCode    =   $ticket->createTicket($tdata);
 
-        if ($creResult == true) {
+        if ($retCode == 1) {
             // Get recipients
             $recipients =   User::where('group_id', $tdata['group_id'])
                                 ->select(
@@ -104,9 +108,9 @@ class TicketsCreate extends Component
             // Queue email to be sent
             foreach ($recipients as $rcpt) {
                 if ($rcpt['uid'] == $tdata['assignee']) {
-                    $subject    =   'Ticket ' . $tdata['tkey'] . ' has been assigned to you.';
+                    $subject    =   'Ticket ' . $tdata['ticket_id'] . ' has been assigned to you.';
                 } else {
-                    $subject    =   'Ticket ' . $tdata['tkey'] . ' has been assigned to your group.';
+                    $subject    =   'Ticket ' . $tdata['ticket_id'] . ' has been assigned to your group.';
                 }
                 
                 $email['to']        =   $rcpt['email'];
@@ -125,9 +129,11 @@ class TicketsCreate extends Component
             ]);
 
         } else {
-            return redirect('/tickets')->withErrors([
-                'Saving ticket data encountered an unexpected error. Please report this to your administrator for checking.'
-            ]);
+            $utils  =   new Utils;
+            return $this->addError(
+                'message',
+                $utils->err->unexpected
+            );
 
         }
     }

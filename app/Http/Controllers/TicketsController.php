@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\URL;
 class TicketsController extends Controller
 {
     protected $utils;
+    protected $uid;
 
     /**
      * Create a new controller instance.
@@ -25,6 +26,7 @@ class TicketsController extends Controller
     {
         $this->middleware('auth');
         $this->utils    =   new Utils;
+        $this->uid      =   ( auth()->check() == 1 ) ? auth()->user()->id : 99999;
     }
 
     /**
@@ -257,44 +259,46 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function resolve(Request $request, $id)
+    public function resolve($id)
     {
         $utils      =   new Utils;
         $ticket     =   new Ticket();
         $access     =   auth()->user();
 
-        $utils->loggr('TICKETS.RESOLVE', 1);
+        info('CTRL.TK.RESLV', [
+                'user'      =>  $this->uid,
+                'status'    =>  'init',
+                'data'      =>  $id
+            ]);
         
-        $utils->loggr('Action > Fetching data.', 0);
-        $tdata      =   Ticket::find($id);
+        $tdata      =   DB::table('tickets as t')
+                            ->leftJoin('users as u', 'u.id', '=', 't.reporter')
+                            ->where('t.id', $id)
+                            ->select(
+                                't.id as ticket_id',
+                                'title',
+                                'description',
+                                DB::raw("'resolved' as status"),
+                                'priority',
+                                't.group_id',
+                                'assignee',
+                                'reporter',
+                                'u.email',
+                                'u.id as uid'
+                            )
+                            ->first();
 
-        $utils->loggr('Result > Completed.', 0);
-        $utils->loggr(json_encode(['data' => $tdata]), 0);
-
-        $tdata['tkey']      =   $id;
-        $tdata['status']    =   'resolved';
-        $tdata['assignee']  =   $access->id;
-
-        $tdata              =   Arr::except($tdata, ['id']);
+        $tdata      =   (array) $tdata;
         
-        $utils->loggr('Action > Resolving ticket ' . $id . '.', 0);
         $retcode    =   $ticket->resolveTicket($tdata);
 
         if ($retcode == 1) {
-            $utils->loggr('Result > Success.', 0);
 
             // Send email
-            $reporter           =   User::where('id', $tdata['reporter'])
-                                        ->select(
-                                            'email',
-                                            'id as uid'
-                                        )
-                                        ->first()
-                                        ->toArray();
 
-            $email['to']        =   $reporter['email'];
+            $email['to']        =   $tdata['email'];
             $email['content']   =   new TicketResolved((object) [
-                                        'subject'   =>  'Your ticket ' . $tdata['tkey'] . ' has been resolved.',
+                                        'subject'   =>  'Your ticket ' . $tdata['ticket_id'] . ' has been resolved.',
                                         'ticket'    =>  $tdata,
                                         'baseURL'   =>  URL::to('')
                                     ]);
@@ -340,32 +344,46 @@ class TicketsController extends Controller
      */
     public function get($id)
     {
-        $this->utils->loggr('TICKETS.ASSIGNTOME', 1);
+        info('CTRL.TK.AS2ME', [
+                'user'      =>  $this->uid,
+                'status'    =>  'init',
+                'data'      =>  [
+                    'id'    =>  $id
+                ]
+            ]);
         
-        $access         =   auth()->user();
-        $ticket         =   new Ticket();
+        $access             =   auth()->user();
+        $ticket             =   new Ticket();
 
-        $this->utils->loggr('Action > Getting ticket ' . $id . ' data.', 0);
-
-        $tdata          =   Ticket::where('id', $id)
+        $tdata              =   Ticket::where('id', $id)
                                 ->first()
                                 ->toArray();
-        $tdata['id']    =   $id;
+        $tdata['ticket_id'] =   $id;
 
-        $this->utils->loggr('Result > ' . json_encode($tdata), 0);
-
-        $this->utils->loggr('Action > Check assignment group.', 0);
+        info('CTRL.TK.AS2ME', [
+                'user'      =>  $this->uid,
+                'status'    =>  'fetch',
+                'data'      =>  $tdata
+            ]);
 
         if($tdata['group_id'] !=  $access->group_id) {
-            $this->utils->loggr('Result > Assigned to different group. Terminating process.', 0);
+            info('CTRL.TK.AS2ME', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'failed',
+                    'message'   =>  'Belongs to different group. User group id is ' . $access->group_id . '.'
+                ]);
+
             return back()->withErrors([
-                'message'   =>  'Assigning ticket ticket to yourself failed as it belongs to different group. Please check and try again.'
+                'message'   =>  'Assigning ticket ticket to yourself failed as it belongs to a different group. Please check and try again.'
             ]);
 
         }
 
-        $this->utils->loggr("Result > Assigned to user's group.", 0);
-        $this->utils->loggr("Action > Assigning to " . $access->id . ".", 0);
+        info('CTRL.TK.AS2ME', [
+                'user'      =>  $this->uid,
+                'status'    =>  'assign',
+                'call'      =>  'modl.tk.assigntome'
+            ]);
 
         $rcode  =   $ticket->assignToMe($tdata);
 

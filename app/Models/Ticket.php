@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Ticket extends Model
 {
     protected $utils;
+    protected $uid;
 
     use HasFactory;
 
@@ -20,6 +21,7 @@ class Ticket extends Model
     public function __construct()
     {
         $this->utils    =   new Utils;
+        $this->uid      =   ( auth()->check() == 1 ) ? auth()->user()->id : 99999;
     }
 
     /**
@@ -65,25 +67,69 @@ class Ticket extends Model
      */
     public function createTicket($tdata)
     {
-        $tdate      =   \Carbon\Carbon::now();
+        $retcode    =   0;
 
-        $isCreated  =   Ticket::insert([
-                                'id'            =>  $tdata['tkey'],
-                                'status'        =>  ($tdata['assignee'] != '') ? 'in-progress' : $tdata['status'],
-                                'priority'      =>  $tdata['priority'],
-                                'title'         =>  $tdata['title'],
-                                'description'   =>  $tdata['description'],
-                                'group_id'      =>  $tdata['group_id'],
-                                'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
-                                'reporter'      =>  $tdata['caller'],
-                                'created_at'    =>  $tdate
-                            ]);
-        
-        $this->addHistory($tdata);
+        info('MODL.TK.CREAT', [
+                'user'      =>  $this->uid,
+                'status'    =>  'init',
+                'data'      =>  $tdata
+            ]);
 
-        $this->updReserves($tdata['tkey'], 'P');
+        try {
+            Ticket::insert([
+                    'id'            =>  $tdata['ticket_id'],
+                    'status'        =>  ($tdata['assignee'] != '') ? 'in-progress' : $tdata['status'],
+                    'priority'      =>  $tdata['priority'],
+                    'title'         =>  $tdata['title'],
+                    'description'   =>  $tdata['description'],
+                    'group_id'      =>  $tdata['group_id'],
+                    'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
+                    'reporter'      =>  $tdata['reporter'],
+                    'created_at'    =>  \Carbon\Carbon::now()
+                ]);
 
-        return  $isCreated;
+            info('MODL.TK.CREAT', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'created',
+                ]);
+
+            $retcode    =   1;
+
+        } catch (\Throwable $th) {
+            info('MODL.TK.CREAT', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'error',
+                ]);
+            report($th);
+
+            $retcode    =   255;
+
+        }
+
+        info('MODL.TK.CREAT', [
+                'user'      =>  $this->uid,
+                'call'      =>  'modl.tk.ahist',
+            ]);
+
+        try {
+            $this->addHistory($tdata);
+        } catch (\Throwable $th) {
+            report($th);
+        }
+
+        info('MODL.TK.CREAT', [
+            'user'      =>  $this->uid,
+            'call'      =>  'modl.tk.uresv',
+        ]);
+
+        try {
+            $this->updReserves($tdata['ticket_id'], 'P');
+
+        } catch (\Throwable $th) {
+            report($th);
+        }
+
+        return  $retcode;
     }
 
     /**
@@ -122,43 +168,57 @@ class Ticket extends Model
      */
     public function assignToMe($tdata)
     {
+        info('MODL.TK.AS2ME', [
+            'user'      =>  $this->uid,
+            'status'    =>  'init'
+        ]);
+
         $access     =   auth()->user();
-        $now        =   \Carbon\Carbon::now();
         $isAssigned =   0;
 
         try {
             
-            $succes =   Ticket::where('id', $tdata['id'])
+            $succes =   Ticket::where('id', $tdata['ticket_id'])
                                 ->update([
                                     'status'        =>  'in-progress',
                                     'group_id'      =>  $access->group_id,
                                     'assignee'      =>  $access->id,
-                                    'updated_at'    =>  $now
+                                    'updated_at'    =>  \Carbon\Carbon::now()
                                 ]);
 
             if ($succes) {
                 $isAssigned =   1;
 
-                $this->addHistory([
-                    'ticket_id'     =>  $tdata['id'],
-                    'status'        =>  $tdata['status'],
-                    'priority'      =>  $tdata['priority'],
-                    'title'         =>  $tdata['title'],
-                    'description'   =>  $tdata['description'],
-                    'group_id'      =>  $tdata['group_id'],
-                    'assignee'      =>  $access->id,
-                    'reporter'      =>  $tdata['reporter'],
-                    'created_by'    =>  $access->id,
-                    'created_at'    =>  $now
+                $tdata['assignee']      =   $this->uid;
+                $tdata['created_by']    =   $this->uid;
+
+                info('MODL.TK.AS2ME', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'assigned'
                 ]);
 
             }
 
         } catch (\Throwable $th) {
+            info('MODL.TK.AS2ME', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'error',
+                ]);
             
             $isAssigned =   255;
             report($th);
 
+        }
+
+        info('MODL.TK.AS2ME', [
+                'user'  =>  $this->uid,
+                'call'  =>  'modl.tk.ahist'
+            ]);
+
+        try {
+            $this->addHistory($tdata);
+        } catch (\Throwable $th) {
+            report($th);
         }
 
         return $isAssigned;
@@ -167,32 +227,54 @@ class Ticket extends Model
     /**
      * Resolve ticket
      * 
-     * @param   Object  $tdata
+     * @param   Object  $ticket_id
      * @return  Int     $retcode
      */
     public function resolveTicket($tdata)
     {
+        info('MODL.TK.RESLV', [
+            'user'      =>  $this->uid,
+            'status'    =>  'init',
+            'data'      =>  $tdata['ticket_id']
+        ]);
+
         $now        =   \Carbon\Carbon::now();
         $retcode    =   0;
 
         try {
-            $isUpdated  =   Ticket::where('id', $tdata['tkey'])
-                            ->update([
-                                'status'        =>  $tdata['status'],
-                                'assignee'      =>  $tdata['assignee'],
-                                'updated_at'    =>  $now
-                            ]);
+            Ticket::where('id', $tdata['ticket_id'])
+                ->update([
+                    'status'        =>  $tdata['status'],
+                    'assignee'      =>  $tdata['assignee'],
+                    'updated_at'    =>  $now
+                ]);
 
-            if ($isUpdated) {
-                $retcode    =   1;
-                $this->addHistory($tdata);
+            info('MODL.TK.RESLV', [
+                'user'      =>  $this->uid,
+                'status'    =>  'resolved'
+            ]);
 
-            }
+            $retcode    =   1;
             
         } catch (\Throwable $th) {
+            info('MODL.TK.RESLV', [
+                'user'      =>  $this->uid,
+                'status'    =>  'error' 
+            ]);
             $retcode    =   255;
             report($th);
-            
+
+        }
+
+        info('MODL.TK.RESLV', [
+                'user'      =>  $this->uid,
+                'call'      =>  'modl.tk.ahist'
+            ]);
+
+        try {
+            $this->addHistory($tdata);
+        } catch (\Throwable $th) {
+            report($th);
         }
 
         return $retcode;
@@ -206,16 +288,16 @@ class Ticket extends Model
      */
     public function autoClose()
     {
-        info('TICKETS.AUTOCLOSE > Started');
-        info('TICKETS.AUTOCLOSE > Getting auto-close date.');
+        info('MODL.TK.AUTOX > Started');
+        info('MODL.TK.AUTOX > Getting auto-close date.');
 
         $xdate      =   Config::where('config_name', 'TK_AUTO_X_DAYS')
                             ->select(DB::raw('current_timestamp - interval configs.value day as cut_date'))
                             ->first()
                             ->cut_date;
 
-        info('TICKETS.AUTOCLOSE > Auto-close date is ' . $xdate . '.');
-        info('TICKETS.AUTOCLOSE > Checking tickets resolved prior ' . $xdate . '.');
+        info('MODL.TK.AUTOX > Auto-close date is ' . $xdate . '.');
+        info('MODL.TK.AUTOX > Checking tickets resolved prior ' . $xdate . '.');
 
         try {
             $tickets    =   DB::table('tickets as t')
@@ -235,17 +317,17 @@ class Ticket extends Model
                             ->where('h.created_at', '<', $xdate)
                             ->get();
             
-            info('TICKETS.AUTOCLOSE > Found ' . count($tickets) . ' tickets to auto-close.');
+            info('MODL.TK.AUTOX > Found ' . count($tickets) . ' tickets to auto-close.');
             
         } catch (\Throwable $th) {
-            info('TICKETS.AUTOCLOSE > ERROR: Unexpected.');
+            info('MODL.TK.AUTOX > ERROR: Unexpected.');
             report($th);
 
         }
 
         // Check if needs to proceed
         if (count($tickets) == 0) {
-            info('TICKETS.AUTOCLOSE > Terminating task.');
+            info('MODL.TK.AUTOX > Terminating task.');
             return true;
         }
 
@@ -255,7 +337,7 @@ class Ticket extends Model
             $tmp->status    =   'closed';
 
             // Create history
-            info('TICKETS.AUTOCLOSE > Adding history for ' . $tmp->tkey . '.');
+            info('MODL.TK.AUTOX > Adding history for ' . $tmp->tkey . '.');
             try {
                 DB::table('ticket_hists')
                     ->insert([
@@ -271,10 +353,10 @@ class Ticket extends Model
                         'created_at'    =>  \Carbon\Carbon::now()
                     ]);
 
-                info('TICKETS.AUTOCLOSE > Added history.');
+                info('MODL.TK.AUTOX > Added history.');
 
             } catch (\Throwable $th) {
-                info('TICKETS.AUTOCLOSE > ERROR. Unexpected.');
+                info('MODL.TK.AUTOX > ERROR. Unexpected.');
                 report($th);
             }
 
@@ -282,17 +364,17 @@ class Ticket extends Model
             $this->updReserves($tmp->tkey, $tmp->status);
 
             // Close the ticket
-            info('TICKETS.AUTOCLOSE > Closing ticket ' . $tmp->tkey . '.');
+            info('MODL.TK.AUTOX > Closing ticket ' . $tmp->tkey . '.');
             try {
                 Ticket::where('id', $tmp->tkey)
                         ->update([
                             'status'        =>  'closed',
                             'updated_at'    =>  \Carbon\Carbon::now()
                         ]);
-                info('TICKETS.AUTOCLOSE > Ticket closed.');
+                info('MODL.TK.AUTOX > Ticket closed.');
 
             } catch (\Throwable $th) {
-                info('TICKETS.AUTOCLOSE > ERROR. Unexpected.');
+                info('MODL.TK.AUTOX > ERROR. Unexpected.');
                 report($th);
 
             }
@@ -349,9 +431,14 @@ class Ticket extends Model
      */
     protected function updReserves($tkey, $status)
     {
-        $this->utils->loggr('TICKETS.UPDATERESERVES', 1);
-
-        $this->utils->loggr('Action > Updating ticket ' . $tkey . ' to ' . $status . '.' , 0);
+        info('MODL.TK.URESV', [
+            'user'      =>  $this->uid,
+            'status'    =>  'init',
+            'data'      =>  [
+                'tkey'      =>  $tkey,
+                'status'    =>  $status
+            ]
+        ]);
 
         try {
             DB::table('reserves')
@@ -361,12 +448,20 @@ class Ticket extends Model
                     'status'    =>  $status
                 ]);
 
-            $this->utils->loggr('Result > Done.' , 0);
+            info('MODL.TK.URESV', [
+                'user'      =>  $this->uid,
+                'status'    =>  'updated',
+                'data'      =>  []
+            ]);
                 
         } catch (\Throwable $th) {
-            $this->utils->loggr('Result > ERROR. Unexpected.' , 0);
+            info('MODL.TK.URESV', [
+                'user'      =>  $this->uid,
+                'status'    =>  'error',
+                'data'      =>  []
+            ]);
             report($th);
-            
+
         }
     }
 
@@ -377,31 +472,42 @@ class Ticket extends Model
      */
     protected function addHistory($tdata)
     {
+        info('MODL.TK.AHIST', [
+            'user'      =>  $this->uid,
+            'status'    =>  'init',
+            'data'      =>  $tdata
+        ]);
+
         try {
-            
+
             DB::table('ticket_hists')
                 ->insert([
-                    'ticket_id'     =>  $tdata['tkey'],
+                    'ticket_id'     =>  $tdata['ticket_id'],
                     'status'        =>  $tdata['status'],
                     'priority'      =>  $tdata['priority'],
                     'title'         =>  $tdata['title'],
                     'description'   =>  $tdata['description'],
                     'group_id'      =>  $tdata['group_id'],
                     'assignee'      =>  ($tdata['assignee'] != '') ? $tdata['assignee'] : null,
-                    'reporter'      =>  $tdata['caller'],
-                    'created_by'    =>  auth()->user()->id,
+                    'reporter'      =>  $tdata['reporter'],
+                    'created_by'    =>  $this->uid,
                     'created_at'    =>  \Carbon\Carbon::now()
                 ]);
 
-        } catch (\Throwable $th) {
-            
-            $this->utils->loggr('TICKETS.ADDHIST', 1);
-            $this->utils->loggr(json_encode([
-                                    'data'  =>  $tdata,
-                                    'error' =>  $th
-                                ]), 0);
+            info('MODL.TK.AHIST', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'success',
+                    'data'      =>  []
+                ]);
 
-            return false;
+        } catch (\Throwable $th) {
+            info('MODL.TK.AHIST', [
+                'user'      =>  $this->uid,
+                'status'    =>  'error',
+                'data'      =>  []
+            ]);
+
+            report($th);
 
         }
     }

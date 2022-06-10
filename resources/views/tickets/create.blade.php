@@ -8,7 +8,7 @@
 <div class="container" id="tk-create-box">
     <div class="card card-body border-round border-forest-light pt-4">
         <div class="mb-2">
-            @livewire('tickets-create', ['tkey' => $tkey])
+            @livewire('tickets-create', ['ticket_id' => $tkey])
         </div>
         <div class="mb-2">
             @livewire('upload-attachment', ['tkey' => $tkey])
