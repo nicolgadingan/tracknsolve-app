@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container-fluid">
-    @livewire('groups-index')
+    @livewire('groups-index', ['configs' => $configs])
     
     {{-- New Group Form --}}
     <div class="modal fade" id="gr-new-group-form" tabindex="-1" aria-labelledby="gr-new-group-label"

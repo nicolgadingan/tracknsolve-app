@@ -10,6 +10,7 @@ use App\Models\User;
 class GroupsIndex extends Component
 {
     public $searchgroup;
+    public $configs;
 
     public function mount()
     {

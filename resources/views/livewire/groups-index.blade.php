@@ -90,11 +90,12 @@
                                                     <i class="bi bi-toggle-off fs-lg"></i>
                                                 </a>
                                             @endif
-                                            
-                                            <a href="#delete-{{ $group->slug }}" class="link-danger gr-delete" data-value="{{ $group->id }}"
-                                                data-bs-toggle="tooltip" data-bs-placement="left" title="Delete group" aria-label="{{ $group->name }}">
-                                                <i class="bi bi-trash-fill fs-lg"></i>
-                                            </a>
+                                            @if ($configs['canDelete'] == 'Y')
+                                                <a href="#delete-{{ $group->slug }}" class="link-danger gr-delete" data-value="{{ $group->id }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="Delete group" aria-label="{{ $group->name }}">
+                                                    <i class="bi bi-trash-fill fs-lg"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     @endif
                                 </tr>

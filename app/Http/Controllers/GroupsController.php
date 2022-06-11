@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Group;
 use Illuminate\Support\Str;
 
+use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Utils;
 
@@ -31,16 +32,21 @@ class GroupsController extends Controller
      */
     public function index()
     {        
-        // Validate restriction
-        if ($this->utils->isUser()) {
-            // abort('401');
-        }
+        $config     =   new Config;
+        // $config->setBasic();
+        $configs    =   $config->allConfig();
+
+        $track      =   'CAN#DEL_GROUP';
+        $canDel     =   $this->utils->parseConfig($configs, $track);
 
         $user       =   new User();
         $managers   =   $user->canManage();
 
         return view('groups.index')->with([
-            'managers'  =>  $managers
+            'managers'  =>  $managers,
+            'configs'   =>  [
+                'canDelete' =>  $canDel
+            ]
         ]);
     }
 
