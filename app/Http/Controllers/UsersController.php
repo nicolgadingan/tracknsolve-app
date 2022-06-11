@@ -12,11 +12,13 @@ use App\Jobs\Mailman;
 use App\Mail\HelloMail;
 use App\Models\EmailVerify;
 use App\Models\Event;
+use App\Notifications\UserRegistered;
 use Illuminate\Support\Facades\URL;
 
 class UsersController extends Controller
 {
     protected $utils;
+    protected $uid;
 
     /**
      * Create a new controller instance.
@@ -27,6 +29,7 @@ class UsersController extends Controller
     {
         $this->middleware('auth');
         $this->utils    =   new Utils;
+        $this->uid      =   (auth()->check() == 1) ? auth()->user()->email : 99999;
     }
 
     /**
@@ -114,24 +117,28 @@ class UsersController extends Controller
         ]);
 
         // Queue email to user
-        info('USERS.REGISTER', [
-            'action'    =>  'send',
-            'message'   =>  'verification',
-            'subject'   =>  $user->email
-        ]);
+        info('CTRL.US.RGSTR', [
+                'user'      =>  $this->uid,
+                'action'    =>  'email',
+            ]);
 
         try {
-            $email['to']        =   $user->email;
-            $email['content']   =   new HelloMail((object) [
-                                            'user'      =>  $user,
-                                            'baseURL'   =>  URL::to('')
-                                        ]);
+            
+            $user->notify(new UserRegistered((Object) [
+                'user'  =>  $user,
+                'token' =>  $user->emailVerify->token
+            ]));
 
-            dispatch(new Mailman($email));
-            info('USERS.REGISTER', ['result' => 'queued']);
+            info('CTRL.US.RGSTR', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'sent',
+                ]);
 
         } catch (\Throwable $th) {
-            info('USERS.REGISTER', ['result' => 'error']);
+            info('CTRL.US.RGSTR', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'error',
+                ]);
             report($th);
 
         }

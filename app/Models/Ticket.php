@@ -106,6 +106,26 @@ class Ticket extends Model
 
         }
 
+        // Add event
+        info('MODL.TK.CREAT', [
+                'user'      =>  $this->uid,
+                'call'      =>  'modl.ev.creat',
+            ]);
+
+        $evdata['category'] =   'TICKET';
+        
+        $event  =   new Event();
+
+        $event->create([
+            'category'      =>  'TICKET',
+            'action'        =>  '',
+            'key_id1'       =>  '',
+            'key_id2'       =>  '',
+            'key_id3'       =>  '',
+            'description'   =>  ''
+        ]);
+
+        // Add history
         info('MODL.TK.CREAT', [
                 'user'      =>  $this->uid,
                 'call'      =>  'modl.tk.ahist',
@@ -117,6 +137,7 @@ class Ticket extends Model
             report($th);
         }
 
+        // Update reservation to P (processed)
         info('MODL.TK.CREAT', [
             'user'      =>  $this->uid,
             'call'      =>  'modl.tk.uresv',

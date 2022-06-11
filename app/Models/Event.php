@@ -11,7 +11,7 @@ class Event extends Model
 
     // Disable timestamps
     public $timestamps      =   false;
-    protected $userid;
+    protected $uid;
 
     protected $fillable     =   [
         'category'
@@ -19,7 +19,7 @@ class Event extends Model
 
     public function __construct()
     {
-        $this->userid       =   isset(auth()->user()->id) == '' ? 99999 : auth()->user()->id;
+        $this->uid       =   isset(auth()->user()->id) == '' ? 99999 : auth()->user()->id;
     }
 
     /**
@@ -29,19 +29,39 @@ class Event extends Model
      */
     public function create($edata)
     {
-        $event              =   new Event();
+        info('MODL.TK.CREAT', [
+                'user'      =>  $this->uid,
+                'status'    =>  'init',
+                'data'      =>  $edata
+            ]);
+        
+            try {
+                $event              =   new Event();
 
-        $event->category    =   $edata['category'];
-        $event->action      =   $edata['action'];
-        $event->key_id1     =   $edata['key_id1'];
-        $event->key_id2     =   isset($edata['key_id2']) == '' ? null : $edata['key_id2'];
-        $event->key_id3     =   isset($edata['key_id3']) == '' ? null : $edata['key_id3'];
-        $event->description =   isset($edata['description']) == '' ? null : $edata['description'];
-        $event->event_by    =   $this->userid;
-        $event->event_at    =   \Carbon\Carbon::now();
+                $event->category    =   $edata['category'];
+                $event->action      =   $edata['action'];
+                $event->key_id1     =   $edata['key_id1'];
+                $event->key_id2     =   isset($edata['key_id2'])        == '' ? null : $edata['key_id2'];
+                $event->key_id3     =   isset($edata['key_id3'])        == '' ? null : $edata['key_id3'];
+                $event->description =   isset($edata['description'])    == '' ? null : $edata['description'];
+                $event->event_by    =   $this->uid;
+                $event->event_at    =   \Carbon\Carbon::now();
 
-        $event->save();
+                $event->save();
 
-        info('EVENTS.CREATE', ['event' => $edata]);
+                info('MODL.TK.CREAT', [
+                        'user'      =>  $this->uid,
+                        'status'    =>  'created',
+                    ]);
+
+            } catch (\Throwable $th) {
+                info('MODL.TK.CREAT', [
+                        'user'      =>  $this->uid,
+                        'status'    =>  'error',
+                    ]);
+
+                report($th);
+
+            }
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use App\Mail\TicketResolved;
 use App\Jobs\Mailman;
+use App\Notifications\ResolvedTicket;
 use Illuminate\Support\Facades\URL;
 
 class TicketsController extends Controller
@@ -271,8 +272,7 @@ class TicketsController extends Controller
                 'data'      =>  $id
             ]);
         
-        $tdata      =   DB::table('tickets as t')
-                            ->leftJoin('users as u', 'u.id', '=', 't.reporter')
+        $tkData     =   DB::table('tickets as t')
                             ->where('t.id', $id)
                             ->select(
                                 't.id as ticket_id',
@@ -280,30 +280,23 @@ class TicketsController extends Controller
                                 'description',
                                 DB::raw("'resolved' as status"),
                                 'priority',
-                                't.group_id',
+                                'group_id',
                                 'assignee',
-                                'reporter',
-                                'u.email',
-                                'u.id as uid'
+                                'reporter'
                             )
                             ->first();
 
-        $tdata      =   (array) $tdata;
+        $tdata      =   (array) $tkData;
         
         $retcode    =   $ticket->resolveTicket($tdata);
 
         if ($retcode == 1) {
 
-            // Send email
-
-            $email['to']        =   $tdata['email'];
-            $email['content']   =   new TicketResolved((object) [
-                                        'subject'   =>  'Your ticket ' . $tdata['ticket_id'] . ' has been resolved.',
-                                        'ticket'    =>  $tdata,
-                                        'baseURL'   =>  URL::to('')
-                                    ]);
-
-            dispatch(new Mailman($email));
+            $user   =   User::find($tkData->reporter);
+            $user->notify(new ResolvedTicket((Object) [
+                'user'      =>  $user,
+                'ticket'    =>  $tkData
+            ]));
             
             return redirect('/tickets/' . $id . '/edit')->with([
                 'success'       =>  'Ticket <b>' . $id . '</b> has been resolved.'

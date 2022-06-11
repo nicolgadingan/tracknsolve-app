@@ -11,16 +11,24 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\VerifiedMail;
 use App\Jobs\Mailman;
 use App\Models\Event;
+use App\Notifications\UserVerified;
 use Illuminate\Support\Facades\URL;
 
 class AccessesController extends Controller
 {
+    protected $uid;
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::DASHBOARD;
+
+    public function __construct()
+    {
+        $this->uid  =   (auth()->check() == 1) ? auth()->user()->id : 99999;
+    }
 
     /**
      * Registered user verification form
@@ -66,6 +74,11 @@ class AccessesController extends Controller
      */
     public function verify(Request $request)
     {
+        info('CTRL.US.VERFY', [
+            'user'      =>  $this->uid,
+            'status'    =>  'init',
+        ]);
+
         // Validate input
         $this->validate($request, [
             'user_id'               =>  'required',
@@ -77,13 +90,38 @@ class AccessesController extends Controller
         $user   =   User::find($request->user_id);
         
         if ($user != null) {
-            // Apply password and verification
-            $user->password             =   Hash::make($request->password);
-            $user->email_verified_at    =   \Carbon\Carbon::now();
-            $user->updated_by           =   $request->user_id;
-            $user->updated_at           =   \Carbon\Carbon::now();
-            $user->status               =   'A';
-            $user->save();
+            info('CTRL.US.VERFY', [
+                'user'      =>  $this->uid,
+                'action'    =>  'verifying',
+            ]);
+
+            try {
+                $user->password             =   Hash::make($request->password);
+                $user->email_verified_at    =   \Carbon\Carbon::now();
+                $user->updated_by           =   $request->user_id;
+                $user->updated_at           =   \Carbon\Carbon::now();
+                $user->status               =   'A';
+                $user->save();
+
+            } catch (\Throwable $th) {
+                info('CTRL.US.VERFY', [
+                    'user'      =>  $this->uid,
+                    'status'    =>  'error',
+                ]);
+                report($th);
+
+            }
+
+            info('CTRL.US.VERFY', [
+                'user'      =>  $this->uid,
+                'status'    =>  'verified',
+            ]);
+
+            try {
+                $user->notify(new UserVerified($user));
+            } catch (\Throwable $th) {
+                report($th);
+            }
 
             // Drop token
             DB::table('email_verifies')->where('user_id', $user->id)->delete();
@@ -104,21 +142,13 @@ class AccessesController extends Controller
         ]);
 
         // Queue email to user
-        info('USERS.REGISTER', [
-            'action'    =>  'send',
-            'message'   =>  'verified',
-            'subject'   =>  $user->email
+        info('CTRL.US.VERFY', [
+            'user'      =>  $this->uid,
+            'status'    =>  'sent',
         ]);
 
         try {
-            $email['to']        =   $user->email;
-            $email['content']   =   new VerifiedMail((object) [
-                                        'user'      =>  $user,
-                                        'baseURL'   =>  URL::to('')
-                                    ]);
-
-            dispatch(new Mailman($email));
-            info('USERS.REGISTER', ['result' => 'queued']);
+            
 
         } catch (\Throwable $th) {
             info('USERS.REGISTER', ['result' => 'error']);

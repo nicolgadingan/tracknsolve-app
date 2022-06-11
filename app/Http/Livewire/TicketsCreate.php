@@ -6,9 +6,10 @@ use Livewire\Component;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\Ticket;
-use App\Jobs\Mailman;
-use App\Mail\TicketCreated;
-use Illuminate\Support\Facades\URL;
+// use App\Jobs\Mailman;
+// use App\Mail\TicketCreated;
+// use Illuminate\Support\Facades\URL;
+use App\Notifications\AssignedTicket;
 use App\Http\Controllers\Utils;
 
 class TicketsCreate extends Component
@@ -97,31 +98,16 @@ class TicketsCreate extends Component
 
         if ($retCode == 1) {
             // Get recipients
-            $recipients =   User::where('group_id', $tdata['group_id'])
-                                ->select(
-                                    'id as uid',
-                                    'email',
-                                )
-                                ->get()
-                                ->toArray();
+            $ticket =   (Object) $tdata;
 
-            // Queue email to be sent
-            foreach ($recipients as $rcpt) {
-                if ($rcpt['uid'] == $tdata['assignee']) {
-                    $subject    =   'Ticket ' . $tdata['ticket_id'] . ' has been assigned to you.';
-                } else {
-                    $subject    =   'Ticket ' . $tdata['ticket_id'] . ' has been assigned to your group.';
-                }
-                
-                $email['to']        =   $rcpt['email'];
-                $email['content']   =   new TicketCreated((object) [
-                                            'subject'   =>  $subject,
-                                            'user'      =>  $rcpt,
-                                            'ticket'    =>  $tdata,
-                                            'baseURL'   =>  URL::to('')
-                                        ]);
+            $users  =   User::where('group_id', $ticket->group_id)
+                            ->get();
 
-                dispatch(new Mailman($email));
+            foreach ($users as $user) {
+                $user->notify(new AssignedTicket((Object) [
+                    'user'      =>  $user,
+                    'ticket'    =>  $ticket
+                ]));
             }
 
             return redirect('/tickets')->with([

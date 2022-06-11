@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use Illuminate\Support\Facades\URL;
 use App\Mail\VerifiedMail;
 use App\Mail\HelloMail;
+use App\Notifications\AssignedTicket;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,31 @@ Route::get('user-hello', function() {
                                 ]);
 
     dispatch(new App\Jobs\Mailman($email));
+
+    dd("DONE");
+});
+
+Route::get('assigned-notif', function() {
+
+    $ticket =   Ticket::where('id', 'YRTK842538235')
+                    ->select(
+                        'tickets.id as ticket_id',
+                        'title',
+                        'description',
+                        'assignee',
+                        'group_id'
+                    )
+                    ->first();
+
+    $users  =   User::where('group_id', $ticket->group_id)
+                    ->get();
+
+    foreach ($users as $user) {
+        $user->notify(new AssignedTicket((Object) [
+            'user'      =>  $user,
+            'ticket'    =>  $ticket
+        ]));
+    }
 
     dd("DONE");
 });

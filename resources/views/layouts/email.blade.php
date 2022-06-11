@@ -106,7 +106,7 @@
         <div class="p-3 pt-2 left">
             <small style="color: #889ca5;">
                 This is an auto-generated email base on the process triggered from your application.
-                Please do not reply to this email as it is only for sending and not being monitored.
+                Please do not reply to this email as it is not being monitored and for sending purposes only.
             </small>
         </div>
     </div> 

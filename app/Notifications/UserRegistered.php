@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Notifications;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class UserRegistered extends Notification
+{
+    use Queueable;
+
+    protected $data;
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct($data)
+    {
+        $this->data =   $data;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        $actUrl     =   url('/user/verify/' . $this->data->token);
+        $subject    =   'Welcome to ' . config('app.name', 'tracknsolve') . '!';
+
+        return (new MailMessage)
+                    ->subject($subject)
+
+                    ->from(config('mail.from.address'),
+                            config('mail.from.name'))
+
+                    ->greeting('Hello ' . $this->data->user->first_name . '!')
+                    ->line($subject)
+                    ->line('You’ve received this message because your email address has been registered with tracknsolve. ' .
+                            'Please click the button below to verify your account to complete your registration.')
+                    
+                    ->action('Verify Account', $actUrl)
+
+                    ->line('Please note, your username is <b>' . $this->data->user->username . '</b> ')
+                    ->line('If you did not register with us, kindly disregard this email.')
+
+                    ->line('Please do not reply to this email as it is not being monitored and used for sending only.');
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+}
