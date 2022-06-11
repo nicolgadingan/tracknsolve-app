@@ -37,3 +37,16 @@
         {!! session('error') !!}
     </div>
 @endif
+
+@if (session('info'))
+    <div class="alert alert-info fs-sm">
+        <strong>Hey there!</strong>
+        {!! session('info') !!}
+    </div>
+@endif
+
+@if (session('status'))
+    <div class="alert alert-info fs-sm">
+        {!! session('status') !!}
+    </div>
+@endif

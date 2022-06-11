@@ -46,6 +46,11 @@ class Kernel extends ConsoleKernel
         })
         ->daily();
 
+        /**
+         * Delete expired reset-password tokens
+         */
+        $schedule->command('auth:clear-resets')->everyFiveMinutes();
+
     }
 
     /**

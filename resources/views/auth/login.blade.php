@@ -29,8 +29,8 @@
                         name="password" placeholder="Password">
                     <label for="li-password">Password</label>
                 </div>
-                <div class="mb-3">
-                    <a href="#" class="link-marine">Forgot password?</a>
+                <div class="mb-3 pl-3">
+                    <a href="{{ route('password.request') }}" class="link-marine">Forgot password?</a>
                 </div>
                 <div class="right">
                     <button type="submit" class="btn btn-lg btn-marine shadow">Login</button>

@@ -584,6 +584,13 @@ a {
     border: none;
 }
 
+button,
+input,
+select,
+.alert {
+    border-radius: .5rem !important;
+}
+
 .border-bubble {
     border-radius: 2rem;
 }
