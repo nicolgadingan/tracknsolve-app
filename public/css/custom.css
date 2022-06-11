@@ -584,7 +584,7 @@ a {
     border: none;
 }
 
-button,
+button.btn,
 input,
 select,
 .alert {
