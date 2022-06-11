@@ -406,12 +406,37 @@ class Config extends Model
             ]
         ];
 
+        $limits =   [
+            [
+                'config_name'   =>  'LIMIT#USER',
+                'value'         =>  500,
+                'description'   =>  'Limit of users to be added.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'LIMIT#GROUP',
+                'value'         =>  5,
+                'description'   =>  'Limit of groups to be added.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'LIMIT#DISK',
+                'value'         =>  10240,
+                'description'   =>  'Limit of storage to be used (Mb).',
+                'created_by'    =>  99999
+            ],
+        ];
+
         info('CONFIG.SETBASIC', [
             'status'    =>  'in-progress',
             'config'    =>  'collected'
         ]);
 
-        // Clear existing configuration
+        // Clear existing LIMIT# configuration
+        Config::where('config_name', 'like', 'LIMIT#%')
+                ->delete();
+
+        // Clear existing CAN# configuration
         Config::where('config_name', 'like', 'CAN#%')
                 ->delete();
 
@@ -421,6 +446,7 @@ class Config extends Model
         ]);
 
         // Add new configuration
+        Config::insert($limits);
         Config::insert($user);
         Config::insert($group);
         Config::insert($ticket);

@@ -23,7 +23,7 @@ class Configs extends Seeder
                                     'config_name'   =>  'ORG_KEY',
                                 ],
                                 [
-                                    'value'         =>  'YRTK',
+                                    'value'         =>  'TNS',
                                     'description'   =>  "This is the organizations' 2 to 4 character key identifier.",
                                     'created_by'    =>  99999,
                                     'created_at'    =>  \Carbon\Carbon::now()
@@ -36,7 +36,7 @@ class Configs extends Seeder
                                     'config_name'   =>  'LAST_TK_SEQ',
                                 ],
                                 [
-                                    'value'         =>  842538001,
+                                    'value'         =>  000,
                                     'description'   =>  "This is the last ticket sequence generated.",
                                     'created_by'    =>  99999,
                                     'created_at'    =>  \Carbon\Carbon::now()

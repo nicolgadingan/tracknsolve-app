@@ -53,7 +53,7 @@
                 </div>
             </a>
             @if ($whatami == 'admin')
-            <a href="/settings" class="btn block side-nav-item {{ $whereami == 'settings' ? 'active' : '' }}" hidden>
+            <a href="/settings" class="btn block side-nav-item {{ $whereami == 'settings' ? 'active' : '' }}">
                 <div class="d-flex justify-content-between">
                     <span>Settings</span>
                     <i class="bi bi-toggles2"></i>

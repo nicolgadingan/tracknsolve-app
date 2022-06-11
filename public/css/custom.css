@@ -1,4 +1,8 @@
 :root {
+    --x-black:      #202020;
+    --x-yellow:     #ffd100;
+    --x-gray:       #f6f6f6;
+
     --cheese:       #EAD2AC;
     --marine:       #4281A4;
     --forest:       #9CAFB7;
@@ -305,6 +309,23 @@ body {
 }
 
 
+/* THEMES */
+.theme-dark {
+    background-color: var(--x-black);
+    color: white;
+}
+
+.theme-marine {
+    background-color: var(--marine-dark);
+    color: white;
+}
+
+.theme-marine .theme-sub {
+    background-color: var(--forest-light);
+    color: var(--marine-dark);
+}
+
+
 /* CUSTOM BUTTONS AND LINKS */
 .btn-marine {
     background-color: var(--marine);
@@ -378,6 +399,10 @@ a.link-marine:active {
 
 .fs-2l {
     font-size: xx-large;
+}
+
+.fs-30 {
+    font-size: 30pt;
 }
 
 
@@ -585,6 +610,7 @@ a {
 }
 
 button.btn,
+a.btn,
 input,
 select,
 .alert {

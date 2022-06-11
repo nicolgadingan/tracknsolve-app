@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Utils;
+use App\Models\Config;
+use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use App\Models\Group;
 
 class SettingsController extends Controller
 {
@@ -28,7 +33,36 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('settings.index');
+        $config         =   new Config();
+        $configs        =   $config->allConfig();
+
+        $prsConfs       =   [];
+        foreach ($configs as $conf) {
+            $prsConfs   =   Arr::add($prsConfs, $conf['config_name'], $conf['value']);
+        }
+
+        // Get disk size
+        $pubDirSize     =   0;
+
+        foreach( File::allFiles(public_path('/storage')) as $file)
+        {
+            $pubDirSize += $file->getSize();
+        }
+
+        $pubDirSize = number_format($pubDirSize / 1048576, 2);
+
+        // Get the group and user used
+        $users      =   User::all();
+        $groups     =   Group::all();
+
+        return view('settings.index')->with([
+            'configs'   =>  $prsConfs,
+            'stats'     =>  [
+                'diskUsed'  =>  $pubDirSize,
+                'userUsed'  =>  count($users),
+                'groupUsed' =>  count($groups)
+            ]
+        ]);
     }
 
     /**
