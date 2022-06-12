@@ -1,32 +1,36 @@
 <div class="container-fluid">
-    <div class="d-flex justify-content-between mb-4">
-        <div id="tk-group-updates" class="d-flex">
-            <div class="mr-3">
-                <div class="search" style="width: 300px;">
-                    <input type="text" class="form-control search-input borderless" placeholder="Search..."
-                        name="" id="tk-search-ticket" wire:model="search">
+    <div class="row mb-3">
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-sm-auto mb-2">
+                    <div class="search">
+                        <input type="text" class="form-control search-input borderless" placeholder="Search..."
+                            name="" id="tk-search-ticket" wire:model="search">
+                    </div>
                 </div>
-            </div>
-            <div class="mr-3">
-                <div class="has-icon has-icon-start">
-                    <select class="form-select borderless border-round has-icon-form" wire:model="filter">
-                        <option value="">All</option>
-                        @if (count($statuses) > 0)
-                            @foreach ($statuses as $filter)
-                                <option value="{{ $filter->status }}">{{ Str::ucfirst($filter->status) }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <span class="has-icon-this">
-                        <i class="bi bi-clipboard-check fs-re"></i>
-                    </span>
+                <div class="col-sm-auto mb-2">
+                    <div class="has-icon has-icon-start">
+                        <select class="form-select borderless border-round has-icon-form" wire:model="filter">
+                            <option value="">All</option>
+                            @if (count($statuses) > 0)
+                                @foreach ($statuses as $filter)
+                                    <option value="{{ $filter->status }}">{{ Str::ucfirst($filter->status) }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <span class="has-icon-this">
+                            <i class="bi bi-clipboard-check fs-re"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="tk-group-actions">
-            <a href="/tickets/create" class="btn btn-marine shadow">
-                New Ticket
-            </a>
+        <div class="col-sm-auto mb-2 right">
+            <div id="tk-group-actions">
+                <a href="/tickets/create" class="btn btn-marine shadow">
+                    New Ticket
+                </a>
+            </div>
         </div>
     </div>
     @include('plugins.messages')
@@ -37,12 +41,12 @@
                     <thead class="bg-marine-dark fg-white">
                         <td class="pt-3">Key</td>
                         <td>Status</td>
-                        <td>Priority</td>
+                        <td class="no-mobile">Priority</td>
                         <td>Title</td>
-                        <td>Group</td>
-                        <td>Assignee</td>
-                        <td>Reporter</td>
-                        <td class="right">Created</td>
+                        <td class="no-mobile">Group</td>
+                        <td class="no-mobile">Assignee</td>
+                        <td class="no-mobile">Reporter</td>
+                        <td class="right no-mobile">Created</td>
                     </thead>
                     <tbody>
                         @if (count($tickets) > 0)
@@ -97,7 +101,7 @@
                                             {{ Str::ucfirst($ticket->status) }}
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="no-mobile">
                                         {{ Str::ucfirst($ticket->priority) }}
                                     </td>
                                     <td class="td-break" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $ticket->title }}">
@@ -109,10 +113,10 @@
                                             @endif
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="no-mobile">
                                         {{ $ticket->group_name }}
                                     </td>
-                                    <td>
+                                    <td class="no-mobile">
                                         @php
                                             if ($ticket->assignee_fn != null ||
                                                     $ticket->assignee_fn != '') {
@@ -124,13 +128,13 @@
                                         <a href="/users/{{ $ticket->assignee_id }}" class="link-marine">
                                             {{ $assignee }}
                                         </a>
-                                    </td>
-                                    <td>
+                                    </td class="no-mobile">
+                                    <td class="no-mobile">
                                         <a href="/users/{{ $ticket->reporter_id }}" class="link-marine">
                                             {{ $ticket->reporter_fn . ' ' . $ticket->reporter_ln }}
                                         </a>
                                     </td>
-                                    <td class="right">
+                                    <td class="right no-mobile">
                                         {{ \Carbon\Carbon::create($ticket->created)->diffForHumans() }}
                                     </td>
                                 </tr>

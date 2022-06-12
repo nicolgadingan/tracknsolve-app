@@ -403,6 +403,11 @@ a.link-marine:active {
     right: 26px;
 }
 
+.search {
+    min-width: 300px;
+    max-width: 400px;
+}
+
 .search-bar input {
     padding-right: 2rem;
 }
@@ -808,6 +813,21 @@ and (max-device-width : 480px) {
     #db-ticket-chart canvas {
         display: none !important;
     }
+
+    li.page-item {
+
+        display: none;
+    }
+
+    .page-item:first-child,
+    .page-item:nth-child( 2 ),
+    .page-item:nth-last-child( 2 ),
+    .page-item:last-child,
+    .page-item.active,
+    .page-item.disabled {
+
+        display: block;
+    }
 }
 
 /* Smartphones (landscape) ----------- */
@@ -890,6 +910,7 @@ and (min-width : 1224px) {
     #sidebar-admin {
         display: block;
     } */
+
 }
 
 /* Large screens ----------- */
