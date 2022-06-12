@@ -108,7 +108,7 @@ body {
 #context-body {
     max-height: 100vh;
     overflow: auto;
-    font-size: smaller;
+    font-size: small;
 }
 
 /* DASHBOARD */
