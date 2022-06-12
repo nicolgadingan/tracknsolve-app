@@ -38,17 +38,19 @@
         integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script src="{{ asset('js/custom.js') }}"></script>
+
     @livewireStyles
 </head>
 <body>
-    <div class="d-flex">
+    <div class="d-flex" id="body-divider">
         <div id="sidebar" class="shadow-sm">
             @include('plugins.sidebar')
         </div>
-        <div class="flex-grow-1 p-3 pb-5" id="context-body">
+        <div class="flex-grow-1" id="context-body">
             <header class="container-fluid" style="height: 90px;">
                 <div class="row">
-                    <div class="col-sm d-flex align-items-end fs-lg fg-marine-light">
+                    <div class="col-sm d-flex align-items-end fs-lg fg-marine-light x-mobile">
                         <strong>
                             @php
                                 $path   =   explode("/", request()->path());
@@ -56,7 +58,7 @@
                             @endphp
                         </strong>
                     </div>
-                    <div class="col-auto">
+                    <div class="col-auto" id="profile">
                         @php
                             $user   =   auth()->user();
                         @endphp

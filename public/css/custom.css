@@ -78,28 +78,6 @@ body {
     max-height: 64px;
 }
 
-/* SIDEBAR */
-#sidebar {
-    min-width: 255px;
-    max-width: 255px;
-    background-color: var(--cheese);
-    height: 100vh;
-}
-
-#sidebar-logo {
-    max-height: 54px;
-}
-
-#sidebar-brand-box {
-    padding: 1.5rem 1rem 1rem 1rem;
-    height: 95px;
-}
-
-#sidebar-brand-box #tns-icon {
-    max-height: 54px;
-    fill: var(--marine);
-}
-
 /* APP LAYOUT */
 #profile-link {
     min-width: 47px;
@@ -755,8 +733,156 @@ label{
 }
 
 
-/* SCREEN SIZE - Desktop */
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+    #body-divider {
+        flex-direction: column;
+    }
+
+    #sidebar {
+        width: 100vw;
+        height: auto;
+        position: absolute;
+        background-color: var(--cheese);
+        z-index: 999;
+    }
+
+    #brand-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #sidebar-brand-box svg#tns-icon {
+        width: 32px;;
+    }
+
+    #sidebar-brand-box svg#tns-text {
+        display: none;
+    }
+
+    #sidebar-brand-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        fill: var(--marine);
+        padding: 0.8rem 1rem;
+    }
+
+    #sidebar-menu {
+        display: none;
+    }
+
+    #context-body {
+        margin-top: 69px;
+        padding-top: 0.5rem;
+    }
+
+    /* #sidebar-brand-box a {
+        pointer-events: none;
+    } */
+
+    .table-header {
+        padding: 0.75rem 0rem 0.5rem 0rem;
+    }
+
+    .for-mobile {
+        display: block;
+    }
+
+    .no-mobile {
+        display: none;
+    }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+    /* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+    /* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+    /* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+    /* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+    /* Styles */
+}
+
+/* Desktops and laptops ----------- */
 @media only screen 
 and (min-width : 1224px) {
+    /* SIDEBAR */
+    #sidebar {
+        min-width: 255px;
+        max-width: 255px;
+        background-color: var(--cheese);
+        height: 100vh;
+    }
 
+    #sidebar-logo {
+        max-height: 54px;
+    }
+
+    #sidebar-brand-box {
+        padding: 1.5rem 1rem 1rem 1rem;
+        height: 95px;
+    }
+
+    #sidebar-brand-box #tns-icon {
+        max-height: 54px;
+        fill: var(--marine);
+    }
+
+    #context-body {
+        padding: 1rem 1rem 3rem 1rem;
+    }
+
+    .table-header {
+        padding-bottom: 0.5rem;
+    }
+
+    .for-mobile {
+        display: none;
+    }
+
+    .no-mobile {
+        display: block;
+    }
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+    /* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+    /* Styles */
 }
