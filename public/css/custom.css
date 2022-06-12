@@ -792,8 +792,11 @@ and (max-device-width : 480px) {
         display: block;
     }
 
-    .no-mobile {
-        display: none;
+    .no-mobile,
+    header,
+    #db-ticket-chart canvas,
+    #sidebar-admin {
+        display: none !important;
     }
 }
 
@@ -869,7 +872,7 @@ and (min-width : 1224px) {
         display: none;
     }
 
-    .no-mobile {
+    .no-mobile:not(td) {
         display: block;
     }
 }

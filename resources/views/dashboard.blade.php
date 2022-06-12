@@ -7,7 +7,60 @@
 @section('content')
     <div class="container-fluid">
         <div class="row g-4">
-            <div class="col-md">
+            <div class="col-sm-3 order-sm-2">
+                <div style="">
+                    <div class="table-header">
+                        <span class="fg-marine fs-sm">TICKETS BREAKDOWN</span>
+                    </div>
+                    <div class="card card-body border-round borderless shadow-sm" id="db-ticket-chart">
+                        <canvas id="dbTicketsBreakdown" width="300" height="300" role="img" class="no-mobile"></canvas>
+                        <div class="p-2 center">
+                            <span class="fs-xl fg-dark">
+                                {{ array_sum($chartData['counts']) }}
+                            </span><br>
+                            <span>OVERALL</span>
+                        </div>
+                        <script>
+                            const ctx   =   document.getElementById("dbTicketsBreakdown").getContext("2d");
+                            const dbtb  =   new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: {!! json_encode($chartData['labels'], JSON_HEX_TAG) !!},
+                                    datasets: [{
+                                        label: 'Tickets Breakdown',
+                                        data: {!! json_encode($chartData['counts'], JSON_HEX_TAG) !!},
+                                        backgroundColor: {!! json_encode($chartData['colors'], JSON_HEX_TAG) !!},
+                                        borderColor: {!! json_encode($chartData['colors'], JSON_HEX_TAG) !!},
+                                        borderWidth: 1,
+                                        hoverOffset: 3,
+                                    }]
+                                },
+                                options: {
+                                    layout: {
+                                        padding: {
+                                            top: 5,
+                                            right: 5,
+                                            bottom: 5,
+                                            left: 5
+                                        }
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        title: {
+                                            display: false,
+                                            text: 'All Tickets'
+                                        }
+                                    }
+                                }
+                                
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md order-md-1">
                 <div class="mb-3 flex-grow-1">
                     <div class="table-header">
                         <span class="fg-marine fs-sm">UNASSIGNED TICKETS</span>
@@ -178,59 +231,6 @@
                                 {{ $myTickets->links() }}
                             </span>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3 order-first">
-                <div style="">
-                    <div class="table-header">
-                        <span class="fg-marine fs-sm">TICKETS BREAKDOWN</span>
-                    </div>
-                    <div class="card card-body border-round borderless shadow-sm" id="db-ticket-chart">
-                        <canvas id="dbTicketsBreakdown" width="300" height="300" role="img" class="no-mobile"></canvas>
-                        <div class="p-2 center">
-                            <span class="fs-xl fg-dark">
-                                {{ array_sum($chartData['counts']) }}
-                            </span><br>
-                            <span>OVERALL</span>
-                        </div>
-                        <script>
-                            const ctx   =   document.getElementById("dbTicketsBreakdown").getContext("2d");
-                            const dbtb  =   new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: {!! json_encode($chartData['labels'], JSON_HEX_TAG) !!},
-                                    datasets: [{
-                                        label: 'Tickets Breakdown',
-                                        data: {!! json_encode($chartData['counts'], JSON_HEX_TAG) !!},
-                                        backgroundColor: {!! json_encode($chartData['colors'], JSON_HEX_TAG) !!},
-                                        borderColor: {!! json_encode($chartData['colors'], JSON_HEX_TAG) !!},
-                                        borderWidth: 1,
-                                        hoverOffset: 3,
-                                    }]
-                                },
-                                options: {
-                                    layout: {
-                                        padding: {
-                                            top: 5,
-                                            right: 5,
-                                            bottom: 5,
-                                            left: 5
-                                        }
-                                    },
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        },
-                                        title: {
-                                            display: false,
-                                            text: 'All Tickets'
-                                        }
-                                    }
-                                }
-                                
-                            });
-                        </script>
                     </div>
                 </div>
             </div>

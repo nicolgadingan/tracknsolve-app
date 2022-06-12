@@ -4,13 +4,11 @@ $(document).ready(function() {
     // Mobile Screen
     if (screen_width >= 320 &&
         screen_width <= 480) {
-        $("header").attr("hidden", true);
-        $("#sidebar-admin").attr("hidden", true);
-        $("#db-ticket-chart canvas").attr("hidden", true);
+        // $("#sidebar-admin").attr("hidden", true);
+        // $("#db-ticket-chart canvas").attr("hidden", true);
     } else {
-        $("header").attr("hidden", false);
-        $("#sidebar-admin").attr("hidden", false);
-        $("#db-ticket-chart canvas").attr("hidden", false);
+        // $("#sidebar-admin").attr("hidden", false);
+        // $("#db-ticket-chart canvas").attr("hidden", false);
     }
 
     $("body").on("click", "#mobile-menu", function () {
