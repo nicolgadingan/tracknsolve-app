@@ -89,6 +89,13 @@ body {
     font-size: small;
 }
 
+
+/* SIDEBAR */
+#sidebar-menu {
+    display: block;
+}
+
+
 /* DASHBOARD */
 #db-ticket-chart {
     padding: 2rem 1.25rem;
@@ -794,8 +801,11 @@ and (max-device-width : 480px) {
 
     .no-mobile,
     header,
-    #db-ticket-chart canvas,
     #sidebar-admin {
+        display: none;
+    }
+
+    #db-ticket-chart canvas {
         display: none !important;
     }
 }
@@ -875,6 +885,11 @@ and (min-width : 1224px) {
     .no-mobile:not(td) {
         display: block;
     }
+
+    /* #sidebar-menu,
+    #sidebar-admin {
+        display: block;
+    } */
 }
 
 /* Large screens ----------- */
