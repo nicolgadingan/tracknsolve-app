@@ -10,7 +10,7 @@
     <div class="row mb-3 g-3">
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ $ticket_id }}" disabled>
+                <input type="text" name="tkey" class="form-control" id="tk-tkey" value="{{ Str::upper($ticket_id) }}" disabled>
                 <label for="tk-tkey">Key</label>
             </div>
         </div>

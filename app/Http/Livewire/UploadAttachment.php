@@ -42,7 +42,8 @@ class UploadAttachment extends Component
         DB::table('ticket_atts')->insert([
             'ticket_id'     =>  $this->tkey,
             'att_path'      =>  $this->filepath,
-            'created_by'    =>  auth()->user()->id
+            'created_by'    =>  auth()->user()->id,
+            'created_at'    =>  \Carbon\Carbon::now()
         ]);
 
         $this->attachment   =   '';

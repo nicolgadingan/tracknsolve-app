@@ -99,20 +99,27 @@ class Utils extends Controller
     }
 
     /**
-     * Clean-up unused attachments
+     * Clean-up unused attachments after 24hrs
      * 
      */
     public function attCleanup()
     {
-        $app_name   =   'UTILS.ATTCLNUP';
-        $file_dir   =   public_path() . '\storage\att';
-        $arch_dir   =   $file_dir . '\archive';
-
         // Init
-        info($app_name, ['status' => 'started']);
+        info('CTRL.UT.RUATT', [
+            'user'      =>  99999,
+            'status'    =>  'init'
+        ]);
+
+        // Paths
+        $fileDir    =   storage_path('app/public/att');
+        $archDir    =   $fileDir . '/archive';
+
+        // Create archive if not exists
+        File::ensureDirectoryExists($archDir);
 
         // Get all unused tickets
         $tickets    =   DB::table('ticket_atts')
+                                ->where('created_at', '<', DB::raw('(current_timestamp - interval 1 day)'))
                                 ->whereNotIn('ticket_id', DB::table('tickets')
                                                             ->select('id'))
                                 ->select('ticket_id');
@@ -121,52 +128,62 @@ class Utils extends Controller
         $total      =   count($tickets->get());
 
         // Display total
-        info($app_name, ['found' => $total]);
-
-        // Create archive if not exists
-        File::ensureDirectoryExists($arch_dir);
+        info('CTRL.UT.RUATT', [
+            'status'    =>  'checked',
+            'found'     =>  $total
+        ]);
 
         // Check count
         if ($total > 0) {
             // Archive each ticket folder
             foreach ($tickets->get() as $ticket) {
-                info($app_name, [
+                info('CTRL.UT.RUATT', [
                     'action'    =>  'archiving',
-                    'ticket'    =>  $ticket->ticket_id
+                    'data'      =>  $ticket->ticket_id
                 ]);
 
                 try {
                     File::moveDirectory(
-                        $file_dir . "/" . $ticket->ticket_id,
-                        $arch_dir . "/" . $ticket->ticket_id,
-                        false
+                        $fileDir . "/" . $ticket->ticket_id,
+                        $archDir . "/" . $ticket->ticket_id,
+                        true
                     );
 
-                    if (File::exists($arch_dir . "/" . $ticket->ticket_id)) {
-                        info($app_name, ['status' => 'success']);
+                    if (File::exists($archDir . "/" . $ticket->ticket_id)) {
+                        info('CTRL.UT.RUATT', [
+                            'action'    =>  'validate',
+                            'status'    =>  'archived'
+                        ]);
 
                         $isDeleted  =   DB::table('ticket_atts')
                                             ->where('ticket_id', $ticket->ticket_id)
                                             ->delete();
 
-                        info($app_name, [
+                        info('CTRL.UT.RUATT', [
                             'action'    =>  'delete',
                             'status'    =>  $isDeleted
                         ]);
 
                     } else {
-                        info($app_name, ['status' => 'failed']);
+                        info('CTRL.UT.RUATT', [
+                            'action'    =>  'validate',
+                            'status'    =>  'failed'
+                        ]);
                     }
 
                 } catch (\Throwable $th) {
-                    info($app_name, ['status' => 'error']);
+                    info('CTRL.UT.RUATT',[
+                        'action'    =>  'error'
+                    ]);
                     report($th);
                 }
 
             }
         }
         
-        info($app_name, ['action' => 'completing']);
+        info('CTRL.UT.RUATT',[
+            'status'    =>  'done'
+        ]);
 
     }
 
