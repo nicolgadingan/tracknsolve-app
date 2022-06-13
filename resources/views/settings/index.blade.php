@@ -92,6 +92,34 @@
                             <i class="bi bi-arrow-up-square-fill"></i>
                         </a>
                     </div>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                        @php
+                            $icon       =   '';
+                            $color      =   '';
+                            $liStlyle   =   'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
+
+                            if ($stats['pubAccess']) {
+                                $icon   =   'check';
+                                $color  =   'success';
+                            } else {
+                                $icon   =   'exclamation';
+                                $color  =   'danger';
+                            }
+                        @endphp
+                        <li class="{{ $liStlyle }}">
+                            <span>User directory access</span>
+                            <span>
+                                <i class="bi bi-{{ $icon }}-circle-fill fg-{{ $color }} fs-re"></i>
+                            </span>
+                        </li>
+                        <li class="{{ $liStlyle }}">
+                            <span>Download attachment</span>
+                            <span>
+                                <i class="bi bi-{{ $icon }}-circle-fill fg-{{ $color }} fs-re"></i>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

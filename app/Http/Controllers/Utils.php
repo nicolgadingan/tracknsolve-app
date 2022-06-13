@@ -191,7 +191,7 @@ class Utils extends Controller
      * Parse config
      * 
      * @param   Array   $configs
-     * @return  Value
+     * @return  String|Int
      */
     public function parseConfig($configs, $track)
     {
@@ -205,6 +205,50 @@ class Utils extends Controller
         });
 
         return $value;
+    }
+
+    /**
+     * Create public access identifier file
+     * 
+     */
+    public function createPublicId()
+    {
+        info('CTRL.UT.APUBV', [
+            'user'      =>  99999,
+            'status'    =>  'init'
+        ]);
+
+        // File identifier
+        $fileName   =   'public-access.txt';
+        $fileId     =   storage_path('app/public/' . $fileName);
+
+        info('CTRL.UT.APUBV', [
+            'action'    =>  'check',
+            'file'      =>  $fileName
+        ]);
+
+        // Check and create
+        if (File::exists($fileId)) {
+            info('CTRL.UT.APUBV', [
+                'status'    =>  'exists'
+            ]);
+        } else {
+            File::put($fileId, 'hello');
+            info('CTRL.UT.APUBV', [
+                'status'    =>  'created'
+            ]);
+        }
+
+    }
+
+    /**
+     * Check for public access identifier file
+     * 
+     * @return  Boolean
+     */
+    public function checkPublicId()
+    {
+        return File::exists(public_path('storage/public-access.txt'));
     }
 
 }

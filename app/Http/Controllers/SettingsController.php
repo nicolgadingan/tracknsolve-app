@@ -44,23 +44,28 @@ class SettingsController extends Controller
         // Get disk size
         $pubDirSize     =   0;
 
-        foreach( File::allFiles(public_path('/storage')) as $file)
+        // Sum all files' sizes
+        foreach( File::allFiles(storage_path('/')) as $file)
         {
             $pubDirSize += $file->getSize();
         }
 
+        // Convert it to Mb
         $pubDirSize = number_format($pubDirSize / 1048576, 2);
 
         // Get the group and user used
         $users      =   User::all();
         $groups     =   Group::all();
 
+        $pubAccess  =   $this->utils->checkPublicId();
+
         return view('settings.index')->with([
             'configs'   =>  $prsConfs,
             'stats'     =>  [
                 'diskUsed'  =>  $pubDirSize,
                 'userUsed'  =>  count($users),
-                'groupUsed' =>  count($groups)
+                'groupUsed' =>  count($groups),
+                'pubAccess' =>  $pubAccess
             ]
         ]);
     }

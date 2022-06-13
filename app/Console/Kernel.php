@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use App\Models\Ticket;
 use App\Http\Controllers\Utils;
+use Dflydev\DotAccessData\Util;
 
 class Kernel extends ConsoleKernel
 {
@@ -50,6 +51,15 @@ class Kernel extends ConsoleKernel
          * Delete expired reset-password tokens
          */
         $schedule->command('auth:clear-resets')->everyFiveMinutes();
+
+        /**
+         * Generate public file access identifier
+         */
+        $schedule->call(function() {
+            $utils      =   new Utils;
+            $utils->createPublicId();
+        })
+        ->everyTwoHours();
 
     }
 

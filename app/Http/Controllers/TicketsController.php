@@ -11,7 +11,7 @@ use Illuminate\Support\Arr;
 use App\Mail\TicketResolved;
 use App\Jobs\Mailman;
 use App\Notifications\ResolvedTicket;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
 
 class TicketsController extends Controller
 {
