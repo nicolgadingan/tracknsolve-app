@@ -1,13 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Mail\TicketCreated;
-use App\Models\User;
-use App\Models\Ticket;
-use Illuminate\Support\Facades\URL;
-use App\Mail\VerifiedMail;
-use App\Mail\HelloMail;
-use App\Notifications\AssignedTicket;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,84 +38,5 @@ Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'
 Route::get('/user/verify/{token}', [App\Http\Controllers\AccessesController::class, 'verification']);
 Route::post('/user/verify', [App\Http\Controllers\AccessesController::class, 'verify'])->name('verify');
 
-// Test Email
-Route::get('email-test', function() {
-
-    $rcpt                   =   User::where('id', 700001)
-                                    ->select('users.id as uid')
-                                    ->first()
-                                    ->toArray();
-
-    $tdata                  =   Ticket::where('id', '=', 'YRTK842538125')
-                                    ->first()
-                                    ->toArray();
-
-    $tdata['tkey']          =   'YRTK842538125';
-
-    $email['to']        =   'mgadingan@tracknsolve.com';
-    $email['content']   =   new TicketCreated((object) [
-                                'subject'   =>  'Ticket XXXXXXXXXXXX has been assigned to your group',
-                                'user'      =>  $rcpt,
-                                'ticket'    =>  $tdata,
-                                'baseURL'   =>  URL::to('')
-                            ]);
-
-    dispatch(new App\Jobs\Mailman($email));
-
-    dd('done');
-
-});
-
-Route::get('user-verify', function() {
-    $user               =   User::where('id', 700001)
-                                    ->first()
-                                    ->toArray();
-
-    $email['to']        =   $user['email'];
-    $email['content']   =   new VerifiedMail((object) [
-                                'user'      =>  $user,
-                                'baseURL'   =>  URL::to('')
-                            ]);
-
-    dispatch(new App\Jobs\Mailman($email));
-    dd('done');
-});
-
-Route::get('user-hello', function() {
-    $user               =   User::where('id', 700036)
-                                    ->first();
-    $email['to']        =   $user->email;
-    $email['content']   =   new HelloMail((object) [
-                                    'user'      =>  $user,
-                                    'baseURL'   =>  URL::to('')
-                                ]);
-
-    dispatch(new App\Jobs\Mailman($email));
-
-    dd("DONE");
-});
-
-Route::get('assigned-notif', function() {
-
-    $ticket =   Ticket::where('id', 'YRTK842538235')
-                    ->select(
-                        'tickets.id as ticket_id',
-                        'title',
-                        'description',
-                        'assignee',
-                        'group_id'
-                    )
-                    ->first();
-
-    $users  =   User::where('group_id', $ticket->group_id)
-                    ->get();
-
-    foreach ($users as $user) {
-        $user->notify(new AssignedTicket((Object) [
-            'user'      =>  $user,
-            'ticket'    =>  $ticket
-        ]));
-    }
-
-    dd("DONE");
-});
+// Testing
+Route::get('do-test', [\Tests\Feature\ExampleTest::class, 'execute']);

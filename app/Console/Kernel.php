@@ -7,7 +7,8 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use App\Models\Ticket;
 use App\Http\Controllers\Utils;
-use Dflydev\DotAccessData\Util;
+use App\Notifications\ReportPublicId;
+use Illuminate\Support\Facades\Notification;
 
 class Kernel extends ConsoleKernel
 {
@@ -60,6 +61,21 @@ class Kernel extends ConsoleKernel
             $utils->createPublicId();
         })
         ->everyTwoHours();
+
+        /**
+         * Check public access key file
+         */
+        $schedule->call(function() {
+            $utils      =   new Utils;
+            $accessible =   $utils->checkPublicId();
+
+            if (!$accessible) {
+                Notification::route('mail', env('MAIL_CALL_THE_GUY', 'mgadingan@tracknsolve'))
+                            ->notify(new ReportPublicId(null));
+            }
+
+        })
+        ->everyThirtyMinutes();
 
     }
 
