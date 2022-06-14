@@ -101,23 +101,21 @@
             </div>
         </div>
         <div class="col-md-6" style="position: relative;">
-            <div class="search">
-                <div class="form-floating mb-1">
-                    <select name="assignee" wire:model="assignee" id="tk-assignee" class="form-select @error('assignee') is-invalid @enderror">
-                        @if (count($users) > 0)
-                            <option value="">Select Assignee (optional)</option>
-                            @foreach ($users as $udata)
-                                <option value="{{ $udata->id }}">{{ $udata->first_name . ' ' . $udata->last_name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('assignee')
-                        <span class="invalid-feedback">
-                            {{ $message }}
-                        </span>
-                    @enderror
-                    <label for="tk-assignee">Assignee</label>
-                </div>
+            <div class="form-floating mb-1">
+                <select name="assignee" wire:model="assignee" id="tk-assignee" class="form-select @error('assignee') is-invalid @enderror">
+                    @if (count($users) > 0)
+                        <option value="">Select Assignee (optional)</option>
+                        @foreach ($users as $udata)
+                            <option value="{{ $udata->id }}">{{ $udata->first_name . ' ' . $udata->last_name }}</option>
+                        @endforeach
+                    @endif
+                </select>
+                @error('assignee')
+                    <span class="invalid-feedback">
+                        {{ $message }}
+                    </span>
+                @enderror
+                <label for="tk-assignee">Assignee</label>
             </div>
         </div>
     </div>
