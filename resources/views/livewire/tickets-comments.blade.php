@@ -31,7 +31,7 @@
         @if(count($comments) > 0)
             @foreach ($comments as $comment)
                 <li class="list-group-item list-group-item-action">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-1">
                         <a href="/users/{{ $comment->user->id }}" class="link-primary">
                             <strong>
                                 {{ $comment->user->first_name . ' ' . $comment->user->last_name }}
@@ -39,7 +39,7 @@
                         </a>
                         <span>{{ \Carbon\Carbon::create($comment->created_at)->diffForHumans() }}</span>
                     </div>
-                    <pre class="fs-sm breakline">{{ $comment->comments }}</pre>
+                    <span class="fs-sm breakline">{{ $comment->comments }}</span>
                 </li>
             @endforeach
         @else
