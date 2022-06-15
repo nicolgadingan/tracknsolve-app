@@ -13,7 +13,7 @@
                 <div class="row g-3">
                     <div class="col-md">
                         <textarea name="comment" id="tk-comment" cols="30" rows="2" placeholder="Type your comment here..."
-                            class="form-control @error('comment') is-invalid @enderror" wire:model="comment"></textarea>
+                            class="form-control @error('comment') is-invalid @enderror border-round" wire:model="comment"></textarea>
                         @error('comment')
                             <span class="invalid-feedback">
                                 {{ $message }}

@@ -208,7 +208,8 @@
                         </div>
                         <div class="form-floating mb-3">
                             <textarea name="description" id="tk-upd-description" cols="30" rows="20"
-                                class="form-control @error('description') is-invalid @enderror" wire:model.debounce.1000ms="description"
+                                class="form-control @error('description') is-invalid @enderror border-round" 
+                                wire:model.debounce.1000ms="description"
                                 placeholder="Type the ticket description here.." style="min-height: 147px;" maxlength="4000"
                                 {{ ( $access->group_id != $ticket->user->group_id ) ? 'readonly' : '' }}
                                 @if($ticket->status == 'closed') disabled @endif>{!! $ticket->description !!}</textarea>

@@ -45,7 +45,7 @@ body {
     /* font-size: small; */
     background-color: #e9ecef;
     /* background-color: #dae6eb; */
-    font-family: 'Nunito', Helvetica, sans-serif;
+    font-family: 'Montserrat', Helvetica, sans-serif;
     /* font-family: 'Montserrat', Helvetica, sans-serif; */
 }
 
@@ -586,6 +586,40 @@ table thead {
 }
 
 
+/* ENVOLOPES */
+.envelope {
+    margin: 4rem 0.5rem;
+    border-radius: 1rem;
+    height: 135px;
+    width: 200px;
+    padding: 1rem;
+    background-color: white;
+    position: relative;
+    text-align: center;
+    
+    display: flex;
+    justify-content: center;
+}
+  
+  .envelope-cover {
+    position: absolute;
+    background-color: gray;
+    border: 10px solid white;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border-radius: 50%;
+    top: -60px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 1rem;
+    font-size: x-large;
+}
+
+
 /* OVERRIDE */
 a {
     text-decoration: none;
@@ -670,6 +704,22 @@ label{
     white-space:    -pre-wrap; /* Opera 4-6 */
     white-space:    -o-pre-wrap; /* Opera 7 */
     word-wrap:      break-word; /* Internet Explorer 5.5+ */
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+    border-color: #f0f3f6;
+}
+
+input,
+textarea,
+select,
+div,
+button,
+a.btn,
+ul.list-group {
+    border-radius: 0.5rem;
 }
 
 /* ICON POSITIONING */
