@@ -9,7 +9,7 @@
     $access =   auth()->user();
 @endphp
 <div class="container" id="tk-create-box">
-    <div class="card card-body border-round borderless shadow-sm pt-4">
+    <div class="card card-body  borderless shadow-sm pt-4">
         <div class="mb-2">
             @if ($ticket->group_id == $access->group_id &&
                                 $ticket->assignee == '')
@@ -208,7 +208,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <textarea name="description" id="tk-upd-description" cols="30" rows="20"
-                                class="form-control @error('description') is-invalid @enderror border-round" 
+                                class="form-control @error('description') is-invalid @enderror " 
                                 wire:model.debounce.1000ms="description"
                                 placeholder="Type the ticket description here.." style="min-height: 147px;" maxlength="4000"
                                 {{ ( $access->group_id != $ticket->user->group_id ) ? 'readonly' : '' }}
