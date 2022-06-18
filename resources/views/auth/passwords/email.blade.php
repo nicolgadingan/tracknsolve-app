@@ -14,8 +14,8 @@
             @if (session('status') != "")
                 @include('plugins.messages')
             @else
-                <div class="alert alert-info fs-sm">
-                    <strong>Hey there!</strong>
+                <div class="alert alert-navy fs-sm">
+                    <span>Hey there!</span><br>
                     {!! $info !!}
                 </div>
             @endif
@@ -33,10 +33,10 @@
                     <label for="rp-email">Email</label>
                 </div>
                 <div class="mb-3 pl-3">
-                    <a href="{{ route('login') }}" class="link-marine">Login instead?</a>
+                    <a href="{{ route('login') }}" class="link-pumpkin">Login instead?</a>
                 </div>
                 <div class="right">
-                    <button type="submit" class="btn btn-lg btn-marine shadow">Reset</button>
+                    <button type="submit" class="btn btn-lg btn-pumpkin shadow">Reset</button>
                 </div>
             </form>
             <div class="pt-5 center">

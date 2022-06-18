@@ -1,0 +1,80 @@
+:root {
+    /* Adjustment RGB(20, 14, 8) */
+    --ts-navy:          rgb(21, 19, 60);
+    --ts-pumpkin:       rgb(236, 153, 75);
+    --ts-pumpkin-d:     rgb(216, 139, 67);
+    --ts-gray:          rgb(115, 119, 123);
+    --ts-light:         rgb(241, 238, 233);
+}
+
+html,
+body#auth-body {
+    background-color: var(--ts-navy);
+}
+
+div#box-login {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.brand svg#tns-icon,
+.brand svg#tns-text {
+    fill: var(--ts-pumpkin);
+}
+
+/* 
+==================================
+  LINKS
+================================== */
+.link-pumpkin {
+    color: var(--ts-pumpkin);
+}
+
+.link-pumpkin:hover,
+.link-pumpkin:active {
+    color: var(--ts-pumpkin-d);
+}
+
+/* 
+==================================
+  BUTTONS
+================================== */
+.btn-pumpkin {
+    background-color: var(--ts-pumpkin);
+    color: white;
+}
+
+.btn-pumpkin:hover,
+.btn-pumpkin:active {
+    background-color: var(--ts-pumpkin-d);
+    color: white;
+    font-weight: 500;
+}
+
+/* 
+==================================
+  BACKGROUNDS
+================================== */
+.bg-navy {
+    background-color: var(--ts-navy);
+}
+
+.bg-dark {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* 
+==================================
+  BACKGROUNDS
+================================== */
+.alert {
+    position: relative;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-navy {
+    color: white;
+    background-color: var(--ts-navy);
+}

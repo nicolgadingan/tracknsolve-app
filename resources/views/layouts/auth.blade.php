@@ -13,10 +13,12 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/tnstheme.css') }}">
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="d-flex" style="height: 100vh;">
+<body class="d-flex" style="height: 100vh;" id="auth-body">
     <main class="align-self-center" style="width: 100vw; height: 70vh;">
         <div >
             @yield('content')

@@ -41,12 +41,11 @@
 
 html,
 body {
-    color: var(--marine-dark);
+    /* color: var(--marine-dark); */
     /* font-size: small; */
-    background-color: #e9ecef;
+    /* background-color: #e9ecef; */
     /* background-color: #dae6eb; */
     font-family: 'Montserrat', Helvetica, sans-serif;
-    /* font-family: 'Montserrat', Helvetica, sans-serif; */
 }
 
 .brand {
@@ -57,20 +56,20 @@ body {
 
 .brand #tns-icon {
     max-height: 64px;
-    fill: var(--marine);
+    /* fill: var(--marine); */
 }
 
 .brand #tns-text {
     width: 70%;
     max-width: 200px;
     padding: 0.5rem;
-    fill: var(--marine);
+    /* fill: var(--marine); */
 }
 
 /* AUTH LAYOUT */
 #box-login {
     max-width: 355px;
-    background-color: var(--cheese);
+    /* background-color: var(--cheese); */
     padding: 3rem 1.5rem;
 }
 

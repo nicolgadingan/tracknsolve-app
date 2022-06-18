@@ -30,10 +30,10 @@
                     <label for="li-password">Password</label>
                 </div>
                 <div class="mb-3 pl-3">
-                    <a href="{{ route('password.request') }}" class="link-marine">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="link-pumpkin">Forgot password?</a>
                 </div>
                 <div class="right">
-                    <button type="submit" class="btn btn-lg btn-marine shadow">Login</button>
+                    <button type="submit" class="btn btn-lg btn-pumpkin shadow">Login</button>
                 </div>
             </form>
             <div class="pt-5 center">
