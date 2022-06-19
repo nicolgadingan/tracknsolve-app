@@ -12,6 +12,10 @@ body#auth-body {
     background-color: var(--ts-navy);
 }
 
+body {
+    background-color: white;
+}
+
 div#box-login {
     background-color: rgba(0, 0, 0, 0.2);
 }
@@ -19,6 +23,26 @@ div#box-login {
 .brand svg#tns-icon,
 .brand svg#tns-text {
     fill: var(--ts-pumpkin);
+}
+
+/* 
+==================================
+  SIDEBAR
+================================== */
+div#sidebar {
+    background-color: var(--ts-navy);
+}
+
+.side-nav-item:hover {
+    background-color: rgba(225, 225, 225, 0.2);
+}
+
+.side-nav-item.active {
+    background-color: var(--ts-light);
+    font-weight: bold;
+    pointer-events: none;
+    cursor: default;
+    color: var(--ts-navy);
 }
 
 /* 
@@ -64,7 +88,7 @@ div#box-login {
 
 /* 
 ==================================
-  BACKGROUNDS
+  ALERTS
 ================================== */
 .alert {
     position: relative;
@@ -78,3 +102,8 @@ div#box-login {
     color: white;
     background-color: var(--ts-navy);
 }
+
+/* 
+==================================
+  BRAND
+================================== */
