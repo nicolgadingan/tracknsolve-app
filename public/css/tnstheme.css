@@ -4,25 +4,32 @@
     --ts-pumpkin:       rgb(236, 153, 75);
     --ts-pumpkin-d:     rgb(216, 139, 67);
     --ts-gray:          rgb(115, 119, 123);
-    --ts-light:         rgb(241, 238, 233);
+    --ts-light:         #e6e4e4;
+    --ts-light-dark:    #d1cece;
+
+    --ts-yellow:        #F6C90E;
+    --ts-yellow-dark:   #deb50d;
+    --ts-dark:          #303841;
+    --ts-secondary:     #3A4750;
 }
 
 html,
 body#auth-body {
-    background-color: var(--ts-navy);
+    background-color: var(--ts-dark);
 }
 
 body {
-    background-color: white;
+    background-color: var(--ts-secondary);
+    color: var(--ts-light);
 }
 
 div#box-login {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .brand svg#tns-icon,
 .brand svg#tns-text {
-    fill: var(--ts-pumpkin);
+    fill: var(--ts-yellow);
 }
 
 /* 
@@ -30,7 +37,14 @@ div#box-login {
   SIDEBAR
 ================================== */
 div#sidebar {
-    background-color: var(--ts-navy);
+    background-color: var(--ts-dark);
+    color: var(--ts-light);
+}
+
+.side-nav .side-nav-item {
+    text-align: left;
+    padding-left: 1rem;
+    color: var(--ts-light);
 }
 
 .side-nav-item:hover {
@@ -42,36 +56,54 @@ div#sidebar {
     font-weight: bold;
     pointer-events: none;
     cursor: default;
-    color: var(--ts-navy);
+    color: var(--ts-dark);
 }
 
 /* 
 ==================================
   LINKS
 ================================== */
-.link-pumpkin {
-    color: var(--ts-pumpkin);
+.link-yellow {
+    color: var(--ts-yellow);
 }
 
-.link-pumpkin:hover,
-.link-pumpkin:active {
-    color: var(--ts-pumpkin-d);
+.link-yellow:hover,
+.link-yellow:active {
+    color: var(--ts-yellow-dark);
 }
+
+.link-light {
+    color: var(--ts-light);
+}
+
+.link-light:hover,
+.link-light:active {
+    color: var(--ts-light-dark);
+}
+
 
 /* 
 ==================================
   BUTTONS
 ================================== */
-.btn-pumpkin {
-    background-color: var(--ts-pumpkin);
-    color: white;
+.btn-yellow {
+    background-color: var(--ts-yellow);
+    color: var(--ts-dark);
 }
 
-.btn-pumpkin:hover,
-.btn-pumpkin:active {
-    background-color: var(--ts-pumpkin-d);
-    color: white;
+.btn-yellow:hover,
+.btn-yellow:active {
+    background-color: var(--ts-yellow-dark);
+    color: var(--ts-dark);
     font-weight: 500;
+}
+
+/* 
+==================================
+  FOREGROUNDS
+================================== */
+.fg-yellow {
+    color: var(--ts-yellow);
 }
 
 /* 
@@ -83,8 +115,21 @@ div#sidebar {
 }
 
 .bg-dark {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--ts-dark);
 }
+
+.bg-dark-shade {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.bg-pumpkin {
+    background-color: var(--ts-pumpkin);
+}
+
+.bg-yellow {
+    background-color: var(--ts-yellow);
+}
+
 
 /* 
 ==================================
@@ -105,5 +150,89 @@ div#sidebar {
 
 /* 
 ==================================
-  BRAND
+  TABLES
 ================================== */
+.ts-table {
+    --bs-table-bg: transparent;
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: #212529;
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-active-color: #212529;
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: #212529;
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--ts-light);
+    vertical-align: top;
+    border: none;
+}
+
+.card-body:has(table) {
+    padding: 1rem;
+}
+
+table.ts-table > thead > tr > th {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+table.ts-table > thead > tr > th:first-child,
+table.ts-table > thead > tr > td:first-child {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+table.ts-table > thead > tr > th:last-child,
+table.ts-table > thead > tr > td:last-child {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+table.ts-table tr:first-child {
+    border-left: 3px solid none;
+}
+
+
+/* 
+==================================
+  CARDS
+================================== */
+.ts-card-dark {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border-radius: 0.75rem;
+    overflow: auto;
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+/* 
+==================================
+  PAGINATION
+================================== */
+.ts-card-dark ul.pagination .page-item:not(.active) > * {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: var(--ts-yellow);
+}
+
+.page-link {
+    color: var(--ts-yellow);
+}
+
+.page-link:hover {
+    color: var(--ts-light);
+}
+
+.page-item.active .page-link {
+    background-color: var(--ts-yellow);
+    border-color: var(--ts-yellow-dark);
+    color: var(--ts-dark);
+}

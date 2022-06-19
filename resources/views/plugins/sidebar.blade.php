@@ -17,7 +17,7 @@
     </div>
     <div id="sidebar-menu">
         <div class="p-4 pt-3 pb-3">
-            <h6 class="fg-forest">
+            <h6 class="text-muted">
                 GENERAL
             </h6>
             <div class="side-nav">
@@ -43,7 +43,7 @@
         </div>
         @if (true)
         <div class="p-4 pt-3 pb-3" id="sidebar-admin">
-            <h6 class="fg-forest">
+            <h6 class="text-muted">
                 ADMIN
             </h6>
             <div class="side-nav">

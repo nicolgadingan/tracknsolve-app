@@ -9,10 +9,12 @@
         <div class="row g-4">
             <div class="col-sm-3 order-sm-2">
                 <div style="">
-                    <div class="table-header">
-                        <span class="fg-marine fs-sm">TICKETS BREAKDOWN</span>
-                    </div>
-                    <div class="card card-body border-round borderless shadow-sm" id="db-ticket-chart">
+                    <div class="ts-card-dark" id="db-ticket-chart">
+                        <div class="table-header fg-yellow">
+                            <h5>
+                                <b>Tickets Breakdown</b>
+                            </h5>
+                        </div>
                         <canvas id="dbTicketsBreakdown" width="300" height="300" role="img" class="no-mobile"></canvas>
                         <div class="p-2 center">
                             <span class="fs-xl fg-dark">
@@ -62,17 +64,19 @@
             </div>
             <div class="col-md order-md-1">
                 <div class="mb-3 flex-grow-1">
-                    <div class="table-header">
-                        <span class="fg-marine fs-sm">UNASSIGNED TICKETS</span>
-                    </div>
-                    <div class="card card-body mb-4 borderless border-round p-0 shadow-sm">
-                        <table class="table table-borderless table-hover">
-                            <thead class="fg-white bg-marine-dark">
-                                <td class="pt-3">Key</td>
-                                <td class="no-mobile">Priority</td>
-                                <td>Title</td>
-                                <td class="no-mobile">Reporter</td>
-                                <td class="right no-mobile">Created</td>
+                    <div class="ts-card-dark mb-4">
+                        <div class="table-header fg-yellow">
+                            <h5>
+                                <b>Unassigned Tickets</b>
+                            </h5>
+                        </div>
+                        <table class="table table-borderless ts-table">
+                            <thead>
+                                <th>Key</th>
+                                <th class="no-mobile">Priority</th>
+                                <th>Title</th>
+                                <th class="no-mobile">Reporter</th>
+                                <th class="right no-mobile">Created</th>
                             </thead>
                             <tbody>
                                 @if (count($gpUnassigned) > 0)
@@ -87,13 +91,13 @@
                                         @endphp
                                         <tr class="{{ $overdue }} ">
                                             <td>
-                                                <strong>
-                                                    <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-marine"
+                                                <span>
+                                                    <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-yellow"
                                                         @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
                                                         data-bs-placement="bottom">
                                                         {{ $unassigned->tkey }}
                                                     </a>
-                                                </strong>
+                                                </span>
                                             </td>
                                             <td class="no-mobile">
                                                 {{ Str::ucfirst($unassigned->priority) }}
@@ -102,7 +106,7 @@
                                                 {{ $unassigned->title }}
                                             </td>
                                             <td class="no-mobile">
-                                                <a href="/users/{{ $unassigned->user->id }}" class="link-marine">
+                                                <a href="/users/{{ $unassigned->user->id }}" class="link-light">
                                                     {{ $unassigned->user->first_name . ' ' . $unassigned->user->last_name }}
                                                 </a>
                                             </td>
@@ -120,7 +124,7 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="p-3 pt-0 d-flex justify-content-between">
+                        <div class="pl-3 pr-3 d-flex justify-content-between">
                             <span class="fg-forest">
                                 @if (count($gpUnassigned) > 0)
                                     {{ 'Showing ' . $gpUnassigned->total() . ' tickets' }}
@@ -131,18 +135,20 @@
                             </span>
                         </div>
                     </div>
-                    <div class="table-header">
-                        <span class="fg-marine fs-sm">MY TICKETS</span>
-                    </div>
-                    <div class="card card-body border-round borderless p-0 shadow-sm">
-                        <table class="table table-borderless table-hover">
-                            <thead class="bg-marine-dark fg-white">
-                                <td class="pt-3">Key</td>
-                                <td class="no-mobile">Priority</td>
-                                <td class="no-mobile">Status</td>
-                                <td>Description</td>
-                                <td class="no-mobile">Reporter</td>
-                                <td class="right no-mobile">Created</td>
+                    <div class="ts-card-dark">
+                        <div class="table-header fg-yellow">
+                            <h5>
+                                <b>My Tickets</b>
+                            </h5>
+                        </div>
+                        <table class="table table-borderless ts-table">
+                            <thead class="fg-white">
+                                <th class="pt-3">Key</th>
+                                <th class="no-mobile">Priority</th>
+                                <th class="no-mobile">Status</th>
+                                <th>Description</th>
+                                <th class="no-mobile">Reporter</th>
+                                <th class="right no-mobile">Created</th>
                             </thead>
                             <tbody>
                                 @if (count($myTickets) > 0)
@@ -179,13 +185,13 @@
                                         @endphp
                                         <tr class="{{ $overdue }}">
                                             <td>
-                                                <strong>
-                                                    <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-marine"
+                                                <span>
+                                                    <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-yellow"
                                                         @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
                                                         data-bs-placement="bottom">
                                                         {{ $mytk->tkey }}
                                                     </a>
-                                                </strong>
+                                                </span>
                                             </td>
                                             <td class="no-mobile">
                                                 {{ Str::ucfirst($mytk->priority) }}
@@ -203,7 +209,7 @@
                                                 @endif
                                             </td>
                                             <td class="no-mobile">
-                                                <a href="/users/{{ $mytk->user->id }}" class="link-marine">
+                                                <a href="/users/{{ $mytk->user->id }}" class="link-light">
                                                     {{ $mytk->user->first_name . ' ' . $mytk->user->last_name }}
                                                 </a>
                                             </td>
