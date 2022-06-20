@@ -124,61 +124,6 @@ body {
 }
 
 
-/* DOT */
-.dot {
-    padding: 0.1rem 0.6rem;
-    border: 1px solid var(--bs-secondary);
-    border-radius: 0.4rem;
-    background-color: var(--secondary-light);
-    display: block;
-    max-width: 110px;
-    min-width: 85px;
-    text-align: center;
-}
-
-.dot-success {
-    background-color: var(--x-success-m);
-    border-color: var(--x-success-d);
-    color: var(--bs-dark);
-}
-
-.dot-warning {
-    background-color: var(--x-butter-m);
-    border-color: var(--x-butter-d);
-    color: var(--bs-dark);
-}
-
-.dot-danger {
-    background-color: var(--x-danger-m);
-    border-color: var(--x-danger-d);
-    color: white;
-}
-
-.dot-primary {
-    background-color: var(--x-primary-m);
-    border-color: var(--x-primary-d);
-    color: white;
-}
-
-.dot-dark {
-    background-color: var(--x-secondary-d);
-    border-color: var(--bs-dark);
-    color: white;
-}
-
-.dot-purple {
-    background-color: var(--x-purple-m);
-    border-color: var(--x-purple-d);
-    color: white;
-}
-
-.dot-pumpkin {
-    background-color: var(--x-pumpkin-m);
-    border-color: var(--x-pumpkin-d);
-    color: white;
-}
-
-
 /* COLORS */
 .fg-marine {
     color: var(--marine);

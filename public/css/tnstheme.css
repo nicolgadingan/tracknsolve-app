@@ -1,16 +1,14 @@
 :root {
     /* Adjustment RGB(20, 14, 8) */
-    --ts-navy:          rgb(21, 19, 60);
-    --ts-pumpkin:       rgb(236, 153, 75);
-    --ts-pumpkin-d:     rgb(216, 139, 67);
-    --ts-gray:          rgb(115, 119, 123);
-    --ts-light:         #e6e4e4;
-    --ts-light-dark:    #d1cece;
-
-    --ts-yellow:        #F6C90E;
-    --ts-yellow-dark:   #deb50d;
-    --ts-dark:          #303841;
-    --ts-secondary:     #3A4750;
+    --ts-navy:              rgb(21, 19, 60);
+    --ts-pumpkin:           rgb(236, 153, 75);
+    --ts-pumpkin-d:         rgb(216, 139, 67);
+    --ts-light:             #e6e4e4;
+    --ts-light-dark:        #d1cece;  
+    --ts-yellow:            #F6C90E;
+    --ts-yellow-dark:       #deb50d;
+    --ts-dark:              #303841;
+    --ts-gray:              #3A4750;
 
     --ts-warning:           #ffb142;
     --ts-warning-dark:      #cc8e35;
@@ -32,7 +30,7 @@
     --ts-ube:               #40407a;
     --ts-ube-dark:          #2c2c54;
 
-    --ts-dark-shade:    rgba(0, 0, 0, 0.05);
+    --ts-dark-shade:        rgba(0, 0, 0, 0.05);
 }
 
 html,
@@ -41,7 +39,7 @@ body#auth-body {
 }
 
 body {
-    background-color: var(--ts-secondary);
+    background-color: var(--ts-gray);
     color: var(--ts-light);
 }
 
@@ -113,11 +111,22 @@ div#sidebar {
     color: var(--ts-dark);
 }
 
+.btn-yellow-outline {
+    background-color: transparent;
+    color: var(--ts-yellow);
+    border: 1px solid var(--ts-yellow-dark);
+}
+
 .btn-yellow:hover,
 .btn-yellow:active {
     background-color: var(--ts-yellow-dark);
     color: var(--ts-dark);
-    font-weight: 500;
+}
+
+.btn-yellow-outline:hover,
+.btn-yellow-outline:active {
+    background-color: var(--ts-yellow);
+    color: var(--ts-dark);
 }
 
 /* 
@@ -305,4 +314,55 @@ table.ts-table tr:first-child {
 
 .border-round {
     border-radius: .5rem;
+}
+
+
+/* 
+==================================
+  DOT
+================================== */
+.dot-dark {
+    padding: 0.1rem 0.1rem;
+    border: 1px solid transparent;
+    border-radius: 0.4rem;
+    background-color: var(--ts-dark-shade);
+    display: block;
+    max-width: 110px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.dot-secondary {
+    border-color: var(--ts-secondary-dark);
+    color: var(--ts-secondary);
+}
+
+.dot-success {
+    border-color: var(--ts-success-dark);
+    color: var(--ts-success);
+}
+
+.dot-warning {
+    border-color: var(--ts-butter-dark);
+    color: var(--ts-butter);
+}
+
+.dot-danger {
+    border-color: var(--ts-danger-dark);
+    color: var(--ts-danger);
+}
+
+.dot-primary {
+    border-color: var(--ts-primary-dark);
+    color: var(--ts-primary);
+}
+
+.dot-purple {
+    border-color: var(--ts-purple-dark);
+    color: var(--ts-purple);
+}
+
+.dot-pumpkin {
+    border-color: var(--ts-pumpkin-dark);
+    color: var(--ts-pumpkin);
 }

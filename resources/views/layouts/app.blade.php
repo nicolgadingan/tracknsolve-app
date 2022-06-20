@@ -65,7 +65,7 @@
                             $user   =   auth()->user();
                         @endphp
                         <div class="dropdown">
-                            <button class="btn btn-lg p-2 shadow dropdown-toggle btn-cheese shadow" href="#" id="profile-link" role="button"
+                            <button class="btn btn-lg p-2 shadow dropdown-toggle btn-yellow-outline shadow" href="#" id="profile-link" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true">
                                 <b class="">
                                     {{ Str::ucfirst($user->first_name[0] . $user->last_name[0]) }}

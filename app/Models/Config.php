@@ -30,25 +30,33 @@ class Config extends Model
 
         // Get organization key
         $org_key    =   $this->getOrg();
-        $newKey     =   $org_key . $last_tk_seq->value;
+        // $newKey     =   $org_key . $last_tk_seq->value;
 
-        // Validate if sequence is reused
-        $reUsed     =   DB::table('reserves')
-                            ->where('key_id', $newKey)
-                            ->where('category', 'TICKET_KEY')
-                            ->selectRaw('count(id) as reserved')
-                            ->first();
+        // // Validate if sequence is reused
+        // $reUsed     =   DB::table('reserves')
+        //                     ->where('key_id', $newKey)
+        //                     ->where('category', 'TICKET_KEY')
+        //                     ->selectRaw('count(id) as reserved')
+        //                     ->first();
+
+        $this->tkSeqReconf();
+
+        $getSeq =   Config::where('config_name', 'LAST_TK_SEQ')
+                        ->select('value')
+                        ->first();
+
+        $newKey     =   $org_key . $getSeq->value;
         
-        if ($reUsed->reserved > 1) {
-            // Ticket sequence is reused > Reconfigure
-            $this->tkSeqReconf();
+        // if ($reUsed->reserved > 1) {
+        //     // Ticket sequence is reused > Reconfigure
+        //     $this->tkSeqReconf();
 
-            $getSeq =   Config::where('config_name', 'LAST_TK_SEQ')
-                            ->select('value')
-                            ->first();
+        //     $getSeq =   Config::where('config_name', 'LAST_TK_SEQ')
+        //                     ->select('value')
+        //                     ->first();
 
-            $newKey     =   $org_key . $getSeq->value;
-        }
+        //     $newKey     =   $org_key . $getSeq->value;
+        // }
 
         // Reserve Key
         DB::table('reserves')
@@ -83,18 +91,28 @@ class Config extends Model
                             ->select(
                                 DB::raw("(select length(value) from configs where config_name = 'ORG_KEY') as org_len"),
                                 DB::raw('max(t.id) as max_seq'),
-                                DB::raw("(select value from configs where config_name = 'LAST_TK_SEQ') as last_seq")
+                                DB::raw("(select value from configs where config_name = 'LAST_TK_SEQ') as last_seq"),
+                                DB::raw("(select max(substring(key_id, 4)) from reserves where category = 'ticket_key') as res_seq")
                             )
                             ->first();
 
         $maxSeq     =   substr($reconData->max_seq, $reconData->org_len);
 
         if ($maxSeq >= $reconData->last_seq) {
+
+            $seqToUse   =   0;
+
+            if ($maxSeq >= $reconData->res_seq) {
+                $seqToUse   =   $maxSeq;
+            } else {
+                $seqToUse   =   $reconData->res_seq;
+            }
+
             try {
                 $isReconfd  =   DB::table('configs')
                                     ->where('config_name', 'LAST_TK_SEQ')
                                     ->update([
-                                        'value' =>  $maxSeq + 1
+                                        'value' =>  $seqToUse + 1
                                     ]);
 
                 if ($isReconfd) {

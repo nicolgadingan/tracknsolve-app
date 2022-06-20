@@ -168,7 +168,7 @@
                                                     $theme  =   'warning';
                                                     break;
                                                 case 'on-hold':
-                                                    $theme  =   'secondary';
+                                                    $theme  =   'purple';
                                                     break;
                                                 case 'resolved':
                                                     $theme  =   'success';
@@ -178,10 +178,10 @@
                                                     break;
                                             }
                                             
-                                            if ($createdAt < $dueDate) {
-                                                $theme      =   'pumpkin';
-                                                $overdue    =   'overdue';
-                                            }
+                                            // if ($createdAt < $dueDate) {
+                                            //     $theme      =   'pumpkin';
+                                            //     $overdue    =   'overdue';
+                                            // }
                                         @endphp
                                         <tr class="{{ $overdue }}">
                                             <td>
@@ -197,7 +197,7 @@
                                                 {{ Str::ucfirst($mytk->priority) }}
                                             </td>
                                             <td class="no-mobile">
-                                                <span class="dot dot-{{ $theme }}">
+                                                <span class="dot-dark dot-{{ $theme }}">
                                                     {{ $tkstat }}
                                                 </span>
                                             </td>
