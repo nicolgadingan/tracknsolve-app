@@ -11,6 +11,28 @@
     --ts-yellow-dark:   #deb50d;
     --ts-dark:          #303841;
     --ts-secondary:     #3A4750;
+
+    --ts-warning:           #ffb142;
+    --ts-warning-dark:      #cc8e35;
+    --ts-secondary:         #d1ccc0;
+    --ts-secondary-dark:    #84817a;
+    --ts-butter:            #ffda79;
+    --ts-butter-dark:       #ccae62;
+    --ts-pumpkin:           #ff793f;
+    --ts-pumpkin-dark:      #cd6133;
+    --ts-pumpkin-l:         #ffe0d3;
+    --ts-danger:            #ff5252;
+    --ts-danger-dark:       #b33939;
+    --ts-success:           #33d9b2;
+    --ts-success-dark:      #218c74;
+    --ts-primary:           #34ace0;
+    --ts-primary-dark:      #227093;
+    --ts-purple:            #706fd3;
+    --ts-purple-dark:       #474787;
+    --ts-ube:               #40407a;
+    --ts-ube-dark:          #2c2c54;
+
+    --ts-dark-shade:    rgba(0, 0, 0, 0.05);
 }
 
 html,
@@ -135,18 +157,41 @@ div#sidebar {
 ==================================
   ALERTS
 ================================== */
-.alert {
+.ts-alert-dark {
     position: relative;
     padding: 1rem 1rem;
     margin-bottom: 1rem;
     border: 1px solid transparent;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
+    background-color: var(--ts-dark-shade);
+    font-size: small;
 }
 
 .alert-navy {
     color: white;
     background-color: var(--ts-navy);
 }
+
+.ts-alert-success {
+    color: var(--ts-success);
+    border-color: var(--ts-success-dark);
+}
+
+.ts-alert-primary {
+    color: var(--ts-primary);
+    border-color: var(--ts-primary-dark);
+}
+
+.ts-alert-warning {
+    color: var(--ts-warning);
+    border-color: var(--ts-warning-dark);
+}
+
+.ts-alert-danger {
+    color: var(--ts-danger);
+    border-color: var(--ts-danger-dark);
+}
+
 
 /* 
 ==================================
@@ -222,6 +267,7 @@ table.ts-table tr:first-child {
 .ts-card-dark input:focus {
     background-color: rgba(225, 225, 225, 0.05);
     color: white;
+    border: none;
 }
 
 
@@ -246,4 +292,17 @@ table.ts-table tr:first-child {
     background-color: var(--ts-yellow);
     border-color: var(--ts-yellow-dark);
     color: var(--ts-dark);
+}
+
+
+/* 
+==================================
+  BORDERS
+================================== */
+.border-bubble {
+    border-radius: 2rem;
+}
+
+.border-round {
+    border-radius: .5rem;
 }

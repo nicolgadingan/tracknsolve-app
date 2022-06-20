@@ -6,14 +6,14 @@
 
 @section('content')
 <div class="d-flex justify-content-center">
-    <div class="card card-body borderless shadow-sm border-bubble pb-2" id="box-login">
+    <div class="ts-card-dark border-bubble pb-2" id="box-login">
         <div class="center mb-3 p-2 brand">
             @include('plugins.tnsicon')
             @include('plugins.tnstext')
         </div>
         @if ($status != "not-exists")
             @if ($status == "not-verified")
-                <div class="alert alert-primary">
+                <div class="ts-alert-dark ts-alert-primary">
                     <div class="justify">
                         {!! $message !!}
                     </div>
@@ -23,7 +23,7 @@
                     @csrf
                     <div class="form-floating mb-3">
                         <input type="password" id="password" name="password" placeholder="Password"
-                            class="form-control @error('password') is-invalid @enderror" autocomplete="new-password">
+                            class="form-control @error('password') is-invalid @enderror center" autocomplete="new-password">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-floating mb-4">
                         <input type="password" id="confirm-password" name="password_confirmation" placeholder="Confirm Password"
-                            class="form-control @error('password_confirmation') is-invalid @enderror" autocomplete="new-password">
+                            class="form-control @error('password_confirmation') is-invalid @enderror center" autocomplete="new-password">
                         @error('password_confirmation')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{!! $message !!}</strong>
@@ -43,18 +43,18 @@
                     </div>
                     <input type="hidden" value="{{ $userid }}" name="user_id">
                     <div class="right">
-                        <button type="submit" class="btn btn-lg btn-marine shadow">Submit</button>
+                        <button type="submit" class="btn btn-lg btn-yellow shadow">Submit</button>
                     </div>
                 </form>
             @else
-                <div class="alert alert-warning">
+                <div class="ts-alert-dark ts-alert-warning">
                     <div class="justify">
                         {!! $message !!}
                     </div>
                 </div>
             @endif
         @else
-        <div class="alert alert-warning">
+        <div class="ts-alert-dark ts-alert-warning">
             <div class="justify">
                 {!! $message !!}
             </div>

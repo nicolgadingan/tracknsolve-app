@@ -624,14 +624,6 @@ select,
     border-radius: .5rem !important;
 }
 
-.border-bubble {
-    border-radius: 2rem;
-}
-
-.border-round {
-    border-radius: .5rem;
-}
-
 .block {
     display: block;
 }

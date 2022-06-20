@@ -1,5 +1,5 @@
 @if (count($errors) > 0 && $errors->has('message'))
-    <div class="alert alert-danger p-2">
+    <div class="ts-alert-dark ts-alert-danger">
         <div class="d-flex align-items-start">
             <div class="pl-2 pr-2">
                 <i class="bi bi-exclamation-diamond-fill fs-xl"></i>
@@ -18,35 +18,35 @@
 @endif
 
 @if (session('success'))
-    <div class="alert alert-success fs-sm">
+    <div class="ts-alert-dark ts-alert-success">
         <strong>Hooray!</strong>
         {!! session('success') !!}
     </div>
 @endif
 
 @if (session('warning'))
-    <div class="alert alert-warning fs-sm">
+    <div class="ts-alert-dark ts-alert-warning">
         <strong>Holy Guacamole!</strong>
         {!! session('warning') !!}
     </div>
 @endif
 
 @if (session('error'))
-    <div class="alert alert-danger fs-sm">
+    <div class="ts-alert-dark ts-alert-danger">
         <strong>Oh Snap!</strong>
         {!! session('error') !!}
     </div>
 @endif
 
 @if (session('info'))
-    <div class="alert alert-info fs-sm">
+    <div class="ts-alert-dark ts-alert-info">
         <strong>Hey there!</strong>
         {!! session('info') !!}
     </div>
 @endif
 
 @if (session('status'))
-    <div class="alert alert-info fs-sm">
+    <div class="ts-alert-dark ts-alert-info">
         {!! session('status') !!}
     </div>
 @endif
