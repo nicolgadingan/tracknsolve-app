@@ -11,9 +11,7 @@
                 <div style="">
                     <div class="ts-card-dark" id="db-ticket-chart">
                         <div class="table-header fg-yellow">
-                            <h5>
-                                <b>Tickets Breakdown</b>
-                            </h5>
+                            <h5>Tickets Breakdown</h5>
                         </div>
                         <canvas id="dbTicketsBreakdown" width="300" height="300" role="img" class="no-mobile"></canvas>
                         <div class="p-2 center">
@@ -66,9 +64,7 @@
                 <div class="mb-3 flex-grow-1">
                     <div class="ts-card-dark mb-4">
                         <div class="table-header fg-yellow">
-                            <h5>
-                                <b>Unassigned Tickets</b>
-                            </h5>
+                            <h5>Unassigned Tickets</h5>
                         </div>
                         <table class="table table-borderless ts-table">
                             <thead>
@@ -137,9 +133,7 @@
                     </div>
                     <div class="ts-card-dark">
                         <div class="table-header fg-yellow">
-                            <h5>
-                                <b>My Tickets</b>
-                            </h5>
+                            <h5>My Tickets</h5>
                         </div>
                         <table class="table table-borderless ts-table">
                             <thead class="fg-white">

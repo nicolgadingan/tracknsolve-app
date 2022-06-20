@@ -3,7 +3,7 @@
         $uinf   =   auth()->user();
     @endphp
 
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-4 dark-theme">
         <div class="col-md">
             <div class="search" style="max-width: 300px;">
                 <input type="text" class="form-control search-input borderless" placeholder="Search..."
@@ -12,23 +12,28 @@
         </div>
         <div class="col-md right">
             @if (auth()->user()->role == "admin")
-                <button class="btn btn-marine" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
+                <button class="btn btn-yellow" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
             @endif
         </div>
     </div>
     @include('plugins.messages')
     <div class="row">
         <div class="col">
-            <div class="card card-body border-round borderless shadow-sm p-0">
-                <table class="table table-borderless table-hover">
-                    <thead class="bg-marine-dark fg-white">
-                        <td class="pt-3">Name</td>
-                        <td>Status</td>
-                        <td>Manager</td>
-                        <td>Members</td>
-                        <td class="right">Created</td>
+            <div class="ts-card-dark">
+                <div class="table-header fg-yellow">
+                    <h5>
+                        <span>All Groups</span>
+                    </h5>
+                </div>
+                <table class="table table-borderless ts-table">
+                    <thead class="fg-white">
+                        <th class="pt-3">Name</th>
+                        <th>Status</th>
+                        <th>Manager</th>
+                        <th>Members</th>
+                        <th class="right">Created</th>
                         @if ($uinf->role == 'admin')
-                            <td></td>
+                            <th></th>
                         @endif
                     </thead>
                     <tbody>
@@ -37,8 +42,8 @@
                             @foreach ($data as $group)
                                 <tr class="align-middle">
                                     <td>
-                                        <a href="/groups/{{ $group->id }}" class="link-marine">
-                                            <b>{{ $group->name }}</b>
+                                        <a href="/groups/{{ $group->id }}" class="link-yellow">
+                                            {{ $group->name }}
                                         </a>
                                     </td>
                                     <td>
@@ -65,7 +70,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="/users/{{ $group->manager->id }}" class="link-marine">
+                                        <a href="/users/{{ $group->manager->id }}" class="link-light">
                                             {{ $group->manager->first_name . ' ' . $group->manager->last_name }}
                                         </a>
                                     </td>

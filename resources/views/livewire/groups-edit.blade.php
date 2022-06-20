@@ -1,4 +1,4 @@
-<div class="card card-body borderless border-round shadow-sm pt-4">
+<div class="ts-card-dark pt-4">
     @php
         $role   =   auth()->user()->role;
         $extra  =   $isEditable ? '' : 'disabled';
@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between mb-4">
             @includeIf('plugins.previous', ['path' => '/groups'])
             @if (auth()->user()->role == "admin")
-                <button type="submit" class="btn btn-marine btn-lg shadow-sm mb-2" {{ ( count($errors) > 0 ) || !$hasUpdate ? 'disabled' : '' }}>
+                <button type="submit" class="btn btn-yellow btn-lg shadow-sm mb-2" {{ ( count($errors) > 0 ) || !$hasUpdate ? 'disabled' : '' }}>
                     Update
                 </button>
             @endif
@@ -66,7 +66,7 @@
         </div>
         </form>
         <h6 class="fg-forest pt-2">MEMBERS</h6>
-        <ul class="list-group mb-4">
+        <ul class="ts-list mb-4">
             @if (count($members) > 0)
                 @foreach ($members as $member)
                     @php
@@ -79,10 +79,10 @@
                         }
                         
                     @endphp
-                    <li class="list-group-item list-group-item-action">
+                    <li class="ts-list-item">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
-                                <strong>{{ ucwords($member->first_name . ' ' . $member->last_name) }}</strong><br>
+                                <h6 class="mb-0">{{ ucwords($member->first_name . ' ' . $member->last_name) }}</h6>
                                 <span>{{ ucwords($member->role) }}</span>
                             </div>
                             <i class="bi-check-circle-fill fg-{{ $ms_theme }}"
@@ -91,7 +91,7 @@
                     </li>
                 @endforeach
             @else
-                <li class="list-group-item list-group-item-action">
+                <li class="ts-list-item">
                     No members.
                 </li>
             @endif

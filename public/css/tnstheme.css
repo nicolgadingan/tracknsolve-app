@@ -31,6 +31,7 @@
     --ts-ube-dark:          #2c2c54;
 
     --ts-dark-shade:        rgba(0, 0, 0, 0.05);
+    --ts-light-shade:       rgba(255, 255, 255, 0.05);
 }
 
 html,
@@ -272,9 +273,23 @@ table.ts-table tr:first-child {
 ==================================
   INPUTS
 ================================== */
-.ts-card-dark input,
-.ts-card-dark input:focus {
+.ts-card-dark .form-control,
+.ts-card-dark .form-control:focus,
+.ts-card-dark .form-select,
+.ts-card-dark .form-select:focus {
     background-color: rgba(225, 225, 225, 0.05);
+    color: white;
+    border: none;
+}
+
+.ts-card-dark .form-select option {
+    background: var(--ts-gray);
+    color: white;
+}
+
+.dark-theme input,
+.dark-theme input:focus {
+    background-color: rgba(225, 225, 225, 0.1);
     color: white;
     border: none;
 }
@@ -365,4 +380,39 @@ table.ts-table tr:first-child {
 .dot-pumpkin {
     border-color: var(--ts-pumpkin-dark);
     color: var(--ts-pumpkin);
+}
+
+
+/* 
+==================================
+  LISTS
+================================== */
+ul.ts-list {
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+li.ts-list-item {
+    border: none;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+.ts-card-dark .ts-list .ts-list-item,
+.dark-them .ts-list .ts-list-item {
+    background-color: var(--ts-dark-shade);
+    color: var(--ts-light);
+}
+
+.ts-card-dark .ts-list .ts-list-item:hover,
+.dark-them .ts-list .ts-list-item:hover {
+    background-color: var(--ts-light-shade);
+    color: var(--ts-light);
 }
