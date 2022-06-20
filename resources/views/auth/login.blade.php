@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="card card-body borderless border-bubble pb-2" id="box-login">
+        <div class="ts-card-dark border-bubble pb-2" id="box-login">
             <div class="center mb-3 p-2 brand">
                 @include('plugins.tnsicon')
                 @include('plugins.tnstext')

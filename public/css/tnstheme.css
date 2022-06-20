@@ -216,6 +216,17 @@ table.ts-table tr:first-child {
 
 /* 
 ==================================
+  INPUTS
+================================== */
+.ts-card-dark input,
+.ts-card-dark input:focus {
+    background-color: rgba(225, 225, 225, 0.05);
+    color: white;
+}
+
+
+/* 
+==================================
   PAGINATION
 ================================== */
 .ts-card-dark ul.pagination .page-item:not(.active) > * {
