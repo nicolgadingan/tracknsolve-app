@@ -1,4 +1,4 @@
-<div class="ts-card-dark pt-4">
+<div class="ts-card pt-4">
     @php
         $role   =   auth()->user()->role;
         $extra  =   $isEditable ? '' : 'disabled';
@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between mb-4">
             @includeIf('plugins.previous', ['path' => '/groups'])
             @if (auth()->user()->role == "admin")
-                <button type="submit" class="btn btn-yellow btn-lg shadow-sm mb-2" {{ ( count($errors) > 0 ) || !$hasUpdate ? 'disabled' : '' }}>
+                <button type="submit" class="btn btn-main btn-lg shadow-sm mb-2" {{ ( count($errors) > 0 ) || !$hasUpdate ? 'disabled' : '' }}>
                     Update
                 </button>
             @endif

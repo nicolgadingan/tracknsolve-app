@@ -44,7 +44,7 @@
 
     @livewireStyles
 </head>
-<body>
+<body class="dark-theme">
     <div class="d-flex" id="body-divider">
         <div id="sidebar" class="shadow-sm">
             @include('plugins.sidebar')

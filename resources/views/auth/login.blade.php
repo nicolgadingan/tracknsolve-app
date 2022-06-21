@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="ts-card-dark border-bubble pb-2" id="box-login">
+        <div class="ts-card border-bubble pb-2" id="box-login">
             <div class="center mb-3 p-2 brand">
                 @include('plugins.tnsicon')
                 @include('plugins.tnstext')
@@ -30,10 +30,10 @@
                     <label for="li-password">Password</label>
                 </div>
                 <div class="mb-3 pl-3">
-                    <a href="{{ route('password.request') }}" class="link-yellow">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="link-main">Forgot password?</a>
                 </div>
                 <div class="right">
-                    <button type="submit" class="btn btn-lg btn-yellow shadow">Login</button>
+                    <button type="submit" class="btn btn-lg btn-main shadow">Login</button>
                 </div>
             </form>
             <div class="pt-5 center">

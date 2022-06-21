@@ -27,7 +27,7 @@
         </div>
         <div class="col-sm-auto mb-2 right">
             <div id="tk-group-actions">
-                <a href="/tickets/create" class="btn btn-marine shadow">
+                <a href="/tickets/create" class="btn btn-main shadow">
                     New Ticket
                 </a>
             </div>
@@ -36,17 +36,20 @@
     @include('plugins.messages')
     <div class="row">
         <div class="col">
-            <div class="card card-body borderless border-round shadow-sm p-0" style="overflow-x: auto;">
-                <table class="table table-borderless table-hover">
-                    <thead class="bg-marine-dark fg-white">
-                        <td class="pt-3">Key</td>
-                        <td>Status</td>
-                        <td class="no-mobile">Priority</td>
-                        <td>Title</td>
-                        <td class="no-mobile">Group</td>
-                        <td class="no-mobile">Assignee</td>
-                        <td class="no-mobile">Reporter</td>
-                        <td class="right no-mobile">Created</td>
+            <div class="ts-card" style="overflow-x: auto;">
+                <div class="table-header fg-yellow">
+                    <h5>All Tickets</h5>
+                </div>
+                <table class="table table-borderless ts-table">
+                    <thead>
+                        <th class="pt-3">Key</th>
+                        <th>Status</th>
+                        <th class="no-mobile">Priority</th>
+                        <th>Title</th>
+                        <th class="no-mobile">Group</th>
+                        <th class="no-mobile">Assignee</th>
+                        <th class="no-mobile">Reporter</th>
+                        <th class="right no-mobile">Created</th>
                     </thead>
                     <tbody>
                         @if (count($tickets) > 0)
@@ -90,7 +93,7 @@
                                 @endphp
                                 <tr class="{{ $recStatus }}">
                                     <td>
-                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-marine"
+                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-main"
                                             @if ($recStatus == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
                                             data-bs-placement="bottom">
                                             <strong>{{ $ticket->tkey }}</strong>
@@ -125,12 +128,12 @@
                                                 $assignee   =   '';
                                             }
                                         @endphp
-                                        <a href="/users/{{ $ticket->assignee_id }}" class="link-marine">
+                                        <a href="/users/{{ $ticket->assignee_id }}" class="link-forest">
                                             {{ $assignee }}
                                         </a>
                                     </td class="no-mobile">
                                     <td class="no-mobile">
-                                        <a href="/users/{{ $ticket->reporter_id }}" class="link-marine">
+                                        <a href="/users/{{ $ticket->reporter_id }}" class="link-forest">
                                             {{ $ticket->reporter_fn . ' ' . $ticket->reporter_ln }}
                                         </a>
                                     </td>

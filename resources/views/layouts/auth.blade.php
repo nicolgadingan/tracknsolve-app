@@ -18,7 +18,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="d-flex" style="height: 100vh;" id="auth-body">
+<body class="d-flex dark-theme" style="height: 100vh;" id="auth-body">
     <main class="align-self-center" style="width: 100vw; height: 70vh;">
         <div >
             @yield('content')

@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="ts-card-dark borderless shadow-sm border-bubble pb-2" id="box-login">
+        <div class="ts-card borderless shadow-sm border-bubble pb-2" id="box-login">
             <div class="center mb-3 p-2 brand">
                 @include('plugins.tnsicon')
                 @include('plugins.tnstext')
@@ -14,7 +14,7 @@
             @if (session('status') != "")
                 @include('plugins.messages')
             @else
-                <div class="alert bg-dark-shade fs-sm">
+                <div class="alert ts-alert-primary fs-sm">
                     <span>Hey there!</span><br>
                     {!! $info !!}
                 </div>
@@ -33,10 +33,10 @@
                     <label for="rp-email">Email</label>
                 </div>
                 <div class="mb-3 pl-3">
-                    <a href="{{ route('login') }}" class="link-yellow">Login instead?</a>
+                    <a href="{{ route('login') }}" class="link-main">Login instead?</a>
                 </div>
                 <div class="right">
-                    <button type="submit" class="btn btn-lg btn-yellow shadow">Reset</button>
+                    <button type="submit" class="btn btn-lg btn-main shadow">Reset</button>
                 </div>
             </form>
             <div class="pt-5 center">

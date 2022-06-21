@@ -283,12 +283,6 @@ a.link-marine:active {
 }
 
 
-.overdue {
-    /* background-color: var(--x-pumpkin-l); */
-    /* border-left: 3px solid var(--x-pumpkin-m); */
-}
-
-
 /* CUSTOM FONTS */
 .fs-xs {
     font-size: x-small;

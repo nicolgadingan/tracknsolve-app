@@ -9,6 +9,8 @@
     --ts-yellow-dark:       #deb50d;
     --ts-dark:              #303841;
     --ts-gray:              #3A4750;
+    --ts-forest:            #9CAFB7;
+    --ts-forest-light:      #bdcfd6;
 
     --ts-warning:           #ffb142;
     --ts-warning-dark:      #cc8e35;
@@ -31,6 +33,7 @@
     --ts-ube-dark:          #2c2c54;
 
     --ts-dark-shade:        rgba(0, 0, 0, 0.05);
+    --ts-darker-shade:      rgba(0, 0, 0, 0.2);
     --ts-light-shade:       rgba(255, 255, 255, 0.05);
 }
 
@@ -88,13 +91,26 @@ div#sidebar {
     color: var(--ts-yellow);
 }
 
+.dark-theme .link-main {
+    color: var(--ts-yellow);
+}
+
+.link-light {
+    color: var(--ts-light);
+}
+
+.link-forest {
+    color: var(--ts-forest-light);
+}
+
 .link-yellow:hover,
 .link-yellow:active {
     color: var(--ts-yellow-dark);
 }
 
-.link-light {
-    color: var(--ts-light);
+.dark-theme .link-main:hover,
+.dark-theme .link-main:active {
+    color: var(--ts-yellow-dark);
 }
 
 .link-light:hover,
@@ -102,6 +118,10 @@ div#sidebar {
     color: var(--ts-light-dark);
 }
 
+.link-forest:hover,
+.link-forest:active {
+    color: var(--ts-forest);
+}
 
 /* 
 ==================================
@@ -118,6 +138,17 @@ div#sidebar {
     border: 1px solid var(--ts-yellow-dark);
 }
 
+.dark-theme .btn-main {
+    background-color: var(--ts-yellow);
+    color: var(--ts-dark);
+}
+
+.dark-theme .btn-sub {
+    background-color: transparent;
+    color: var(--ts-yellow);
+    border: 1px solid var(--ts-yellow-dark);
+}
+
 .btn-yellow:hover,
 .btn-yellow:active {
     background-color: var(--ts-yellow-dark);
@@ -126,6 +157,18 @@ div#sidebar {
 
 .btn-yellow-outline:hover,
 .btn-yellow-outline:active {
+    background-color: var(--ts-yellow);
+    color: var(--ts-dark);
+}
+
+.dark-theme .btn-main:hover,
+.dark-theme .btn-main:active {
+    background-color: var(--ts-yellow-dark);
+    color: var(--ts-dark);
+}
+
+.dark-theme .btn-sub:hover,
+.dark-theme .btn-sub:active {
     background-color: var(--ts-yellow);
     color: var(--ts-dark);
 }
@@ -221,6 +264,8 @@ div#sidebar {
     color: var(--ts-light);
     vertical-align: top;
     border: none;
+    border-collapse: separate;
+    border-spacing: 0px 3px;
 }
 
 .card-body:has(table) {
@@ -234,13 +279,13 @@ table.ts-table > thead > tr > th {
 }
 
 table.ts-table > thead > tr > th:first-child,
-table.ts-table > thead > tr > td:first-child {
+table.ts-table > tbody > tr > td:first-child {
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
 }
 
 table.ts-table > thead > tr > th:last-child,
-table.ts-table > thead > tr > td:last-child {
+table.ts-table > tbody > tr > td:last-child {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
 }
@@ -249,12 +294,28 @@ table.ts-table tr:first-child {
     border-left: 3px solid none;
 }
 
+/* .ts-table tbody tr td:first-child {
+    border-left: 1px solid var(--ts-pumpkin);
+} */
+
+.ts-table tbody tr:hover {
+    --ts-table-row-accent: var(--ts-gray);
+}
+
+.ts-table tbody tr td {
+    background-color: var(--ts-table-row-accent);
+}
+
+.ts-table tbody tr.overdue td {
+    background-color: rgba(255, 121, 63, 0.05);
+}
+
 
 /* 
 ==================================
   CARDS
 ================================== */
-.ts-card-dark {
+.ts-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -273,25 +334,19 @@ table.ts-table tr:first-child {
 ==================================
   INPUTS
 ================================== */
-.ts-card-dark .form-control,
-.ts-card-dark .form-control:focus,
-.ts-card-dark .form-select,
-.ts-card-dark .form-select:focus {
-    background-color: rgba(225, 225, 225, 0.05);
+.dark-theme .form-control,
+.dark-theme .form-control:focus,
+.dark-theme .form-select,
+.dark-theme .form-select:focus {
+    /* background-color: rgba(225, 225, 225, 0.05); */
+    background-color: var(--ts-darker-shade);
     color: white;
     border: none;
 }
 
-.ts-card-dark .form-select option {
+.dark-theme .form-select option {
     background: var(--ts-gray);
     color: white;
-}
-
-.dark-theme input,
-.dark-theme input:focus {
-    background-color: rgba(225, 225, 225, 0.1);
-    color: white;
-    border: none;
 }
 
 
@@ -299,7 +354,7 @@ table.ts-table tr:first-child {
 ==================================
   PAGINATION
 ================================== */
-.ts-card-dark ul.pagination .page-item:not(.active) > * {
+.ts-card ul.pagination .page-item:not(.active) > * {
     background-color: rgba(0, 0, 0, 0.05);
     border-color: var(--ts-yellow);
 }
@@ -336,7 +391,7 @@ table.ts-table tr:first-child {
 ==================================
   DOT
 ================================== */
-.dot-dark {
+.dark-theme .dot {
     padding: 0.1rem 0.1rem;
     border: 1px solid transparent;
     border-radius: 0.4rem;
@@ -347,39 +402,44 @@ table.ts-table tr:first-child {
     text-align: center;
 }
 
-.dot-secondary {
+.dark-theme .dot.dot-secondary {
     border-color: var(--ts-secondary-dark);
     color: var(--ts-secondary);
 }
 
-.dot-success {
+.dark-theme .dot.dot-success {
     border-color: var(--ts-success-dark);
     color: var(--ts-success);
 }
 
-.dot-warning {
+.dark-theme .dot.dot-warning {
     border-color: var(--ts-butter-dark);
     color: var(--ts-butter);
 }
 
-.dot-danger {
+.dark-theme .dot.dot-danger {
     border-color: var(--ts-danger-dark);
     color: var(--ts-danger);
 }
 
-.dot-primary {
+.dark-theme .dot.dot-primary {
     border-color: var(--ts-primary-dark);
     color: var(--ts-primary);
 }
 
-.dot-purple {
+.dark-theme .dot.dot-purple {
     border-color: var(--ts-purple-dark);
     color: var(--ts-purple);
 }
 
-.dot-pumpkin {
+.dark-theme .dot.dot-pumpkin {
     border-color: var(--ts-pumpkin-dark);
     color: var(--ts-pumpkin);
+}
+
+.dark-theme .dot.dot-dark {
+    border-color: var(--ts-forest);
+    color: var(--ts-forest);
 }
 
 
@@ -405,13 +465,13 @@ li.ts-list-item {
     text-decoration: none;
 }
 
-.ts-card-dark .ts-list .ts-list-item,
+.ts-card .ts-list .ts-list-item,
 .dark-them .ts-list .ts-list-item {
     background-color: var(--ts-dark-shade);
     color: var(--ts-light);
 }
 
-.ts-card-dark .ts-list .ts-list-item:hover,
+.ts-card .ts-list .ts-list-item:hover,
 .dark-them .ts-list .ts-list-item:hover {
     background-color: var(--ts-light-shade);
     color: var(--ts-light);

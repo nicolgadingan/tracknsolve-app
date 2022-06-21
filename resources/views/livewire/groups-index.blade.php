@@ -3,7 +3,7 @@
         $uinf   =   auth()->user();
     @endphp
 
-    <div class="row g-3 mb-4 dark-theme">
+    <div class="row g-3 mb-4">
         <div class="col-md">
             <div class="search" style="max-width: 300px;">
                 <input type="text" class="form-control search-input borderless" placeholder="Search..."
@@ -12,14 +12,14 @@
         </div>
         <div class="col-md right">
             @if (auth()->user()->role == "admin")
-                <button class="btn btn-yellow" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
+                <button class="btn btn-yellow shadow" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
             @endif
         </div>
     </div>
     @include('plugins.messages')
     <div class="row">
         <div class="col">
-            <div class="ts-card-dark">
+            <div class="ts-card">
                 <div class="table-header fg-yellow">
                     <h5>
                         <span>All Groups</span>
@@ -42,7 +42,7 @@
                             @foreach ($data as $group)
                                 <tr class="align-middle">
                                     <td>
-                                        <a href="/groups/{{ $group->id }}" class="link-yellow">
+                                        <a href="/groups/{{ $group->id }}" class="link-main">
                                             {{ $group->name }}
                                         </a>
                                     </td>
@@ -70,7 +70,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="/users/{{ $group->manager->id }}" class="link-light">
+                                        <a href="/users/{{ $group->manager->id }}" class="link-forest">
                                             {{ $group->manager->first_name . ' ' . $group->manager->last_name }}
                                         </a>
                                     </td>
@@ -81,24 +81,24 @@
                                         {{ \Carbon\Carbon::create($group->created_at)->diffForHumans() }}
                                     </td>
                                     @if ($uinf->role == 'admin')
-                                        <td class="right">
+                                        <td class="right pt-0 pb-0">
                                             @if ($status == 'Active')
                                                 <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate mr-1" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Group is Active.<br>Click to deactivate."
                                                     data-bs-html="true">
-                                                    <i class="bi bi-toggle-on fs-lg"></i>
+                                                    <i class="bi bi-toggle-on fs-xl"></i>
                                                 </a>
                                             @else
                                                 <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate mr-1" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Group is Inactive.<br> Click to activate."
                                                     data-bs-html="true">
-                                                    <i class="bi bi-toggle-off fs-lg"></i>
+                                                    <i class="bi bi-toggle-off fs-xl"></i>
                                                 </a>
                                             @endif
                                             @if ($configs['canDelete'] == 'Y')
                                                 <a href="#delete-{{ $group->slug }}" class="link-danger gr-delete" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Delete group" aria-label="{{ $group->name }}">
-                                                    <i class="bi bi-trash-fill fs-lg"></i>
+                                                    <i class="bi bi-trash-fill fs-xl"></i>
                                                 </a>
                                             @endif
                                         </td>

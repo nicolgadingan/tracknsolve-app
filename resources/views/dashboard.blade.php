@@ -9,7 +9,7 @@
         <div class="row g-4">
             <div class="col-sm-3 order-sm-2">
                 <div style="">
-                    <div class="ts-card-dark" id="db-ticket-chart">
+                    <div class="ts-card" id="db-ticket-chart">
                         <div class="table-header fg-yellow">
                             <h5>Tickets Breakdown</h5>
                         </div>
@@ -62,7 +62,7 @@
             </div>
             <div class="col-md order-md-1">
                 <div class="mb-3 flex-grow-1">
-                    <div class="ts-card-dark mb-4">
+                    <div class="ts-card mb-4">
                         <div class="table-header fg-yellow">
                             <h5>Unassigned Tickets</h5>
                         </div>
@@ -88,7 +88,7 @@
                                         <tr class="{{ $overdue }} ">
                                             <td>
                                                 <span>
-                                                    <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-yellow"
+                                                    <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-main"
                                                         @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
                                                         data-bs-placement="bottom">
                                                         {{ $unassigned->tkey }}
@@ -102,7 +102,7 @@
                                                 {{ $unassigned->title }}
                                             </td>
                                             <td class="no-mobile">
-                                                <a href="/users/{{ $unassigned->user->id }}" class="link-light">
+                                                <a href="/users/{{ $unassigned->user->id }}" class="link-forest">
                                                     {{ $unassigned->user->first_name . ' ' . $unassigned->user->last_name }}
                                                 </a>
                                             </td>
@@ -131,7 +131,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="ts-card-dark">
+                    <div class="ts-card">
                         <div class="table-header fg-yellow">
                             <h5>My Tickets</h5>
                         </div>
@@ -180,7 +180,7 @@
                                         <tr class="{{ $overdue }}">
                                             <td>
                                                 <span>
-                                                    <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-yellow"
+                                                    <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-main"
                                                         @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
                                                         data-bs-placement="bottom">
                                                         {{ $mytk->tkey }}
@@ -191,7 +191,7 @@
                                                 {{ Str::ucfirst($mytk->priority) }}
                                             </td>
                                             <td class="no-mobile">
-                                                <span class="dot-dark dot-{{ $theme }}">
+                                                <span class="dot dot-{{ $theme }}">
                                                     {{ $tkstat }}
                                                 </span>
                                             </td>
@@ -203,7 +203,7 @@
                                                 @endif
                                             </td>
                                             <td class="no-mobile">
-                                                <a href="/users/{{ $mytk->user->id }}" class="link-light">
+                                                <a href="/users/{{ $mytk->user->id }}" class="link-forest">
                                                     {{ $mytk->user->first_name . ' ' . $mytk->user->last_name }}
                                                 </a>
                                             </td>
