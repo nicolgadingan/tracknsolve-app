@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container" id="tk-create-box">
-    <div class="card card-body border-round border-forest-light pt-4">
+    <div class="ts-card">
         <div class="mb-2">
             @livewire('tickets-create', ['ticket_id' => $tkey])
         </div>

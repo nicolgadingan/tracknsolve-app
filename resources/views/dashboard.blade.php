@@ -172,18 +172,19 @@
                                                     break;
                                             }
                                             
-                                            // if ($createdAt < $dueDate) {
-                                            //     $theme      =   'pumpkin';
-                                            //     $overdue    =   'overdue';
-                                            // }
+                                            if ($createdAt < $dueDate) {
+                                                $overdue    =   'overdue';
+                                            }
                                         @endphp
                                         <tr class="{{ $overdue }}">
                                             <td>
                                                 <span>
-                                                    <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-main"
-                                                        @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
-                                                        data-bs-placement="bottom">
+                                                    <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-main">
                                                         {{ $mytk->tkey }}
+                                                        @if ($overdue == 'overdue')
+                                                            <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
+                                                                data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
+                                                        @endif
                                                     </a>
                                                 </span>
                                             </td>

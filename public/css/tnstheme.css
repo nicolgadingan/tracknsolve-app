@@ -35,6 +35,8 @@
     --ts-dark-shade:        rgba(0, 0, 0, 0.05);
     --ts-darker-shade:      rgba(0, 0, 0, 0.2);
     --ts-light-shade:       rgba(255, 255, 255, 0.05);
+
+    --ts-due-icon-color:    transparent;
 }
 
 html,
@@ -198,7 +200,11 @@ div#sidebar {
 }
 
 .bg-dark-shade {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--ts-dark-shade);
+}
+
+.bg-darker-shade {
+    background-color: var(--ts-darker-shade);
 }
 
 .bg-pumpkin {
@@ -363,6 +369,15 @@ table.ts-table tr:first-child {
     border: 1px solid var(--ts-dark);
 }
 
+.dark-theme .form-control[type='file']::before {
+    background: var(--ts-dark-shade);
+}
+
+.dark-theme .form-select {
+    background-image: url(../imgs/chevron-down-light.svg);
+    
+}
+
 
 /* 
 ==================================
@@ -515,3 +530,9 @@ li.ts-list-item {
     white-space: nowrap;
     transition: width 0.6s ease;
 }
+
+
+/* 
+==================================
+  ICONS
+================================== */

@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('page')</title>
 
-    <link rel="shortcut icon" href="{{ asset('imgs/tns-icon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('imgs/tns-logo.svg') }}" type="image/x-icon">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">

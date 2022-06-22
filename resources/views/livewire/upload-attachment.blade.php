@@ -3,7 +3,7 @@
         <h6 class="fg-forest mb-0">
             ATTACHMENTS
         </h6>
-        <span class="badge bg-cheese fg-marine fs-sm ml-2">
+        <span class="badge bg-darker-shade fg-forest fs-sm ml-2">
             {{ count($files) }}
         </span>
     </div>
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button class="btn btn-primary" type="submit" id="attachment-button" {{ ($attachment == '') ? 'disabled' : '' }}>
+                                <button class="btn btn-sub" type="submit" id="attachment-button" {{ ($attachment == '') ? 'disabled' : '' }}>
                                     Upload
                                 </button>
                             </div>
