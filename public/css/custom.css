@@ -637,34 +637,7 @@ li.list-group-item {
 
 
 /* ICON POSITIONING */
-.has-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
 
-.has-icon-start > .has-icon-form {
-    padding-left: 2.25rem;
-}
-
-.has-icon-end > .has-icon-form {
-    padding-right: 2.25rem;
-}
-
-.has-icon > .has-icon-this {
-    position: absolute;
-}
-
-.has-icon-start > .has-icon-this {
-    padding-left: 0.75rem;
-    color: var(--marine);
-}
-
-.has-icon-end > .has-icon-this {
-    margin-right: 0.75rem;
-    right: 0;
-    color: var(--marine);
-}
 
 .btn-lg {
     max-height: 45px;

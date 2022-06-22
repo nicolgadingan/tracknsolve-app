@@ -364,7 +364,9 @@ table.ts-table tr:first-child {
 }
 
 .dark-theme .form-control:disabled,
-.dark-theme .form-select:disabled {
+.dark-theme .form-select:disabled,
+.dark-theme .form-control[readonly],
+.dark-theme .form-select[readonly] {
     background-color: transparent;
     border: 1px solid var(--ts-dark);
 }
@@ -536,3 +538,35 @@ li.ts-list-item {
 ==================================
   ICONS
 ================================== */
+.has-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.has-icon-start > .has-icon-form {
+    padding-left: 2.25rem;
+}
+
+.has-icon-end > .has-icon-form {
+    padding-right: 2.25rem;
+}
+
+.has-icon > .has-icon-this {
+    position: absolute;
+}
+
+.has-icon-start > .has-icon-this {
+    padding-left: 0.75rem;
+    color: var(--ts-dark);
+}
+
+.has-icon-end > .has-icon-this {
+    margin-right: 0.75rem;
+    right: 0;
+    color: var(--ts-dark);
+}
+
+.dark-theme .has-icon .has-icon-this {
+    color: var(--ts-yellow);
+}

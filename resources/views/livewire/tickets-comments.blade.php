@@ -3,7 +3,7 @@
         <h6 class="fg-forest mb-0">
             COMMENTS
         </h6>
-        <span class="badge bg-cheese fg-marine fs-sm ml-2">
+        <span class="badge bg-darker-shade fg-forest fs-sm ml-2">
             {{ count($comments) }}
         </span>
     </div>
@@ -21,16 +21,16 @@
                         @enderror
                     </div>
                     <div class="col-sm-auto align-self-end">
-                        <button class="btn btn-primary" type="submit">Post</button>
+                        <button class="btn btn-main" type="submit">Post</button>
                     </div>
                 </div>
             </form>
         </div>
     @endif
-    <ul class="list-group fs-sm">
+    <ul class="ts-list">
         @if(count($comments) > 0)
             @foreach ($comments as $comment)
-                <li class="list-group-item list-group-item-action">
+                <li class="ts-list-item">
                     <div class="d-flex justify-content-between mb-1">
                         <a href="/users/{{ $comment->user->id }}" class="link-primary">
                             <strong>
@@ -43,7 +43,7 @@
                 </li>
             @endforeach
         @else
-            <li class="list-group-item">
+            <li class="ts-list-item">
                 <i>No comments found.</i>
             </li>
         @endif

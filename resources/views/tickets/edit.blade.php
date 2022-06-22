@@ -9,7 +9,7 @@
     $access =   auth()->user();
 @endphp
 <div class="container" id="tk-create-box">
-    <div class="card card-body  borderless shadow-sm pt-4">
+    <div class="ts-card">
         <div class="mb-2">
             @if ($ticket->group_id == $access->group_id &&
                                 $ticket->assignee == '')
@@ -50,7 +50,7 @@
                         @if ($ticket->status == 'in-progress' &&
                                 $ticket->assignee == $access->id)
                             <div class="mr-3">
-                                <button type="button" class="btn btn-lg btn-outline-secondary shadow" id="tk-resolve-ticket">
+                                <button type="button" class="btn btn-lg btn-sub shadow" id="tk-resolve-ticket">
                                     Resolve
                                 </button>
                             </div>
@@ -58,13 +58,13 @@
                         @if ($ticket->group_id == $access->group_id &&
                                 $ticket->assignee == '')
                             <div class="mr-3">
-                                <button type="button" class="btn btn-lg btn-outline-secondary" id="tk-assigntome">
+                                <button type="button" class="btn btn-lg btn-sub" id="tk-assigntome">
                                     Get
                                 </button>
                             </div>
                         @endif
                         @if ($ticket->status != 'closed')
-                            <button type="submit" class="btn btn-marine btn-lg shadow" id="tk-update-submit">
+                            <button type="submit" class="btn btn-main btn-lg shadow" id="tk-update-submit">
                                 Update
                             </button>
                         @endif
