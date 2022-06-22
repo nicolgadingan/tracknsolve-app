@@ -245,6 +245,10 @@ div#sidebar {
     border-color: var(--ts-danger-dark);
 }
 
+.invalid-feedback {
+    padding-left: 0.8rem;
+}
+
 
 /* 
 ==================================
@@ -347,6 +351,12 @@ table.ts-table tr:first-child {
 .dark-theme .form-select option {
     background: var(--ts-gray);
     color: white;
+}
+
+.dark-theme .form-control:disabled,
+.dark-theme .form-select:disabled {
+    background-color: transparent;
+    border: 1px solid var(--ts-dark);
 }
 
 

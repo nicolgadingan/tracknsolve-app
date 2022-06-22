@@ -6,12 +6,12 @@
 
 @section('content')
 <div class="container">
-    <div class="card card-body border-round border-forest-light pt-4">
+    <div class="ts-card">
         <form method="POST" action="/users">
             @csrf
             <div class="mb-4 d-flex justify-content-between">
                 @include('plugins.previous', ['path'    =>  '/users'])
-                <button type="submit" class="btn btn-marine btn-lg shadow">
+                <button type="submit" class="btn btn-main btn-lg shadow">
                     Create
                 </button>
             </div>
@@ -35,7 +35,7 @@
                 <div class="col-md-6">
                     <div class="col-md">
                         <div class="form-floating">
-                            <select name="role" id="us-role" class="form-control">
+                            <select name="role" id="us-role" class="form-select">
                                 <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                                 <option value="manager" {{ old('role') == 'manager' ? 'selected' : '' }}>Manager</option>
                                 <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
@@ -52,7 +52,7 @@
                         <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="us-username" maxlength="20" placeholder="Username" value="{{ old('username') }}">
                         @error('username')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                {{ $message }}
                             </span>
                         @enderror
                         <label for="us-username">Username</label>
@@ -65,7 +65,7 @@
                         <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" id="us-first-name" maxlength="50" placeholder="First name" value="{{ old('first_name') }}">
                         @error('first_name')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                {{ $message }}
                             </span>
                         @enderror
                         <label for="us-first-name">First Name</label>
@@ -76,7 +76,7 @@
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="us-last-name" maxlength="50" placeholder="Last name" value="{{ old('last_name') }}">
                         @error('last_name')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                {{ $message }}
                             </span>
                         @enderror
                         <label for="us-first-name">Last Name</label>
@@ -89,7 +89,7 @@
                         <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="us-email" maxlength="50" placeholder="Email" value="{{ old('email') }}">
                         @error('email')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                {{ $message }}
                             </span>
                         @enderror
                         <label for="us-email">Email</label>

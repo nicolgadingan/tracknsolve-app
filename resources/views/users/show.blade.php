@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-    <div class="card card-body border-round border-forest-light pt-4">
+    <div class="ts-card">
         @livewire('users-edit', ['user' =>  $user])
     </div>
 </div>

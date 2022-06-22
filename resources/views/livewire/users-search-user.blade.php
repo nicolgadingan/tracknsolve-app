@@ -28,7 +28,7 @@
         </div>
         <div id="us-group-actions">
             @if ($uinf->role == 'admin')
-                <a href="/users/create" class="btn btn-marine shadow">
+                <a href="/users/create" class="btn btn-main shadow">
                     New User
                 </a>
             @endif
@@ -37,18 +37,21 @@
     @include('plugins.messages')
     <div class="row">
         <div class="col">
-            <div class="card card-body border-round p-0 shadow-sm">
-                <table class="table table-hover table-borderless">
-                    <thead class="fg-white bg-marine-dark">
-                        <td class="pt-3">Name</td>
-                        <td>Role</td>
-                        <td>Status</td>
-                        <td>Email</td>
-                        <td>Username</td>
-                        <td>Group</td>
-                        <td class="right">Joined</td>
+            <div class="ts-card">
+                <div class="table-header fg-yellow">
+                    <h5>All Users</h5>
+                </div>
+                <table class="table table-borderless ts-table">
+                    <thead>
+                        <th class="pt-3">Name</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Group</th>
+                        <th class="right">Joined</th>
                         @if ($uinf->role == 'super')
-                            <td></td>
+                            <th></th>
                         @endif
                     </thead>
                     <tbody>
@@ -56,10 +59,8 @@
                             @foreach ($users as $user)
                                 <tr class="align-middle">
                                     <td>
-                                        <a href="/users/{{ $user->id }}" class="link-marine us-view-trigger">
-                                            <strong>
-                                                {{ $user->first_name . ' ' . $user->last_name }}
-                                            </strong>
+                                        <a href="/users/{{ $user->id }}" class="link-main us-view-trigger">
+                                            {{ $user->first_name . ' ' . $user->last_name }}
                                         </a>
                                     </td>
                                     <td>
@@ -82,7 +83,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="mailto:{{ str_replace('.', '@@', $user->email) }}" class="link-marine"
+                                        <a href="mailto:{{ str_replace('.', '@@', $user->email) }}" class="link-forest"
                                             onclick="this.href=this.href.replace('@@', '.')">
                                             {{ $user->email }}
                                         </a>
