@@ -87,16 +87,17 @@
                                     if ($forDueChk == true &&
                                         $ticket->created < $dateDue) {
 
-                                        $theme      =   'pumpkin';
                                         $recStatus  =   'overdue';
                                     }
                                 @endphp
                                 <tr class="{{ $recStatus }}">
                                     <td>
-                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-main"
-                                            @if ($recStatus == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
-                                            data-bs-placement="bottom">
-                                            <strong>{{ $ticket->tkey }}</strong>
+                                        <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-main">
+                                            {{ $ticket->tkey }}
+                                            @if ($recStatus == 'overdue')
+                                                <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
+                                                    data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
+                                            @endif
                                         </a>
                                     </td>
                                     <td>
