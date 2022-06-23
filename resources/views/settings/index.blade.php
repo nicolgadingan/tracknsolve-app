@@ -60,15 +60,16 @@
                                         <i class="bi bi-hdd-stack-fill"></i>
                                     </span>
                                     <b class="fs-xl">
-                                        {{ $stats['diskUsed'] }} / {{ $configs['LIMIT#DISK'] }} Mb
+                                        {{ $stats['diskInfo']['size']  . ' ' . $stats['diskInfo']['text'] }} /
+                                        {{ $configs['LIMIT#DISK'] / 1024 . ' Gb' }}
                                     </b>
                                 </div>
                                 <div class="ts-progress">
                                     @php
-                                        $usedDisk   =   ( $stats['diskUsed'] / $configs['LIMIT#DISK'] ) * 100;
+                                        $usedDisk   =   ( $stats['diskInfo']['size'] / $configs['LIMIT#DISK'] ) * 100;
                                     @endphp
                                     <div class="ts-progress-bar bg-yellow" role="progress" aria-valuemin="0" style="width: {{ $usedDisk }}%;"
-                                        aria-valuemax="{{ $configs['LIMIT#DISK'] }}" aria-valuenow="{{ $stats['diskUsed'] }}"></div>
+                                        aria-valuemax="{{ $configs['LIMIT#DISK'] }}" aria-valuenow="{{ $stats['diskInfo']['size'] }}"></div>
                                 </div>
                                 <strong class="pt-1">STORAGE</strong>
                             </div>
@@ -117,6 +118,22 @@
                             <span>Download attachment</span>
                             <span>
                                 <i class="bi bi-{{ $icon }}-circle-fill fg-{{ $color }} fs-re"></i>
+                            </span>
+                        </li>
+                        <li class="{{ $liStlyle }}" data-bs-toggle="tooltip" data-bs-placement="bottom" html="true"
+                            title="Sequence is updated. Current sequence is {{ $stats['ticketSeq']['nowSeq'] }}." >
+                            <span>Ticket Sequence</span>
+                            <span>
+                                @php
+                                    $tkSeqColor =   'danger';
+                                    $tkSeqIcon  =   'exclamation';
+
+                                    if ($stats['ticketSeq']['action'] == 'none') {
+                                        $tkSeqColor =   'success';
+                                        $tkSeqIcon  =   'check';
+                                    }
+                                @endphp
+                                <i class="bi bi-{{ $tkSeqIcon }}-circle-fill fg-{{ $tkSeqColor }} fs-re"></i>
                             </span>
                         </li>
                     </ul>

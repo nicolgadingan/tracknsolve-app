@@ -14,6 +14,7 @@ use App\Models\Group;
 class SettingsController extends Controller
 {
     protected $utils;
+    protected $uid;
 
     /**
      * Create a new controller instance.
@@ -24,6 +25,7 @@ class SettingsController extends Controller
     {
         $this->middleware('auth');
         $this->utils    =   new Utils;
+        $this->uid      =   ( auth()->check() == 1 ) ? auth()->user()->id : 99999;
     }
 
     /**
@@ -51,21 +53,35 @@ class SettingsController extends Controller
         }
 
         // Convert it to Mb
-        $pubDirSize = number_format($pubDirSize / 1048576, 2);
+        $pubDirSize =   number_format($pubDirSize / 1048576, 2);
+        $stgInfo    =   [];
+
+        // Covert it to Gb if size already in half Gb
+        if (($pubDirSize / 512) >= 1) {
+            $stgInfo['size']    =   number_format($pubDirSize / 1024, 2);
+            $stgInfo['text']    =   'Gb';
+        } else {
+            $stgInfo['size']    =   $pubDirSize;
+            $stgInfo['text']    =   'Mb';
+        }
 
         // Get the group and user used
         $users      =   User::all();
         $groups     =   Group::all();
+
+        // Get ticket sequence
+        $tkSeq      =   $this->chkTicketSeq();
 
         $pubAccess  =   $this->utils->checkPublicId();
 
         return view('settings.index')->with([
             'configs'   =>  $prsConfs,
             'stats'     =>  [
-                'diskUsed'  =>  $pubDirSize,
+                'diskInfo'  =>  $stgInfo,
                 'userUsed'  =>  count($users),
                 'groupUsed' =>  count($groups),
-                'pubAccess' =>  $pubAccess
+                'pubAccess' =>  $pubAccess,
+                'ticketSeq' =>  $tkSeq
             ]
         ]);
     }
@@ -77,8 +93,10 @@ class SettingsController extends Controller
      */
     public function chkTicketSeq()
     {
-        $this->utils->loggr('SETTINGS.CHKTKSEQ', 1);
-        $this->utils->loggr('Action > Check ticket sequence.', 0);
+        info('CTRL.ST.GTKSQ', [
+            'user'      =>  $this->uid,
+            'status'    =>  'init'
+        ]);
 
         $status         =   [];
         $status['code'] =   0;
@@ -92,17 +110,21 @@ class SettingsController extends Controller
                                 )
                                 ->first();
             
-            $this->utils->loggr(json_encode([
-                'result'    =>  'success',
+            info('CTRL.ST.GTKSQ', [
+                'user'      =>  $this->uid,
+                'status'    =>  'fetched',
                 'data'      =>  $chkData
-            ]), 0);
+            ]);
 
             $maxSeq     =   substr($chkData->max_seq, $chkData->org_len);
 
             $status['maxSeq']   =   $maxSeq;
             $status['nowSeq']   =   $chkData->last_seq;
 
-            $this->utils->loggr('Action > Compare sequence.', 0);
+            info('CTRL.ST.GTKSQ', [
+                'user'      =>  $this->uid,
+                'action'    =>  'verifying'
+            ]);
 
             if ($maxSeq >= $chkData->last_seq) {
                 $status['action']   =   'recon';
@@ -112,19 +134,28 @@ class SettingsController extends Controller
                 
             }
 
-            $this->utils->loggr(json_encode([
-                'result'    =>  'success',
-                'require'   =>  $status['action']
-            ]), 0);
+            info('CTRL.ST.GTKSQ', [
+                'user'      =>  $this->uid,
+                'status'    =>  'success'
+            ]);
 
             $status['code'] =   1;
 
         } catch (\Throwable $th) {
             $status['code'] =   255;
-            $this->utils->loggr('Result > Error.', 0);
+
+            info('CTRL.ST.GTKSQ', [
+                'user'      =>  $this->uid,
+                'status'    =>  'error'
+            ]);
             report($th);
 
         }
+
+        info('CTRL.ST.GTKSQ', [
+            'user'      =>  $this->uid,
+            'status'    =>  'end'
+        ]);
 
         return $status;
     }
