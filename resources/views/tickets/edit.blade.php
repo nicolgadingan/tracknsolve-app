@@ -44,7 +44,7 @@
             <form method="POST" action="/tickets/{{ $ticket->tkey }}">
                 @csrf
                 @method('PUT')
-                <div class="mb-4 d-flex justify-content-between">
+                <div class="mb-4 d-flex justify-content-between" style="min-height: 45px;">
                     @includeIf('plugins.previous', ['path' => '/tickets'])
                     <div class="d-flex">
                         @if ($ticket->status == 'in-progress' &&
