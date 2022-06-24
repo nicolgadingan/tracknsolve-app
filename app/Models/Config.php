@@ -492,6 +492,11 @@ class Config extends Model
         Config::insert($email);
         Config::insert($notif);
 
+        Config::where('config_name', 'SUBS_TYPE')
+                ->update([
+                    'value' =>  'basic'
+                ]);
+
         info('MODL.CF.SETBS', [
             'status'    =>  'complete',
             'config'    =>  'applied'
@@ -764,13 +769,8 @@ class Config extends Model
             'config'    =>  'collected'
         ]);
 
-        // Clear existing LIMIT# configuration
-        Config::where('config_name', 'like', 'LIMIT#%')
-                ->delete();
-
-        // Clear existing CAN# configuration
-        Config::where('config_name', 'like', 'CAN#%')
-                ->delete();
+        // Clear existing configs
+        $this->clearSubscription();
 
         info('MODL.CF.SETST', [
             'status'    =>  'in-progress',
@@ -788,7 +788,308 @@ class Config extends Model
         Config::insert($email);
         Config::insert($notif);
 
+        Config::where('config_name', 'SUBS_TYPE')
+                ->update([
+                    'value' =>  'standard'
+                ]);
+
         info('MODL.CF.SETST', [
+            'status'    =>  'complete',
+            'config'    =>  'applied'
+        ]);
+
+    }
+
+    /**
+     * Set Premium Subscription
+     * 
+     */
+    public function setPremium()
+    {
+        info('MODL.CF.SETPR', [
+            'status'    =>  'init'
+        ]);
+
+        $user   =   [
+            [
+                'config_name'   =>  'CAN#SEE_USER',
+                'value'         =>  'Y',
+                'description'   =>  'See user.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#ADD_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Add user.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#UPD_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Modify user.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#DEL_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Delete user.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#RAS_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Reassign user.',
+                'created_by'    =>  99999
+            ]
+        ];
+
+        $group  =   [
+            [
+                'config_name'   =>  'CAN#SEE_GROUP',
+                'value'         =>  'Y',
+                'description'   =>  'See group.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#ADD_GROUP',
+                'value'         =>  'Y',
+                'description'   =>  'Add group.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#UPD_GROUP',
+                'value'         =>  'Y',
+                'description'   =>  'Modify group.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#DEL_GROUP',
+                'value'         =>  'Y',
+                'description'   =>  'Delete group.',
+                'created_by'    =>  99999
+            ]
+        ];
+
+        $ticket =   [
+            [
+                'config_name'   =>  'CAN#SEE_TICKET',
+                'value'         =>  'Y',
+                'description'   =>  'See ticket.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#ADD_TICKET',
+                'value'         =>  'Y',
+                'description'   =>  'Add ticket.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#UPD_TICKET',
+                'value'         =>  'Y',
+                'description'   =>  'Modify ticket.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#DEL_TICKET',
+                'value'         =>  'N',
+                'description'   =>  'Delete ticket.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#ADD_COMMENT',
+                'value'         =>  'Y',
+                'description'   =>  'Add comments.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#ADD_ATTACHMENT',
+                'value'         =>  'Y',
+                'description'   =>  'Add attachments.',
+                'created_by'    =>  99999
+            ]
+        ];
+
+        $admin  =   [
+            [
+                'config_name'   =>  'CAN#SEE_USAGE',
+                'value'         =>  'Y',
+                'description'   =>  'See usage.',
+                'created_by'    =>  99999
+            ]
+        ];
+
+        $extra  =   [
+            [
+                'config_name'   =>  'CAN#EXP_TICKET',
+                'value'         =>  'Y',
+                'description'   =>  'Export tickets.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#SEE_REPORT',
+                'value'         =>  'Y',
+                'description'   =>  'See reports.',
+                'created_by'    =>  99999
+            ]
+        ];
+        
+        $mobile =   [
+            [
+                'config_name'   =>  'CAN#MOB_TICKET',
+                'value'         =>  'Y',
+                'description'   =>  'Tickets availability in mobile.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#MOB_GROUP',
+                'value'         =>  'Y',
+                'description'   =>  'Groups availability in mobile.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#MOB_REPORT',
+                'value'         =>  'Y',
+                'description'   =>  'Reports availability in mobile.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#MOB_ADMIN',
+                'value'         =>  'Y',
+                'description'   =>  'Admin availability in mobile.',
+                'created_by'    =>  99999
+            ]
+        ];
+
+        $email  =   [
+            [
+                'config_name'   =>  'CAN#EML_NEW_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Send email to registered user.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#EML_VFY_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Send email to verified user.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#EML_TK_ASSIGN',
+                'value'         =>  'Y',
+                'description'   =>  'Send email when ticket assigned.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#EML_TK_RESOLVED',
+                'value'         =>  'Y',
+                'description'   =>  'Send email when ticket resolved.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#EML_TK_COMMENT',
+                'value'         =>  'Y',
+                'description'   =>  'Send email when ticket has new comment.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#EML_TK_CLOSE',
+                'value'         =>  'Y',
+                'description'   =>  'Send email when ticket is closed.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#EML_SUBS_ALERT',
+                'value'         =>  'Y',
+                'description'   =>  'Send email subscription alerts.',
+                'created_by'    =>  99999
+            ]
+            
+        ];
+
+        $notif  =   [
+            [
+                'config_name'   =>  'CAN#GUI_TK_ASSIGN',
+                'value'         =>  'Y',
+                'description'   =>  'Send notif when ticket assigned.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#GUI_TK_RESOLVED',
+                'value'         =>  'Y',
+                'description'   =>  'Send notif when ticket resolved.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#GUI_TK_CLOSE',
+                'value'         =>  'Y',
+                'description'   =>  'Send notif when ticket is closed.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#GUI_TK_COMMENT',
+                'value'         =>  'Y',
+                'description'   =>  'Send notif when ticket has new comment.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'CAN#GUI_RAS_USER',
+                'value'         =>  'Y',
+                'description'   =>  'Send notif when user is reassigned.',
+                'created_by'    =>  99999
+            ]
+        ];
+
+        $limits =   [
+            [
+                'config_name'   =>  'LIMIT#USER',
+                'value'         =>  2000,
+                'description'   =>  'Limit of users to be added.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'LIMIT#GROUP',
+                'value'         =>  30,
+                'description'   =>  'Limit of groups to be added.',
+                'created_by'    =>  99999
+            ],
+            [
+                'config_name'   =>  'LIMIT#DISK',
+                'value'         =>  51200,
+                'description'   =>  'Limit of storage to be used (Mb).',
+                'created_by'    =>  99999
+            ],
+        ];
+
+        info('MODL.CF.SETPR', [
+            'status'    =>  'in-progress',
+            'config'    =>  'collected'
+        ]);
+
+        // Clear existing configs
+        $this->clearSubscription();
+
+        info('MODL.CF.SETPR', [
+            'status'    =>  'in-progress',
+            'config'    =>  'truncated'
+        ]);
+
+        // Add new configuration
+        Config::insert($limits);
+        Config::insert($user);
+        Config::insert($group);
+        Config::insert($ticket);
+        Config::insert($admin);
+        Config::insert($extra);
+        Config::insert($mobile);
+        Config::insert($email);
+        Config::insert($notif);
+
+        Config::where('config_name', 'SUBS_TYPE')
+                ->update([
+                    'value' =>  'premium'
+                ]);
+
+        info('MODL.CF.SETPR', [
             'status'    =>  'complete',
             'config'    =>  'applied'
         ]);

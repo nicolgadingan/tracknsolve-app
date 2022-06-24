@@ -321,9 +321,12 @@ table.ts-table tr:first-child {
 }
 
 .ts-table tbody tr.overdue td {
-    background-color: rgba(255, 121, 63, 0.05);
+    --ts-table-row-accent: rgba(255, 121, 63, 0.05);
 }
 
+.ts-table tbody tr.overdue:hover td {
+    --ts-table-row-accent: rgba(255, 121, 63, 0.075);
+}
 
 /* 
 ==================================
