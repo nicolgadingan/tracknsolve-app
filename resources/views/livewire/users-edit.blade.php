@@ -1,13 +1,14 @@
 @php
-    $role   =   auth()->user()->role;
+    $urole  =   auth()->user()->role;
+    $uid    =   auth()->user()->id;
 @endphp
 <form wire:submit.prevent="updateUser">
     @csrf
     <div class="mb-4 d-flex justify-content-between">
         @include('plugins.previous', ['path'    =>  '/users'])
-        <div>
-            @if ($role == "admin")
-                <button type="submit" class="btn btn-marine btn-lg shadow" {{ ( count($errors) > 0 || $isFresh == true ) ? 'disabled' : '' }}>
+        <div style="min-height: 45px;">
+            @if ($urole == "admin" && $editable == "Y")
+                <button type="submit" class="btn btn-main btn-lg shadow" {{ ( count($errors) > 0 || $isFresh == true ) ? 'disabled' : '' }}>
                     Update
                 </button>
             @endif
@@ -19,7 +20,7 @@
         <div class="col-md-6">
             <div class="form-floating">
                 <select name="group" id="us-group" class="form-select" wire:model="group_id"
-                    {{ ( $role != "admin" ) ? 'disabled' : '' }}>
+                    {{ ( $editable == "N" ) ? 'disabled' : '' }}>
                     @if (count($groups) > 0)
                         @foreach ($groups as $group)
                             <option value="{{ $group->id }}">
@@ -37,7 +38,7 @@
             <div class="col-md">
                 <div class="form-floating">
                     <select name="role" id="us-edit-role" class="form-select" wire:model="role"
-                        {{ ( $role != "admin" ) ? 'disabled' : '' }}>
+                        {{ ( $editable == "N" ) ? 'disabled' : '' }}>
                         <option value="user" {{ $role == 'user' ? 'selected' : '' }}>User</option>
                         <option value="manager" {{ $role == 'manager' ? 'selected' : '' }}>Manager</option>
                         <option value="admin" {{ $role == 'admin' ? 'selected' : '' }}>Admin</option>
@@ -90,7 +91,7 @@
             <div class="form-floating">
                 <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name"
                     id="us-edit-first-name" maxlength="50" placeholder="First name" value="{{ $first_name }}" wire:model="first_name"
-                    {{ ( $role != "admin" ) ? 'disabled' : '' }}>
+                    {{ ( $editable == "N" ) ? 'disabled' : '' }}>
                 @error('first_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -103,7 +104,7 @@
             <div class="form-floating">
                 <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name"
                     id="us-edit-last-name" maxlength="50" placeholder="Last name" value="{{ $last_name }}" wire:model="last_name"
-                    {{ ( $role != "admin" ) ? 'disabled' : '' }}>
+                    {{ ( $editable == "N" ) ? 'disabled' : '' }}>
                 @error('last_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -132,7 +133,7 @@
         <div class="col-md">
             <div class="form-floating">
                 <input type="text" class="form-control" name="contact_no" id="us-edit-contact-no" maxlength="20" placeholder="Contact No"
-                    value="{{ $contact_no }}" wire:model="contact_no" {{ ( $role != "admin" ) ? 'disabled' : '' }}>
+                    value="{{ $contact_no }}" wire:model="contact_no" {{ ( $editable == "N" ) ? 'disabled' : '' }}>
                 <label for="us-edit-contact-no">Contact Number</label>
             </div>
         </div>

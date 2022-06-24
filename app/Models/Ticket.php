@@ -95,6 +95,31 @@ class Ticket extends Model
 
             $retcode    =   1;
 
+             // Add history
+            info('MODL.TK.CREAT', [
+                'user'      =>  $this->uid,
+                'call'      =>  'modl.tk.ahist',
+            ]);
+
+            try {
+                $this->addHistory($tdata);
+            } catch (\Throwable $th) {
+                report($th);
+            }
+
+            // Update reservation to P (processed)
+            info('MODL.TK.CREAT', [
+                'user'      =>  $this->uid,
+                'call'      =>  'modl.tk.uresv',
+            ]);
+
+            try {
+                $this->updReserves($tdata['ticket_id'], 'P');
+
+            } catch (\Throwable $th) {
+                report($th);
+            }
+
         } catch (\Throwable $th) {
             info('MODL.TK.CREAT', [
                     'user'      =>  $this->uid,
@@ -107,48 +132,23 @@ class Ticket extends Model
         }
 
         // Add event
-        info('MODL.TK.CREAT', [
-                'user'      =>  $this->uid,
-                'call'      =>  'modl.ev.creat',
-            ]);
+        // info('MODL.TK.CREAT', [
+        //         'user'      =>  $this->uid,
+        //         'call'      =>  'modl.ev.creat',
+        //     ]);
 
-        $evdata['category'] =   'TICKET';
+        // $evdata['category'] =   'TICKET';
         
-        $event  =   new Event();
+        // $event  =   new Event();
 
-        $event->create([
-            'category'      =>  'TICKET',
-            'action'        =>  '',
-            'key_id1'       =>  '',
-            'key_id2'       =>  '',
-            'key_id3'       =>  '',
-            'description'   =>  ''
-        ]);
-
-        // Add history
-        info('MODL.TK.CREAT', [
-                'user'      =>  $this->uid,
-                'call'      =>  'modl.tk.ahist',
-            ]);
-
-        try {
-            $this->addHistory($tdata);
-        } catch (\Throwable $th) {
-            report($th);
-        }
-
-        // Update reservation to P (processed)
-        info('MODL.TK.CREAT', [
-            'user'      =>  $this->uid,
-            'call'      =>  'modl.tk.uresv',
-        ]);
-
-        try {
-            $this->updReserves($tdata['ticket_id'], 'P');
-
-        } catch (\Throwable $th) {
-            report($th);
-        }
+        // $event->create([
+        //     'category'      =>  'TICKET',
+        //     'action'        =>  '',
+        //     'key_id1'       =>  '',
+        //     'key_id2'       =>  '',
+        //     'key_id3'       =>  '',
+        //     'description'   =>  ''
+        // ]);
 
         return  $retcode;
     }
@@ -382,7 +382,7 @@ class Ticket extends Model
             }
 
             // Update reserves
-            $this->updReserves($tmp->tkey, $tmp->status);
+            $this->updReserves($tmp->tkey, 'X');
 
             // Close the ticket
             info('MODL.TK.AUTOX > Closing ticket ' . $tmp->tkey . '.');

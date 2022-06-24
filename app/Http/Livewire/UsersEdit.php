@@ -3,12 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Http\Controllers\Utils;
+use App\Models\Config;
 use Livewire\Component;
 use App\Models\Group;
 use App\Models\User;
 
 class UsersEdit extends Component
 {
+    public      $editable;
     public      $user;
     public      $user_id;
     public      $group_id;
@@ -41,6 +43,8 @@ class UsersEdit extends Component
         $this->last_name    =   $this->user->last_name;
         
         $this->isFresh      =   true;
+
+        $this->isEditable();
     }
 
     public function updated($userData)
@@ -106,6 +110,20 @@ class UsersEdit extends Component
 
         }
         
+    }
+
+    public function isEditable()
+    {
+        $setEdit        =   'Y';
+
+        $config         =   new Config();
+        $setEdit        =   $config->chkConfig('CAN#UPD_USER');
+
+        if (auth()->user()->id == $this->user_id) {
+            $setEdit    =   'N';
+        }
+
+        $this->editable =   $setEdit;
     }
 
     public function render()

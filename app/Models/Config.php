@@ -1108,4 +1108,17 @@ class Config extends Model
                     ->toArray();
 
     }
+
+    /**
+     * Get specific config value
+     * 
+     * @param   String  $config_name
+     * @return  Value
+     */
+    public function chkConfig($config_name)
+    {
+        return Config::where('config_name', $config_name)
+                    ->first()
+                    ->value;
+    }
 }
