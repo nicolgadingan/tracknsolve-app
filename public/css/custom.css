@@ -165,61 +165,7 @@ body {
     color: var(--x-primary-m);
 }
 
-.bg-less {
-    background: none !important;
-}
 
-.bg-white {
-    background-color: white;
-}
-
-.bg-marine {
-    background-color: var(--marine);
-}
-
-.bg-marine-dark {
-    background-color: var(--marine-dark);
-}
-
-.bg-cheese {
-    background-color: var(--cheese);
-}
-
-.bg-forest {
-    background-color: var(--forest);
-}
-
-.bg-rose {
-    background-color: var(--rose);
-}
-
-.bg-success {
-    background-color: var(--bs-success);
-}
-
-.bg-warning {
-    background-color: var(--bs-warning);
-}
-
-.bg-secondary {
-    background-color: var(--bs-secondary);
-}
-
-.bg-danger {
-    background-color: var(--bs-danger);
-}
-
-.bg-primary {
-    background-color: var(--bs-primary);
-}
-
-.bg-forest-light {
-    background-color: var(--forest-light);
-}
-
-.bg-pumpkin-light {
-    background-color: var(--x-pumpkin-l);
-}
 
 
 /* THEMES */

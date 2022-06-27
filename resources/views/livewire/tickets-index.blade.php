@@ -90,7 +90,7 @@
                                         $recStatus  =   'overdue';
                                     }
                                 @endphp
-                                <tr class="{{ $recStatus }}">
+                                <tr class="{{ $recStatus }} @if(session('newRecord') == $ticket->tkey ) new-record @endif">
                                     <td>
                                         <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-main">
                                             {{ $ticket->tkey }}

@@ -106,7 +106,7 @@ class TicketsController extends Controller
         }
 
         return view( 'tickets.' . $action )->with([
-            'tkey'      =>  $id,
+            'tkey'      =>  $id
         ]);
 
     }

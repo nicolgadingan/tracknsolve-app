@@ -111,7 +111,8 @@ class TicketsCreate extends Component
             }
 
             return redirect('/tickets')->with([
-                'success'   =>  'You have successfully created and assigned your ticket.'
+                'success'   =>  'You have successfully created and assigned your ticket.',
+                'newRecord' =>  $tdata['ticket_id']
             ]);
 
         } else {

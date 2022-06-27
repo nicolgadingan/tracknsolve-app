@@ -215,6 +215,62 @@ div#sidebar {
     background-color: var(--ts-yellow);
 }
 
+.bg-less {
+    background: none !important;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-marine {
+    background-color: var(--marine);
+}
+
+.bg-marine-dark {
+    background-color: var(--marine-dark);
+}
+
+.bg-cheese {
+    background-color: var(--cheese);
+}
+
+.bg-forest {
+    background-color: var(--forest);
+}
+
+.bg-rose {
+    background-color: var(--rose);
+}
+
+.bg-success {
+    background-color: var(--ts-success);
+}
+
+.bg-warning {
+    background-color: var(--ts-warning);
+}
+
+.bg-secondary {
+    background-color: var(--ts-secondary);
+}
+
+.bg-danger {
+    background-color: var(--ts-danger);
+}
+
+.bg-primary {
+    background-color: var(--ts-primary);
+}
+
+.bg-forest-light {
+    background-color: var(--forest-light);
+}
+
+.bg-pumpkin-light {
+    background-color: var(--x-pumpkin-l);
+}
+
 
 /* 
 ==================================
@@ -326,6 +382,10 @@ table.ts-table tr:first-child {
 
 .ts-table tbody tr.overdue:hover td {
     --ts-table-row-accent: rgba(255, 121, 63, 0.075);
+}
+
+.ts-table tbody tr.new-record td {
+    animation: new-record 4s ease;
 }
 
 /* 
@@ -572,4 +632,27 @@ li.ts-list-item {
 
 .dark-theme .has-icon .has-icon-this {
     color: var(--ts-yellow);
+}
+
+
+/* 
+==================================
+  ANIMATION
+================================== */
+@keyframes new-record {
+    0% {
+        background-color: rgba(52, 172, 224, 0);
+    }
+    20% {
+        background-color: rgba(52, 172, 224, 0.5);
+    }
+    40% {
+        background-color: rgba(52, 172, 224, 0.1);
+    }
+    60% {
+        background-color: rgba(52, 172, 224, 0.5);
+    }
+    100% {
+        background-color: rgba(52, 172, 224, 0);
+    }
 }
