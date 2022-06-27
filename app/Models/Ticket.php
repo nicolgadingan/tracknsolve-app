@@ -212,6 +212,7 @@ class Ticket extends Model
 
                 $tdata['assignee']      =   $this->uid;
                 $tdata['created_by']    =   $this->uid;
+                $tdata['status']        =   'in-progress';
 
                 info('MODL.TK.AS2ME', [
                     'user'      =>  $this->uid,

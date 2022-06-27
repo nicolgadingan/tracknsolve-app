@@ -120,19 +120,22 @@
                                 <i class="bi bi-{{ $icon }}-circle-fill fg-{{ $color }} fs-re"></i>
                             </span>
                         </li>
+                        @php
+                            $tkSeqColor =   'danger';
+                            $tkSeqIcon  =   'exclamation';
+                            $tkSeqMsg   =   'Sequence is outdated. Current sequence is ' . 
+                                            $stats['ticketSeq']['nowSeq'] . ' (' . $stats['ticketSeq']['maxSeq'] . ').';
+
+                            if ($stats['ticketSeq']['action'] == 'none') {
+                                $tkSeqColor =   'success';
+                                $tkSeqIcon  =   'check';
+                                $tkSeqMsg   =   'Sequence is updated. Current sequence is ' . $stats['ticketSeq']['nowSeq'] . '.';
+                            }
+                        @endphp
                         <li class="{{ $liStlyle }}" data-bs-toggle="tooltip" data-bs-placement="bottom" html="true"
-                            title="Sequence is updated. Current sequence is {{ $stats['ticketSeq']['nowSeq'] }}." >
+                            title="{{ $tkSeqMsg }}">
                             <span>Ticket Sequence</span>
                             <span>
-                                @php
-                                    $tkSeqColor =   'danger';
-                                    $tkSeqIcon  =   'exclamation';
-
-                                    if ($stats['ticketSeq']['action'] == 'none') {
-                                        $tkSeqColor =   'success';
-                                        $tkSeqIcon  =   'check';
-                                    }
-                                @endphp
                                 <i class="bi bi-{{ $tkSeqIcon }}-circle-fill fg-{{ $tkSeqColor }} fs-re"></i>
                             </span>
                         </li>
