@@ -88,10 +88,14 @@
                                         <tr class="{{ $overdue }} ">
                                             <td>
                                                 <span>
-                                                    <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-main"
-                                                        @if ($overdue == 'overdue') data-bs-toggle="tooltip" title="Overdue" @endif
-                                                        data-bs-placement="bottom">
-                                                        {{ $unassigned->tkey }}
+                                                    <a href="/tickets/{{ $unassigned->tkey }}/edit" class="link-main">
+                                                        <div class="d-flex justify-content-between">
+                                                            {{ $unassigned->tkey }}
+                                                            @if ($overdue == 'overdue')
+                                                                <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
+                                                                    data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
+                                                            @endif
+                                                        </div>
                                                     </a>
                                                 </span>
                                             </td>
@@ -180,11 +184,13 @@
                                             <td>
                                                 <span>
                                                     <a href="/tickets/{{ $mytk->tkey }}/edit" class="link-main">
-                                                        {{ $mytk->tkey }}
-                                                        @if ($overdue == 'overdue')
-                                                            <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
-                                                                data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
-                                                        @endif
+                                                        <div class="d-flex justify-content-between">
+                                                            {{ $mytk->tkey }}
+                                                            @if ($overdue == 'overdue')
+                                                                <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
+                                                                    data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
+                                                            @endif
+                                                        </div>
                                                     </a>
                                                 </span>
                                             </td>

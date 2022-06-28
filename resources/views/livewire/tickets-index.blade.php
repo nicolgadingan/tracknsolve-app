@@ -93,11 +93,13 @@
                                 <tr class="{{ $recStatus }} @if(session('newRecord') == $ticket->tkey ) new-record @endif">
                                     <td>
                                         <a href="/tickets/{{ $ticket->tkey }}/edit" class="link-main">
-                                            {{ $ticket->tkey }}
-                                            @if ($recStatus == 'overdue')
-                                                <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
-                                                    data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
-                                            @endif
+                                            <div class="d-flex justify-content-between">
+                                                {{ $ticket->tkey }}
+                                                @if ($recStatus == 'overdue')
+                                                    <i class="bi bi-exclamation-circle pl-1 fg-pumpkin"
+                                                        data-bs-toggle="tooltip" title="Overdue" data-bs-placement="bottom"></i>
+                                                @endif
+                                            </div>
                                         </a>
                                     </td>
                                     <td>
