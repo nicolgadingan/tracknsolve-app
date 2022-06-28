@@ -604,14 +604,7 @@ li.list-group-item {
 
 
 /* LINK - OVERRIDE ::export */
-.link-primary,
-.link-primary:disabled {
-    color: var(--x-primary-m);
-}
 
-.link-primary:hover {
-    color: var(--x-primary-d);
-}
 
 
 /* MODAL - OVERRIDE ::export */

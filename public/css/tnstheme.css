@@ -21,10 +21,12 @@
     --ts-pumpkin:           #ff793f;
     --ts-pumpkin-dark:      #cd6133;
     --ts-pumpkin-l:         #ffe0d3;
+    --ts-danger-light:      #fd7171;
     --ts-danger:            #ff5252;
     --ts-danger-dark:       #b33939;
     --ts-success:           #33d9b2;
     --ts-success-dark:      #218c74;
+    --ts-primary-light:     #72d4ff;
     --ts-primary:           #34ace0;
     --ts-primary-dark:      #227093;
     --ts-purple:            #706fd3;
@@ -37,6 +39,7 @@
     --ts-light-shade:       rgba(255, 255, 255, 0.05);
 
     --ts-due-icon-color:    transparent;
+    --ts-action-icon-show:  hidden;
 }
 
 html,
@@ -105,6 +108,15 @@ div#sidebar {
     color: var(--ts-forest-light);
 }
 
+.link-primary,
+.link-primary:disabled {
+    color: var(--ts-primary);
+}
+
+.link-danger {
+    color: var(--ts-danger);
+}
+
 .link-yellow:hover,
 .link-yellow:active {
     color: var(--ts-yellow-dark);
@@ -124,6 +136,25 @@ div#sidebar {
 .link-forest:active {
     color: var(--ts-forest);
 }
+
+.link-hover-white:hover {
+    color: white;
+}
+
+.dark-theme .link-primary:hover {
+    color: var(--ts-primary-light);
+}
+
+.link-danger:hover,
+.link-danger:active {
+    color: var(--ts-danger-dark);
+}
+
+.dark-theme .link-danger:hover,
+.dark-theme .link-danger:active {
+    color: var(--ts-danger-light);
+}
+
 
 /* 
 ==================================
@@ -569,6 +600,13 @@ li.ts-list-item {
 .dark-them .ts-list .ts-list-item:hover {
     background-color: var(--ts-light-shade);
     color: var(--ts-light);
+
+    --ts-action-icon-show: visible;
+}
+
+.ts-list-item .ts-action-icon {
+    visibility: var(--ts-action-icon-show);
+    font-size: medium;
 }
 
 
@@ -655,4 +693,32 @@ li.ts-list-item {
     100% {
         background-color: rgba(52, 172, 224, 0);
     }
+}
+
+
+/* 
+==================================
+  DROPDOWN
+================================== */
+.ts-dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0;
+    font-size: 0.9rem;
+    text-align: left;
+    list-style: none;
+    background-clip: padding-box;
+    border-radius: 0.5rem;
+}
+
+.ts-dropdown-menu-end {
+    --bs-position: end;
+}
+
+.dark-theme .ts-dropdown-menu {
+    background-color: var(--ts-dark);
+    color: white;
 }
