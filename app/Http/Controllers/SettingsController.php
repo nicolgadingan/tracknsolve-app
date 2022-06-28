@@ -126,7 +126,7 @@ class SettingsController extends Controller
                 'action'    =>  'verifying'
             ]);
 
-            if ($maxSeq >= $chkData->last_seq) {
+            if ($maxSeq > $chkData->last_seq) {
                 $status['action']   =   'recon';
 
             } else {
