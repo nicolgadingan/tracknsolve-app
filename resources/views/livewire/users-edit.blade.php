@@ -14,6 +14,14 @@
             @endif
         </div>
     </div>
+    @if ($urole == "admin" && $uid == $user_id)
+        <div class="ts-alert-dark ts-alert-primary">
+            <strong>Did you know?</strong><br>
+            You can view but cannot edit your own account.
+            Changes on this process requires a second person validation.
+            Kindly have another Administrator do the update for you.
+        </div>
+    @endif
     @include('plugins.messages')
     <h6 class="fg-forest">ORGANIZATION</h6>
     <div class="row g-3 mb-4">

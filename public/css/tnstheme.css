@@ -517,7 +517,7 @@ table.ts-table tr:first-child {
   DOT
 ================================== */
 .dark-theme .dot {
-    padding: 0.1rem 0.1rem;
+    padding: 0.1rem 0.5rem;
     border: 1px solid transparent;
     border-radius: 0.4rem;
     background-color: var(--ts-dark-shade);
