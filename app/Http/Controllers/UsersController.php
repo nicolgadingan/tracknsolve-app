@@ -59,7 +59,7 @@ class UsersController extends Controller
 
         if (count($groups) == 0) {
             return back()->withErrors([
-                'message'   =>  'You cannot create a user without an active Group to assign to. Please create atleast one before proceeding.'
+                'message'   =>  $this->utils->err->nousgroup
             ]);
         }
 

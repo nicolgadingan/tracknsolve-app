@@ -18,6 +18,8 @@ class Utils extends Controller
             'unexpected'    =>  'Unexpected error encountered while processing your request. Kindly report this to your administrator for checking.',
             'nochange'      =>  'You do not seem to have an update on this record. Please check and try again.',
             'calltheguy'    =>  'Kindly report this to your administrator for further checking.',
+            'nousgroup'     =>  'You cannot create a user without an active Group to assign to. Please create atleast one before proceeding.',
+            'notkgroup'     =>  'You cannot create a ticket without an active Group to assign to. Please create atleast one before proceeding.'
         ]);
     }
 

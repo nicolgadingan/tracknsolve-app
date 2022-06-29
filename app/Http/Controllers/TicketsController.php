@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use App\Mail\TicketResolved;
 use App\Jobs\Mailman;
+use App\Models\Group;
 use App\Notifications\ResolvedTicket;
 use Illuminate\Support\Facades\Storage;
 
@@ -56,6 +57,16 @@ class TicketsController extends Controller
      */
     public function create()
     {
+        // Validate group
+        $groups     =   Group::where('status', 'A')
+                            ->get();
+        
+        if (count($groups) == 0) {
+            return back()->withErrors([
+                'message'   =>  $this->utils->err->notkgroup
+            ]);
+        }
+
         // Generate key
         $config     =   new Config();
         $tkSeq      =   $config->getKey();
