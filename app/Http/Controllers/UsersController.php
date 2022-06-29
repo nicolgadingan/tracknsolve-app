@@ -53,9 +53,15 @@ class UsersController extends Controller
             abort('401');
         }
 
-        $groups =   Group::where('status', 'A')
-                        ->orderBy('name')
-                        ->get();
+        $groups     =   Group::where('status', 'A')
+                            ->orderBy('name')
+                            ->get();
+
+        if (count($groups) == 0) {
+            return back()->withErrors([
+                'message'   =>  'You cannot create a user without an active Group to assign to. Please create atleast one before proceeding.'
+            ]);
+        }
 
         return view('users.create')->with([
             'groups'    =>  $groups,
