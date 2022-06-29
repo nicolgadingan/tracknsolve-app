@@ -7,16 +7,6 @@
 @section('content')
 <div class="container-fluid">
     @livewire('groups-index', ['configs' => $configs])
-    
-    {{-- New Group Form --}}
-    <div class="modal fade" id="gr-new-group-form" tabindex="-1" aria-labelledby="gr-new-group-label"
-        aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content border-round">
-                @livewire('groups-create', ['managers' => $managers])
-            </div>
-        </div>
-    </div>
 
     {{-- Delete Group Form --}}
     <div class="modal fade" id="gr-delt-group-modal" tabindex="-1" aria-labelledby="gr-delt-group-label"

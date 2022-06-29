@@ -11,11 +11,19 @@
             </div>
         </div>
         <div class="col-md right">
-            @if (auth()->user()->role == "admin")
-                <button class="btn btn-yellow shadow" data-bs-toggle="modal" data-bs-target="#gr-new-group-form">New Group</button>
+            @if (auth()->user()->role == "admin" && $canCreate)
+                <a href="{{ route('groups.create') }}" class="btn btn-main">
+                    New Group
+                </a>
             @endif
         </div>
     </div>
+    @if ($isExhausted && count($errors) == 0)
+        <div class="ts-alert-dark ts-alert-warning">
+            <strong>Trying to create a group?</strong><br>
+            Unforetunately, you have already reached your group limit count of {{ $maxGroup }} base on your subscription. <br>
+        </div>
+    @endif
     @include('plugins.messages')
     <div class="row">
         <div class="col">

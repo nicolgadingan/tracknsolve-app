@@ -1,10 +1,13 @@
 <form wire:submit.prevent="saveGroup">
-    <div class="modal-header">
-        <h5 class="modal-title" id="gr-new-group-label">New Group</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body" x-data="{ remain: 255 }" x-init="remain = $refs.descn.maxLength; chars = $refs.descn.value.length">
+    <div class="ts-card" x-data="{ remain: 255 }">
+        <div class="d-flex justify-content-between mb-4">
+            @includeIf('plugins.previous', ['path' => '/groups'])
+            <button type="submit" class="btn btn-main btn-lg shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>
+                Submit
+            </button>
+        </div>
         @include('plugins.messages')
+        <h6 class="fg-forest">GROUP DETAILS</h6>
         <div class="form-floating mb-3">
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Gorup name"
                 id="gr-new-name" wire:model.debounce.500ms="name">
@@ -23,7 +26,7 @@
         <div class="mb-3 pt-1 pl-2">
             <span x-html="remain"></span> characters left
         </div>
-        <div class="form-floating">
+        <div class="form-floating mb-3">
             <select id="gr-new-manager" class="form-select @error('manager') is-invalid @enderror" wire:model="manager"
                 aria-placeholder="Manager" {{ ( count($managers) == 0 ) ? 'disabled' : '' }}>
                 @if (count($managers) > 0)
@@ -43,8 +46,4 @@
             <label for="gr-new-manager">Manager</label>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-marine btn-lg shadow-sm" {{ ( count($errors) > 0 ) ? 'disabled' : '' }}>Submit</button>
-    </div>
-    <div hidden>{{ $errors }}</div>
 </form>

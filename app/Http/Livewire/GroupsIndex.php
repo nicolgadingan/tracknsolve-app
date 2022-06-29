@@ -2,19 +2,37 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Config;
 use Livewire\Component;
-use Illuminate\Support\Facades\DB;
 use App\Models\Group;
-use App\Models\User;
 
 class GroupsIndex extends Component
 {
     public $searchgroup;
     public $configs;
+    public $canCreate;
+    public $isExhausted;
+    public $maxGroup;
 
     public function mount()
     {
         $this->searchgroup  =   '';
+        $this->canCreate    =   true;
+
+        $this->checkSecurity();
+    }
+
+    protected function checkSecurity()
+    {
+        $config                 =   new Config();
+        
+        $this->maxGroup         =   (int) $config->chkConfig('LIMIT#GROUP');
+        $grpCount               =   Group::all();
+
+        if ($this->maxGroup <= count($grpCount)) {
+            $this->canCreate    =   false;
+            $this->isExhausted  =   true;
+        }
     }
 
     public function render()

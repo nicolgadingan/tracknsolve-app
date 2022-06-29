@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Utils;
+use PDO;
 
 class GroupsController extends Controller
 {
@@ -39,14 +40,31 @@ class GroupsController extends Controller
         $track      =   'CAN#DEL_GROUP';
         $canDel     =   $this->utils->parseConfig($configs, $track);
 
-        $user       =   new User();
-        $managers   =   $user->canManage();
-
         return view('groups.index')->with([
-            'managers'  =>  $managers,
             'configs'   =>  [
                 'canDelete' =>  $canDel
             ]
+        ]);
+    }
+    
+    /**
+     * Create group
+     * 
+     * @return  View
+     */
+    public function create()
+    {
+        if ($this->isExhausted()) {
+            return back()->withErrors([
+                'message'   =>  'You have already reached your group limit count base on your subscription. You can upgrade to increase your limit.'
+            ]);
+        }
+
+        $user       =   new User();
+        $managers   =   $user->canManage();
+
+        return view('groups.create')->with([
+            'managers'  =>  $managers,
         ]);
     }
 
@@ -252,6 +270,23 @@ class GroupsController extends Controller
 
         }
         
+    }
+
+    /**
+     * Check if the group limit already reached
+     */
+    protected function isExhausted()
+    {
+        $config     =   new Config();
+        
+        $maxGroup   =   (int) $config->chkConfig('LIMIT#GROUP');
+        $grpCount   =   Group::all();
+
+        if ($maxGroup <= count($grpCount)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
