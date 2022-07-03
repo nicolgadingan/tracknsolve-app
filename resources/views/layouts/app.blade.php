@@ -126,9 +126,24 @@
     </div>
     
     <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl)
+        // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        //     return new bootstrap.Tooltip(tooltipTriggerEl)
+        // });
+        $(document).ready(function() {
+
+            // ...
+
+            // Enable Bootstrap tooltips on page load
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // Ensure Livewire updates re-instantiate tooltips
+            if (typeof window.Livewire !== 'undefined') {
+                window.Livewire.hook('message.processed', (message, component) => {
+                    $('[data-bs-toggle="tooltip"]').tooltip('dispose').tooltip();
+                });
+            }
+
         });
     </script>
 
