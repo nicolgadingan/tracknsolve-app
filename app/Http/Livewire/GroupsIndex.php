@@ -38,7 +38,10 @@ class GroupsIndex extends Component
     public function render()
     {
         return view('livewire.groups-index', [
-            'data'      =>  Group::orderBy('name')
+            'data'      =>  Group::when($this->searchgroup, function($query, $key) {
+                                        $query->where('name', 'like', '%' . $key . '%');
+                                    })
+                                ->orderBy('name')
                                 ->paginate(10)
         ]);
     }

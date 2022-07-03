@@ -488,8 +488,8 @@ table.ts-table tr:first-child {
     border: none;
 }
 
-.dark-theme .ts-card .form-select option {
-    background: var(--ts-gray);
+.dark-theme .form-select option {
+    background: var(--ts-dark);
     color: white;
 }
 

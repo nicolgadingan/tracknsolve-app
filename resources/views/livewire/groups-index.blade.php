@@ -41,7 +41,9 @@
                         <th>Members</th>
                         <th class="right">Created</th>
                         @if ($uinf->role == 'admin')
-                            <th></th>
+                            <th class="right fs-re">
+                                <i class="bi bi-three-dots"></i>
+                            </th>
                         @endif
                     </thead>
                     <tbody>
@@ -91,20 +93,20 @@
                                     @if ($uinf->role == 'admin')
                                         <td class="right pt-0 pb-0">
                                             @if ($status == 'Active')
-                                                <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate mr-1" data-value="{{ $group->id }}"
+                                                <a href="#deac-{{ $group->slug }}" class="link-success gr-deactivate" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Group is Active.<br>Click to deactivate."
                                                     data-bs-html="true">
                                                     <i class="bi bi-toggle-on fs-xl"></i>
                                                 </a>
                                             @else
-                                                <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate mr-1" data-value="{{ $group->id }}"
+                                                <a href="#acti-{{ $group->slug }}" class="link-secondary gr-activate" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Group is Inactive.<br> Click to activate."
                                                     data-bs-html="true">
                                                     <i class="bi bi-toggle-off fs-xl"></i>
                                                 </a>
                                             @endif
                                             @if ($configs['canDelete'] == 'Y')
-                                                <a href="#delete-{{ $group->slug }}" class="link-danger gr-delete" data-value="{{ $group->id }}"
+                                                <a href="#delete-{{ $group->slug }}" class="link-danger gr-delete ml-1" data-value="{{ $group->id }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="left" title="Delete group" aria-label="{{ $group->name }}">
                                                     <i class="bi bi-trash-fill fs-xl"></i>
                                                 </a>
