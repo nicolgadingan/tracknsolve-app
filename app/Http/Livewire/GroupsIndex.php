@@ -42,7 +42,10 @@ class GroupsIndex extends Component
                                         $query->where('name', 'like', '%' . $key . '%');
                                     })
                                 ->orderBy('name')
-                                ->paginate(10)
+                                ->paginate(10),
+            'statuses'  =>  Group::selectRaw('distinct status')
+                                ->get()
+                                
         ]);
     }
 }

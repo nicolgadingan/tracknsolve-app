@@ -4,10 +4,29 @@
     @endphp
 
     <div class="row g-3 mb-4">
-        <div class="col-md">
+        <div class="col-auto">
             <div class="search" style="max-width: 300px;">
                 <input type="text" class="form-control search-input borderless" placeholder="Search..."
                     name="" wire:model="searchgroup">
+            </div>
+        </div>
+        <div class="col-auto left">
+            <div class="has-icon has-icon-start">
+                <select class="form-select borderless border-round has-icon-form" wire:model="filter">
+                    @if (count($statuses) > 1)
+                        @foreach ($statuses as $status)
+                            @php
+                                $filter =   ( $status->status == 'A' ) ? 'Active' : 'Inactive';
+                            @endphp
+                            <option value="{{ $status->status }}">{{ Str::ucfirst($filter) }}</option>
+                        @endforeach
+                    @else
+                        <option value="">All</option>
+                    @endif
+                </select>
+                <span class="has-icon-this">
+                    <i class="bi bi-clipboard-check fs-re"></i>
+                </span>
             </div>
         </div>
         <div class="col-md right">
