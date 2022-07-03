@@ -1,14 +1,14 @@
 <div class="container-fluid">
-    <div class="row mb-3">
+    <div class="row mb-3 g-3">
         <div class="col-sm">
             <div class="row">
-                <div class="col-sm-auto mb-2">
+                <div class="col-sm-auto">
                     <div class="search">
                         <input type="text" class="form-control search-input borderless" placeholder="Search..."
                             name="" id="tk-search-ticket" wire:model="search">
                     </div>
                 </div>
-                <div class="col-sm-auto mb-2">
+                <div class="col-sm-auto">
                     <div class="has-icon has-icon-start">
                         <select class="form-select borderless border-round has-icon-form" wire:model="filter">
                             <option value="">All</option>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-sm-auto mb-2 right">
             <div id="tk-group-actions">
-                <a href="/tickets/create" class="btn btn-main shadow">
+                <a href="/tickets/create" class="btn btn-main">
                     New Ticket
                 </a>
             </div>

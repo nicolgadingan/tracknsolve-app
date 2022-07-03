@@ -37,6 +37,7 @@
     --ts-dark-shade:        rgba(0, 0, 0, 0.05);
     --ts-darker-shade:      rgba(0, 0, 0, 0.2);
     --ts-light-shade:       rgba(255, 255, 255, 0.05);
+    --ts-lighter-shade:     rgba(255, 255, 255, 0.2);
 
     --ts-due-icon-color:    transparent;
     --ts-action-icon-show:  hidden;
@@ -206,6 +207,41 @@ div#sidebar {
     color: var(--ts-dark);
 }
 
+.ts-btn {
+    border: 2px solid #f6c90e;
+    background-color: #f6c90e;
+    color: #2e3940;
+    padding: 0.1rem 1rem 0.1rem 0.12rem;
+    font-size: 20pt;
+    border-radius: 0.7rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .ts-btn-icon {
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.25);
+    /* margin-right: 0.5rem; */
+    border-radius: 0.5rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .ts-btn-text {
+    margin-top: 0.25rem;
+  }
+  
+  .ts-btn-icon > * {
+    font-size: 20pt;
+  }
+  
+  .ts-btn:hover {
+    background-color: #e0b60d;
+  }
+
 /* 
 ==================================
   FOREGROUNDS
@@ -313,7 +349,7 @@ div#sidebar {
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-radius: 0.5rem;
-    background-color: var(--ts-dark-shade);
+    background-color: var(--ts-darker-shade);
     font-size: small;
 }
 
@@ -374,7 +410,7 @@ div#sidebar {
 }
 
 table.ts-table > thead > tr > th {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
@@ -434,7 +470,7 @@ table.ts-table tr:first-child {
     overflow: auto;
     flex: 1 1 auto;
     padding: 1rem 1rem;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--ts-darker-shade);
 }
 
 
@@ -442,30 +478,30 @@ table.ts-table tr:first-child {
 ==================================
   INPUTS
 ================================== */
-.dark-theme .form-control,
-.dark-theme .form-control:focus,
-.dark-theme .form-select,
-.dark-theme .form-select:focus {
+.dark-theme .ts-card .form-control,
+.dark-theme .ts-card .form-control:focus,
+.dark-theme .ts-card .form-select,
+.dark-theme .ts-card .form-select:focus {
     /* background-color: rgba(225, 225, 225, 0.05); */
-    background-color: var(--ts-darker-shade);
+    background-color: var(--ts-light-shade);
     color: white;
     border: none;
 }
 
-.dark-theme .form-select option {
+.dark-theme .ts-card .form-select option {
     background: var(--ts-gray);
     color: white;
 }
 
-.dark-theme .form-control:disabled,
-.dark-theme .form-select:disabled,
-.dark-theme .form-control[readonly],
-.dark-theme .form-select[readonly] {
+.dark-theme .ts-card .form-control:disabled,
+.dark-theme .ts-card .form-select:disabled,
+.dark-theme .ts-card .form-control[readonly],
+.dark-theme .ts-card .form-select[readonly] {
     background-color: transparent;
-    border: 1px solid var(--ts-dark);
+    border: 1px solid var(--ts-lighter-shade);
 }
 
-.dark-theme .form-control[type='file']::before {
+.dark-theme .ts-card .form-control[type='file']::before {
     background: var(--ts-dark-shade);
 }
 
@@ -474,13 +510,20 @@ table.ts-table tr:first-child {
     
 }
 
+.dark-theme .form-contol,
+.dark-theme .form-select,
+.dark-theme .search .form-control {
+    background-color: var(--ts-darker-shade);
+    color: var(--ts-light);
+}
+
 
 /* 
 ==================================
   PAGINATION
 ================================== */
 .ts-card ul.pagination .page-item:not(.active) > * {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--ts-light-shade);
     border-color: var(--ts-yellow);
 }
 
@@ -588,11 +631,12 @@ li.ts-list-item {
     display: block;
     padding: 0.5rem 1rem;
     text-decoration: none;
+    /* border: 1px solid var(--ts-lighter-shade); */
 }
 
 .ts-card .ts-list .ts-list-item,
 .dark-them .ts-list .ts-list-item {
-    background-color: var(--ts-dark-shade);
+    background-color: rgba(255, 255, 255, 0.03);
     color: var(--ts-light);
 }
 
@@ -600,7 +644,6 @@ li.ts-list-item {
 .dark-them .ts-list .ts-list-item:hover {
     background-color: var(--ts-light-shade);
     color: var(--ts-light);
-
     --ts-action-icon-show: visible;
 }
 
