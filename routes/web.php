@@ -24,6 +24,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::resource('tickets', App\Http\Controllers\TicketsController::class)->except(['store']);
 Route::put('/tickets/{ticket}/get', [App\Http\Controllers\TicketsController::class, 'get']);
 Route::put('/tickets/{ticket}/resolve', [App\Http\Controllers\TicketsController::class, 'resolve']);
+Route::delete('/tickets/{ticket}/att/{att}/delete', [\App\Http\Controllers\TicketsController::class, 'delatt']);
 
 Route::resource('users', App\Http\Controllers\UsersController::class)->except(['edit', 'update']);
 

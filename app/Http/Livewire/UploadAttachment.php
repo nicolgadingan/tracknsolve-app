@@ -16,7 +16,6 @@ class UploadAttachment extends Component
     public $filepath;
     public $files;
     public $xfile;
-    public $notif;
     public $status;
 
     public function mount()
@@ -66,21 +65,17 @@ class UploadAttachment extends Component
      * Delete attachment
      * 
      */
-    public function delatt()
+    public function delatt($id)
     {
-        // Check if the $xfile is empty
-        if ($this->xfile != '') {
-            // Delete from storage
-            Storage::delete($this->xfile);
+        // Get attachment details
+        $att    =   DB::table('ticket_atts')
+                        ->where('id', $id);
 
-            // Delete from database
-            DB::table('ticket_atts')
-                ->where('id', $this->xfile)
-                ->where('ticket_id', $this->tkey)
-                ->delete();
-        } else {
-            $this->notif    =   'No file to delete.';
-        }
+        // Delete it from public directory
+        Storage::delete('public/' . $att->first()->att_path);
+        
+        // Delete from database
+        $att->delete();
 
         $this->retrieve();
     }

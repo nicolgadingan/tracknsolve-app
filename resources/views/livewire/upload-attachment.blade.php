@@ -40,19 +40,19 @@
             <div class="mb-3">
                 @if (count($files) > 0)
                     <input type="hidden" wire:model="xfile" id="tk-delatt-id">
-                    <button class="d-none" wire:click="delatt" id="tk-delatt-btn" ></button>
                     <ul class="ts-list">
                         @foreach ($files as $file)
                             <li class="ts-list-item d-flex justify-content-between align-items-center">
                                 <a href="{{ asset('storage/' . $file->att_path) }}" class="link-primary" download="{{ $file->att_path }}">
                                     {{ Arr::last(explode('/', $file->att_path)) }}
                                 </a>
-                                <a href="#" class="ts-action-icon fs-re link-danger" hidden>
+                                <a href="#" class="ts-action-icon fs-re link-danger" wire:click="delatt({{ $file->id }})">
                                     <i class="bi bi-x-lg"></i>
                                 </a>
                             </li>
                         @endforeach
                     </ul>
+                    
                 @else
                     No attachments
                 @endif

@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row mb-3 g-3">
         <div class="col-sm">
-            <div class="row">
+            <div class="row g-3">
                 <div class="col-sm-auto">
                     <div class="search">
                         <input type="text" class="form-control search-input borderless" placeholder="Search..."
