@@ -587,7 +587,7 @@
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.5",
-                "guzzlehttp/psr7": "^1.8.3 || ^2.1",
+                "guzzlehttp/psr7": "2.4.5",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -1679,7 +1679,7 @@
                 "illuminate/validation": "^7.0|^8.0|^9.0",
                 "league/mime-type-detection": "^1.9",
                 "php": "^7.2.5|^8.0",
-                "symfony/http-kernel": "^5.0|^6.0"
+                "symfony/http-kernel": "6.0.20"
             },
             "require-dev": {
                 "calebporzio/sushi": "^2.1",
